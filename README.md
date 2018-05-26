@@ -102,10 +102,10 @@ var testItem = new TestItem(Sitecore.Context.Item);
 
 ```TemplateId``` attribute is optional but nice to have in order to validate the item which is being passed to be wrapped.
 
-##3. View rendering with strongly-typed fields
+## 3. View rendering with strongly-typed fields
 
 If you building a simple view rendering, and you don't need a controller for it, you can use this option:
-1. Define model of the view to be Xwrap.Mvc.IViewModel
+1. Define model of the view to be ```Xwrap.Mvc.IViewModel```
 2. Use field extensions to render fields
 ```html
 @using Xwrap.Extensions
@@ -113,16 +113,34 @@ If you building a simple view rendering, and you don't need a controller for it,
 
 <div class="row">
 	<div class="col-md-12">
-		ImageField: @Model.RenderingItem.ImageField("image") <br />
+		ImageField: @Model.RenderingItem.ImageField("image")
 	</div>
 </div>
 ```
 
+## 4. View rendering with strongly-typed datasource
 
-##4. View rendering with strongly-typed datasource
-##5. View rendering with strongly-typed datasource and rendering parameters
-##6. Controller rendering with strongly-typed fields
-##7. Controller rendering with strongly-typed datasource
-##8. Controller rendering with strongly-typed datasource and rendering parameters
+If you building a simple view rendering without a controller and you want to wrap the whole datasource item into strongly-typed representation:
+1. Create a wrapper for your item template, fx ```TestItem```
+2. Define model of the view to be ```Xwrap.Mvc.IViewModel<TestItem>```
+3. Use rendering item to render fields
+```html
+@using Xwrap.Extensions
+@model Xwrap.Mvc.IViewModel<TestItem>
 
-#Documentation
+<div class="row">
+	<div class="col-md-12">
+		ImageField: @Model.RenderingItem.Image
+	</div>
+</div>
+```
+
+## 5. View rendering with strongly-typed datasource and rendering parameters
+
+## 6. Controller rendering with strongly-typed fields
+
+## 7. Controller rendering with strongly-typed datasource
+
+## 8. Controller rendering with strongly-typed datasource and rendering parameters
+
+# Documentation

@@ -45,7 +45,7 @@
 				}
 
 	            var wrapFieldAgrs = new WrapFieldArgs(field);
-	            CorePipeline.Run("ste.wrapField", wrapFieldAgrs);
+	            CorePipeline.Run("xWrap.wrapField", wrapFieldAgrs);
 
 				fieldWrapper = wrapFieldAgrs.FieldWrapper ?? new TextFieldWrapper(field);
 

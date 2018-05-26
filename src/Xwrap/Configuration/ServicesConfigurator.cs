@@ -1,4 +1,4 @@
-﻿namespace Xwrap.Mvc.Configuration
+﻿namespace Xwrap.Configuration
 {
 	using Microsoft.Extensions.DependencyInjection;
 	using Sitecore.DependencyInjection;
@@ -7,7 +7,8 @@
 	{
 		public void Configure(IServiceCollection serviceCollection)
 		{
-			serviceCollection.AddSingleton(provider => ViewModelFactory.Instance);
+			serviceCollection.AddSingleton(provider => FieldWrapperFactory.Instance);
+			serviceCollection.AddSingleton(provider => ItemWrapperFactory.Instance);
 		}
 	}
 }

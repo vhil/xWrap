@@ -4,6 +4,7 @@
 	using Sitecore.Mvc.Pipelines.Response.GetModel;
 	using Sitecore.Mvc.Presentation;
 	using Extensions;
+	using System.Linq;
 
 	public class GetFromView : GetModelProcessor
 	{
@@ -40,14 +41,28 @@
 				}
 
 				var modelType = baseType.GetGenericArguments()[0];
+				var viewModelFactory = ViewModelFactory.Instance;
 
 				// Check to see if no model has been set
-				if (!modelType.IsAssignableTo(typeof(IViewModel)))
+				if (modelType.IsAssignableTo(typeof(IViewModel)))
 				{
-					return null;
+					return viewModelFactory.GetViewModel();
 				}
 
-				return ViewModelFactory.Instance().GetViewModel();
+				if (modelType.IsAssignableTo(typeof(IViewModel<>)))
+				{
+					var modelGenericArgs = modelType.GetGenericArguments();
+
+					var method = typeof(ViewModelFactory).GetMethods().FirstOrDefault(m =>
+						string.Equals(m.Name, "GetViewModel") && 
+						m.GetGenericArguments().Length.Equals(modelGenericArgs.Length));
+
+					var genericMethod = method?.MakeGenericMethod(modelGenericArgs);
+
+					return genericMethod?.Invoke(viewModelFactory, new object[] { viewModelFactory });
+				}
+
+				return null;
 			}
 			catch
 			{

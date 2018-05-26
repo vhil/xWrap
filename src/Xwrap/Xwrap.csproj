@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sitecore.Kernel.NoReferences.8.2.170614\lib\NET452\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -49,6 +52,7 @@
     <Compile Include="Caching\SitecoreCacheService.cs" />
     <Compile Include="Caching\SitecoreCacheStorage.cs" />
     <Compile Include="Caching\SitecoreMemoryCacheEntry.cs" />
+    <Compile Include="Configuration\ServicesConfigurator.cs" />
     <Compile Include="Exceptions\FieldWrappingException.cs" />
     <Compile Include="Exceptions\ItemWrappingException.cs" />
     <Compile Include="Extensions\ItemWrapperExtensions.cs" />
@@ -99,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Config\Include\xWrap\xWrap.Dependencies.config" />
+    <None Include="App_Config\Include\xWrap\xWrap.ServicesConfiguration.config" />
     <None Include="App_Config\Include\xWrap\xWrap.Pipelines.config" />
     <None Include="packages.config" />
   </ItemGroup>

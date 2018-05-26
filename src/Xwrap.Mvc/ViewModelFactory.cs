@@ -17,10 +17,7 @@
 			this.ItemWrapperFactory = itemWrapperFactory;
 		}
 
-		public static IViewModelFactory Instance()
-		{
-			return Factory.CreateObject("xWrap/mvc/viewModelFactory", true) as IViewModelFactory;
-		}
+		public static IViewModelFactory Instance => Factory.CreateObject("xWrap/mvc/viewModelFactory", true) as IViewModelFactory;
 
 		public virtual IViewModel GetViewModel()
 		{

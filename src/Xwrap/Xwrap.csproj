@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD701EA5-513F-41B5-BD5A-9BB1D1A59BD9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xwrap</RootNamespace>
+    <AssemblyName>Xwrap</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Kernel.NoReferences.8.2.170614\lib\NET452\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\ICacheService.cs" />
+    <Compile Include="Caching\ICacheStorage.cs" />
+    <Compile Include="Caching\SitecoreCacheService.cs" />
+    <Compile Include="Caching\SitecoreCacheStorage.cs" />
+    <Compile Include="Caching\SitecoreMemoryCacheEntry.cs" />
+    <Compile Include="Exceptions\FieldWrappingException.cs" />
+    <Compile Include="Extensions\CachingExtensions.cs" />
+    <Compile Include="Extensions\FieldExtensions.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="FieldWrapperFactory.cs" />
+    <Compile Include="Helpers\TypeHelper.cs" />
+    <Compile Include="IFieldWrapperFactory.cs" />
+    <Compile Include="FieldWrappers\Abstractions\ICheckboxFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IDateTimeFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IFileFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IGeneralLinkFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IImageFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IIntegerFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\ILinkFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IListFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\INameLookupValueListFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\INameValueListFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\INumberFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IRenderingParametersFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IRichTextFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\Abstractions\ITextFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\CheckboxFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\DateTimeFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\FieldWrapper.cs" />
+    <Compile Include="FieldWrappers\FileFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\GeneralLinkFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\ImageFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\IntegerFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\LinkFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\ListFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\NameLookupValueListFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\NameValueListFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\NumberFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\RichTextFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\TextFieldWrapper.cs" />
+    <Compile Include="Pipelines\WrapFieldArgs.cs" />
+    <Compile Include="Pipelines\WrapFieldProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Config\Include\xWrap\xWrap.Dependencies.config" />
+    <None Include="App_Config\Include\xWrap\xWrap.Pipelines.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -2,7 +2,7 @@
 {
 	using FieldWrappers.Abstractions;
 
-	public class IntegerFieldWrapper : RenderingParametersFieldWrapper, IIntegerFieldWrapper
+	public class IntegerFieldWrapper : RenderingParametersFieldWrapper<int>, IIntegerFieldWrapper
     {
         private int? value;
 
@@ -11,7 +11,7 @@
         {
         }
 
-        public int Value
+        public override int Value
         {
             get
             {

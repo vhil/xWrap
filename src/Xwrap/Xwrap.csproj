@@ -103,7 +103,9 @@
   <ItemGroup>
     <None Include="App_Config\Include\xWrap\xWrap.Dependencies.config" />
     <None Include="App_Config\Include\xWrap\xWrap.ServicesConfiguration.config" />
-    <None Include="App_Config\Include\xWrap\xWrap.Pipelines.config" />
+    <None Include="App_Config\Include\xWrap\xWrap.Pipelines.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,13 +2,13 @@
 {
 	using FieldWrappers.Abstractions;
 
-	public class TextFieldWrapper : RenderingParametersFieldWrapper, ITextFieldWrapper
+	public class TextFieldWrapper : RenderingParametersFieldWrapper<string>, ITextFieldWrapper
     {
         public TextFieldWrapper(string fieldName, string value)
             : base(fieldName, value)
         {
         }
 
-        public string Value => this.RawValue;
+        public override string Value => this.RawValue;
     }
 }

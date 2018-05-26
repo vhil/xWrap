@@ -14,7 +14,7 @@
 	        this.parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
         }
 
-        public TField GetStronglyTypedField<TField>(string fieldName) where TField : class, IRenderingParametersFieldWrapper
+        public TField WrapParameter<TField>(string fieldName) where TField : class, IRenderingParametersFieldWrapper
         {
 			var rawValue = !this.parameters.Contains(fieldName) 
 				? string.Empty 
@@ -32,32 +32,32 @@
 
         public ICheckboxFieldWrapper CheckboxField(string fieldName)
         {
-            return this.GetStronglyTypedField<CheckboxFieldWrapper>(fieldName);
+            return this.WrapParameter<CheckboxFieldWrapper>(fieldName);
         }
 
         public IIntegerFieldWrapper IntegerField(string fieldName)
         {
-            return this.GetStronglyTypedField<IntegerFieldWrapper>(fieldName);
+            return this.WrapParameter<IntegerFieldWrapper>(fieldName);
         }
 
         public ILinkFieldWrapper LinkField(string fieldName)
         {
-            return this.GetStronglyTypedField<LinkFieldWrapper>(fieldName);
+            return this.WrapParameter<LinkFieldWrapper>(fieldName);
         }
 
 	    public IListFieldWrapper ListField(string fieldName)
 	    {
-			return this.GetStronglyTypedField<ListFieldWrapper>(fieldName);
+			return this.WrapParameter<ListFieldWrapper>(fieldName);
 		}
 
 		public INumberFieldWrapper NumberField(string fieldName)
         {
-            return this.GetStronglyTypedField<NumberFieldWrapper>(fieldName);
+            return this.WrapParameter<NumberFieldWrapper>(fieldName);
         }
 
         public ITextFieldWrapper TextField(string fieldName)
         {
-            return this.GetStronglyTypedField<TextFieldWrapper>(fieldName);
+            return this.WrapParameter<TextFieldWrapper>(fieldName);
         }
     }
 }

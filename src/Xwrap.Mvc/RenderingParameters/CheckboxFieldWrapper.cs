@@ -3,9 +3,9 @@
     using System;
     using FieldWrappers.Abstractions;
 
-	public class CheckboxFieldWrapper : RenderingParametersFieldWrapper, ICheckboxFieldWrapper
+	public class CheckboxFieldWrapper : RenderingParametersFieldWrapper<bool>, ICheckboxFieldWrapper
     {
-        public bool Value => !string.IsNullOrWhiteSpace(this.RawValue) && this.RawValue.Equals("1");
+        public override bool Value => !string.IsNullOrWhiteSpace(this.RawValue) && this.RawValue.Equals("1");
 
         public CheckboxFieldWrapper(string fieldName, string value)
             : base(fieldName, value)

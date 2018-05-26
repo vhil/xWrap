@@ -3,7 +3,7 @@
 	using FieldWrappers.Abstractions;
 	using System.Globalization;
 
-	public class NumberFieldWrapper : RenderingParametersFieldWrapper, INumberFieldWrapper
+	public class NumberFieldWrapper : RenderingParametersFieldWrapper<decimal>, INumberFieldWrapper
     {
         private decimal? value;
 
@@ -12,7 +12,7 @@
         {
         }
 
-        public decimal Value
+        public override decimal Value
         {
             get
             {

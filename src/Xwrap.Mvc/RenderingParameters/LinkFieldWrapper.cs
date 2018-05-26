@@ -6,7 +6,7 @@
     using Sitecore.Data.Items;
     using Sitecore.Links;
 
-    public class LinkFieldWrapper : RenderingParametersFieldWrapper, ILinkFieldWrapper
+    public class LinkFieldWrapper : RenderingParametersFieldWrapper<Guid>, ILinkFieldWrapper
     {
         private Item target;
 
@@ -43,7 +43,7 @@
             return field.Url;
         }
 
-        public Guid Value => this.GetItemId(this.RawValue);
+        public override Guid Value => this.GetItemId(this.RawValue);
 
         public Guid ItemId => this.GetItemId(this.RawValue);
 

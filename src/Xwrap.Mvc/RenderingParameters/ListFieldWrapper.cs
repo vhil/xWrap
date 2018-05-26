@@ -7,7 +7,7 @@
 	using Sitecore.Data;
     using Sitecore.Data.Items;
 
-    public class ListFieldWrapper : RenderingParametersFieldWrapper, IListFieldWrapper
+    public class ListFieldWrapper : RenderingParametersFieldWrapper<IEnumerable<Guid>>, IListFieldWrapper
     {
         public ListFieldWrapper(string fieldName, string value)
             : base(fieldName, value)
@@ -45,7 +45,7 @@
             return this.GetEnumerator();
         }
 
-        public IEnumerable<Guid> Value
+        public override IEnumerable<Guid> Value
         {
             get
             {

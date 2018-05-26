@@ -13,19 +13,19 @@ Functionality and features
  - super light-weight
  - uses only standard Sitecore API, no inventions
  - native support for Sitecore Experience Editor
- - compliant with helix principles and modular architecture
+ - compliant with [helix](http://helix.sitecore.net/ "helix") principles and modular architecture
  - provides convenient field and item extensions
  - fully configurable through sitecore include config files
 
 The framework is a set of NuGet packages that can be used in your solution:
- - ```xWrap.Framework```
- - ```xWrap```
- - ```xWrap.Mvc.Framework```
- - ```xWrap.Mvc```
+ - ```[xWrap.Framework](https://www.nuget.org/packages/xWrap.Framework "xWrap.Framework")```
+ - ```[xWrap](https://www.nuget.org/packages/xWrap "xWrap")```
+ - ```[xWrap.Mvc.Framework](https://www.nuget.org/packages/xWrap.Mvc.Framework "xWrap.Mvc.Framework")```
+ - ```[xWrap.Mvc](https://www.nuget.org/packages/xWrap.Mvc "xWrap.Mvc")```
  
 Within helix modular architecture:
-- Install ```xWrap.Mvc``` nuget package to your project layer module (will include config files)
-- Install ```xWrap.Mvc.Framework``` nuget package to your feature or foundation layer module
+- Install ```[xWrap.Mvc](https://www.nuget.org/packages/xWrap.Mvc "xWrap.Mvc")``` nuget package to your project layer module (will include config files)
+- Install ```[xWrap.Mvc.Framework](https://www.nuget.org/packages/xWrap.Mvc.Framework "xWrap.Mvc.Framework")``` nuget package to your feature or foundation layer module
  
 # Getting started
  

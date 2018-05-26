@@ -24,7 +24,7 @@ The framework is a set of NuGet packages that can be used in your solution:
  - ```xWrap.Mvc```
  
 Within helix modular architecture:
-- Install ```xWrap.Mvc``` nuget package to your project layer (will include config files)
+- Install ```xWrap.Mvc``` nuget package to your project layer module (will include config files)
 - Install ```xWrap.Mvc.Framework``` nuget package to your feature or foundation layer module
  
 # Getting started
@@ -123,7 +123,6 @@ public class TestItem : ItemWrapper
 3. Use rendering item to render fields
 
 ```html
-@using Xwrap.Extensions
 @model Xwrap.Mvc.IViewModel<TestItem>
 
 <div class="row">
@@ -166,7 +165,6 @@ public class TestRenderingParameters : RenderingParametersWrapper
 4. Use rendering item to render fields and rendering parameters to access strongly-typed params
 
 ```html
-@using Xwrap.Extensions
 @model Xwrap.Mvc.IViewModel<TestItem, TestRenderingParameters>
 
 <div class="row">
@@ -218,7 +216,6 @@ public class TestController : Controller
 ````
 3. Use view model fields in the view:
 ```html
-@using Xwrap.Extensions
 @model TestViewModel
 
 <div class="row">
@@ -279,7 +276,6 @@ public class TestController : Controller
 ````
 4. Use rendering item fields in the view:
 ```html
-@using Xwrap.Extensions
 @model TestItemViewModel
 
 <div class="row">
@@ -351,7 +347,6 @@ public class TestController : Controller
 ````
 5. Use rendering item fields in the view:
 ```html
-@using Xwrap.Extensions
 @model TestItemViewModel
 
 <div class="row">

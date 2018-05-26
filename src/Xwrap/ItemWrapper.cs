@@ -6,29 +6,36 @@
 	using System.Collections.Generic;
 	using Extensions;
 	using System.Linq;
+	using Sitecore.Data;
+	using FieldWrappers.Abstractions;
 
-	public abstract class ItemWrapper : IItemWrapper
+	public abstract class ItemWrapper
 	{
-		protected IItemWrapperFactory Factory => ItemWrapperFactory.Instance;
+		protected IItemWrapperFactory ItemWrapperFactory => Xwrap.ItemWrapperFactory.Instance;
+		protected IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
 
-		public Item Item { get; }
-		public Guid Id => this.Item.ID.Guid;
-		public Guid TemplateId => this.Item.TemplateID.Guid;
-		public string Name => this.Item.Name;
-		public string DisplayName => this.Item.DisplayName;
-		public string FullPath => this.Item.Paths.FullPath;
+		public Item OriginalItem { get; }
+		public Guid Id => this.OriginalItem.ID.Guid;
+		public Guid TemplateId => this.OriginalItem.TemplateID.Guid;
+		public string Name => this.OriginalItem.Name;
+		public string DisplayName => this.OriginalItem.DisplayName;
+		public string FullPath => this.OriginalItem.Paths.FullPath;
 
 		protected ItemWrapper(Item item)
 		{
-			this.Item = item ?? throw new ItemWrappingException(
+			this.OriginalItem = item ?? throw new ItemWrappingException(
 				$"Unable to wrap item. Constructor argument '{nameof(item)}' was null.");
 
 			this.ValidateTemplate();
 		}
 
+		public IFieldWrapper this[string fieldName] => this.FieldWrapperFactory.WrapField(this.OriginalItem, fieldName);
+
+		public IFieldWrapper this[ID fieldId] => this.FieldWrapperFactory.WrapField(this.OriginalItem, fieldId);
+
 		public IEnumerable<TItemWrapper> GetChildren<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
-			return this.Factory.WrapItems<TItemWrapper>(this.Item.Children);
+			return this.ItemWrapperFactory.WrapItems<TItemWrapper>(this.OriginalItem.Children);
 		}
 
 		public TItemWrapper GetFirstChild<TItemWrapper>() where TItemWrapper : ItemWrapper
@@ -40,7 +47,7 @@
 		{
 			var expectedTemplateAttr = this.GetTemplateIdAttribute();
 
-			if (expectedTemplateAttr != null && !this.Item.IsDerived(expectedTemplateAttr.TemplateId))
+			if (expectedTemplateAttr != null && !this.OriginalItem.IsDerived(expectedTemplateAttr.TemplateId))
 			{
 				throw new ItemWrappingException(
 					$"Unable to wrap item '{this.FullPath}' of template {this.TemplateId}. " +

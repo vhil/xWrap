@@ -95,7 +95,6 @@
     <Compile Include="FieldWrappers\NumberFieldWrapper.cs" />
     <Compile Include="FieldWrappers\RichTextFieldWrapper.cs" />
     <Compile Include="FieldWrappers\TextFieldWrapper.cs" />
-    <Compile Include="IItemWrapper.cs" />
     <Compile Include="ItemWrapper.cs" />
     <Compile Include="Pipelines\WrapFieldArgs.cs" />
     <Compile Include="Pipelines\WrapFieldProcessor.cs" />

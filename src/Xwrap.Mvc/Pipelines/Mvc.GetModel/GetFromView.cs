@@ -1,10 +1,13 @@
-﻿namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
+﻿
+namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
 {
 	using System.Web.Compilation;
 	using Sitecore.Mvc.Pipelines.Response.GetModel;
 	using Sitecore.Mvc.Presentation;
 	using Extensions;
+	using System;
 	using System.Linq;
+	using RenderingParameters;
 
 	public class GetFromView : GetModelProcessor
 	{
@@ -49,7 +52,8 @@
 					return viewModelFactory.GetViewModel();
 				}
 
-				if (modelType.IsAssignableTo(typeof(IViewModel<>)))
+				if (modelType.IsAssignableTo(typeof(IViewModel<ItemWrapper>))
+					|| modelType.IsAssignableTo(typeof(IViewModel<ItemWrapper, RenderingParametersWrapper>)))
 				{
 					var modelGenericArgs = modelType.GetGenericArguments();
 
@@ -59,7 +63,7 @@
 
 					var genericMethod = method?.MakeGenericMethod(modelGenericArgs);
 
-					return genericMethod?.Invoke(viewModelFactory, new object[] { viewModelFactory });
+					return genericMethod?.Invoke(viewModelFactory, null);
 				}
 
 				return null;

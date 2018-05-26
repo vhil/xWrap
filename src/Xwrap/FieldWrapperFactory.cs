@@ -24,7 +24,7 @@
 
 		public static IFieldWrapperFactory Instance => Factory.CreateObject("xWrap/fieldWrapperFactory", true) as IFieldWrapperFactory;
 
-	    public virtual IFieldWrapper GetStronglyTypedField(Field field)
+	    public virtual IFieldWrapper WrapField(Field field)
         {
             if (field == null) throw new ArgumentNullException(nameof(field));
 
@@ -64,9 +64,9 @@
 
 		public virtual bool CanCache => Sitecore.Context.PageMode.IsNormal;
 
-		public virtual TField GetStronglyTypedField<TField>(Field field) where TField : IFieldWrapper
+		public virtual TField WrapField<TField>(Field field) where TField : IFieldWrapper
         {
-            var stronglyTypedField = this.GetStronglyTypedField(field);
+            var stronglyTypedField = this.WrapField(field);
             if (stronglyTypedField.GetType().IsAssignableTo(typeof(TField)))
             {
                 return (TField) stronglyTypedField;
@@ -75,12 +75,12 @@
             throw new FieldWrappingException($"Field wrapper of type '{stronglyTypedField.GetType().Name}' can't be casted to target field wrapper '{typeof(TField).Name}'. Field '{field.Name}' of '{field.Type}'. Make sure you are calling correct type for give field.");
         }
 
-        public virtual IFieldWrapper GetStronglyTypedField(Item item, string fieldName)
+        public virtual IFieldWrapper WrapField(Item item, string fieldName)
         {
-	        return this.GetStronglyTypedField<IFieldWrapper>(item, fieldName);
+	        return this.WrapField<IFieldWrapper>(item, fieldName);
         }
 
-        public virtual TField GetStronglyTypedField<TField>(Item item, string fieldName) where TField : IFieldWrapper
+        public virtual TField WrapField<TField>(Item item, string fieldName) where TField : IFieldWrapper
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
             if (string.IsNullOrEmpty(fieldName)) throw new ArgumentNullException(nameof(fieldName));
@@ -92,15 +92,15 @@
                 throw new FieldWrappingException($"Field with name '{fieldName}' can't be retrieved from item '{item.Paths.FullPath}' with ID {item.ID}.");
             }
 
-            return this.GetStronglyTypedField<TField>(field);
+            return this.WrapField<TField>(field);
         }
 
-	    public virtual IFieldWrapper GetStronglyTypedField(Item item, ID fieldId)
+	    public virtual IFieldWrapper WrapField(Item item, ID fieldId)
 	    {
-			return this.GetStronglyTypedField<IFieldWrapper>(item, fieldId);
+			return this.WrapField<IFieldWrapper>(item, fieldId);
 		}
 
-		public virtual TField GetStronglyTypedField<TField>(Item item, ID fieldId) where TField : IFieldWrapper
+		public virtual TField WrapField<TField>(Item item, ID fieldId) where TField : IFieldWrapper
 	    {
 			if (item == null) throw new ArgumentNullException(nameof(item));
 		    if (ID.IsNullOrEmpty(fieldId)) throw new ArgumentNullException(nameof(fieldId));
@@ -112,7 +112,7 @@
 			    throw new FieldWrappingException($"Field with ID '{fieldId}' can't be retrieved from item '{item.Paths.FullPath}' with ID {item.ID}.");
 		    }
 
-		    return this.GetStronglyTypedField<TField>(field);
+		    return this.WrapField<TField>(field);
 		}
     }
 }

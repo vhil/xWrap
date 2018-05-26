@@ -13,7 +13,7 @@
 			return Attribute.GetCustomAttribute(itemWrapperType, typeof(TemplateIdAttribute)) as TemplateIdAttribute;
 		}
 
-		public static TemplateIdAttribute GetTemplateIdAttribute(this IItemWrapper itemWrapper)
+		public static TemplateIdAttribute GetTemplateIdAttribute(this ItemWrapper itemWrapper)
 		{
 			return GetTemplateIdAttribute(itemWrapper.GetType());
 		}

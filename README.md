@@ -44,8 +44,67 @@ This section covers the basic framework functionality.
 
 Item fields can be wrapped into strongly-typed intepretation by using convenient extension methods:
 ```cs
-	Item item = Sitecore.Context.Item;
-	ILinkFieldWrapper linkField = item.LinkField("link field name");
-	Guid linkedItemId = linkField.Value;
-	Item linkedItem = linkField.GetTarget();
+var item = Sitecore.Context.Item;
+ILinkFieldWrapper linkField = item.LinkField("link field name");
+Guid linkedItemId = linkField.Value;
+Item linkedItem = linkField.GetTarget();
+INumberFieldWrapper numberField = linkedItem.NumberField(new ID("{686E1737-890D-4AA8-9EA2-AB7AC7CB0525}"));
+decimal numberFieldValue = numberField.Value;
 ```
+
+List of available field wrapper extensions usign both field names or field IDs:
+```cs
+ITextFieldWrapper TextField = item.TextField("text");
+ICheckboxFieldWrapper CheckboxField = item.CheckboxField("checkbox");
+IDateTimeFieldWrapper DateTimeField = item.DateTimeField("datetime");
+ILinkFieldWrapper LinkField = item.LinkField("link");
+IImageFieldWrapper ImageField = item.ImageField("image");
+IGeneralLinkFieldWrapper GeneralLinkField = item.GeneralLinkField("general link");
+IFileFieldWrapper FileField = item.FileField("file");
+IRichTextFieldWrapper RichTextField = item.RichTextField("rich text");
+INumberFieldWrapper NumberField = item.NumberField("number");
+IIntegerFieldWrapper IntegerField = item.IntegerField("integer");
+INameValueListFieldWrapper NameValueListField = item.NameValueListField("Name value list");
+INameLookupValueListFieldWrapper NameLookupValueField = item.NameLookupValueField("Name lookup value list");
+````
+
+## 2. Wrapping items
+
+There is an option to wrap custom sitecore item templates into item wrappers:
+
+```cs
+[TemplateId("{655C4BD7-1D6A-4806-95EA-22B94603CC8F}")]
+public class TestItem : ItemWrapper
+{
+	public TestItem(Item item) : base(item)
+	{
+	}
+
+	public ITextFieldWrapper Text => this.WrapField<ITextFieldWrapper>("text");
+	public ICheckboxFieldWrapper Checkbox => this.WrapField<ICheckboxFieldWrapper>("checkbox");
+	public IDateTimeFieldWrapper DateTime => this.WrapField<IDateTimeFieldWrapper>("datetime");
+	public ILinkFieldWrapper Link => this.WrapField<ILinkFieldWrapper>("link");
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+	public IGeneralLinkFieldWrapper GeneralLink => this.WrapField<IGeneralLinkFieldWrapper>("general link");
+	public IFileFieldWrapper File => this.WrapField<IFileFieldWrapper>("file");
+	public IRichTextFieldWrapper RichText => this.WrapField<IRichTextFieldWrapper>("rich text");
+	public INumberFieldWrapper Number => this.WrapField<INumberFieldWrapper>("number");
+	public IIntegerFieldWrapper Integer => this.WrapField<IIntegerFieldWrapper>("integer");
+	public INameValueListFieldWrapper NameValueList => this.WrapField<INameValueListFieldWrapper>("Name value list");
+	public INameLookupValueListFieldWrapper NameLookupValue => this.WrapField<INameLookupValueListFieldWrapper>("Name lookup value list");
+}
+```
+
+And then use it like this:
+```cs
+var testItem = new TestItem(Sitecore.Context.Item);
+```
+
+```TemplateId``` attribute is optional but nice to have in order to validate the item which is being passed to be wrapped.
+
+##3. View rendering with strongly-typed fields
+##4. View rendering with strongly-typed datasource
+##5. View rendering with strongly-typed datasource and rendering parameters
+##6. Controller rendering with strongly-typed fields
+##7. Controller rendering with strongly-typed datasource
+##8. Controller rendering with strongly-typed datasource and rendering parameters

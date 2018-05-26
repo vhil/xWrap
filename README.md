@@ -181,9 +181,188 @@ public class TestRenderingParameters : RenderingParametersWrapper
 
 ## 6. Controller rendering with strongly-typed fields
 
+Using controller renderings with wrapping on field level on the view model class:
+1. Create view model class:
+```cs
+public class TestViewModel : ViewModel
+{
+	public TestViewModel(IViewModel viewModel) : base(viewModel)
+	{
+	}
+
+	public IRichTextFieldWrapper RichTextField => this.RenderingItem.RichTextField("rich text");
+}
+```
+2. Create controller and inject ```IViewModelFactory```
+```cs
+using System.Web.Mvc;
+using Models;
+using Xwrap.Mvc;
+
+public class TestController : Controller
+{
+	private readonly IViewModelFactory viewModelFactory;
+
+	public TestController(IViewModelFactory viewModelFactory)
+	{
+		this.viewModelFactory = viewModelFactory;
+	}
+
+	public ActionResult TestView()
+	{
+		var viewModel = new TestViewModel(this.viewModelFactory.GetViewModel());
+
+		return this.View(viewModel);
+	}
+}
+````
+3. Use view model fields in the view:
+```html
+@using Xwrap.Extensions
+@model TestViewModel
+
+<div class="row">
+	<div class="col-md-12">
+		ImageField: @Model.RenderingItem.RichTextField
+	</div>
+</div>
+```
+
 ## 7. Controller rendering with strongly-typed datasource
 
+Using controller renderings with wrapping on field level on the view model class:
+
+1. Create item wrapper:
+```cs
+[TemplateId("{655C4BD7-1D6A-4806-95EA-22B94603CC8F}")]
+public class TestItem : ItemWrapper
+{
+	public TestItem(Item item) : base(item)
+	{
+	}
+	
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+}
+```
+
+2. Create view model class:
+```cs
+public class TestItemViewModel: ViewModel<TestItem>
+{
+	public TestItemViewModel(IViewModel<TestItem> viewModel) : base(viewModel)
+	{
+	}
+}
+```
+3. Create controller and inject ```IViewModelFactory```
+```cs
+using System.Web.Mvc;
+using Models;
+using Xwrap.Mvc;
+
+public class TestController : Controller
+{
+	private readonly IViewModelFactory viewModelFactory;
+
+	public TestController(IViewModelFactory viewModelFactory)
+	{
+		this.viewModelFactory = viewModelFactory;
+	}
+
+	public ActionResult TestView()
+	{
+		var viewModel = new TestItemViewModel(this.viewModelFactory.GetViewModel<TestItem>());
+
+		return this.View(viewModel);
+	}
+}
+````
+4. Use rendering item fields in the view:
+```html
+@using Xwrap.Extensions
+@model TestItemViewModel
+
+<div class="row">
+	<div class="col-md-12">
+		ImageField: @Model.RenderingItem.Image
+	</div>
+</div>
+```
+
 ## 8. Controller rendering with strongly-typed datasource and rendering parameters
+
+1. Create item wrapper:
+```cs
+[TemplateId("{655C4BD7-1D6A-4806-95EA-22B94603CC8F}")]
+public class TestItem : ItemWrapper
+{
+	public TestItem(Item item) : base(item)
+	{
+	}
+	
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+}
+```
+
+2. Create rendering parameters wrapper
+
+```cs
+public class TestRenderingParameters : RenderingParametersWrapper
+{
+	public TestRenderingParameters(RenderingParameters parameters) : base(parameters)
+	{
+	}
+
+	public ICheckboxFieldWrapper CheckboxParam => this.CheckboxField("checkbox parameter name");
+}
+```
+
+3. Create view model class:
+```cs
+public class TestItemViewModel: ViewModel<TestItem, TestRenderingParameters>
+{
+	public TestItemViewModel(IViewModel<TestItem, TestRenderingParameters> viewModel) : base(viewModel)
+	{
+	}
+}
+```
+4. Create controller and inject ```IViewModelFactory```
+```cs
+using System.Web.Mvc;
+using Models;
+using Xwrap.Mvc;
+
+public class TestController : Controller
+{
+	private readonly IViewModelFactory viewModelFactory;
+
+	public TestController(IViewModelFactory viewModelFactory)
+	{
+		this.viewModelFactory = viewModelFactory;
+	}
+
+	public ActionResult TestView()
+	{
+		var model = this.viewModelFactory.GetViewModel<TestItem, TestRenderingParameters>();
+		var viewModel = new TestItemViewModel(model);
+		return this.View(viewModel);
+	}
+}
+````
+5. Use rendering item fields in the view:
+```html
+@using Xwrap.Extensions
+@model TestItemViewModel
+
+<div class="row">
+	<div class="col-md-12">
+		@if (@Model.RenderingParameters.CheckboxParam.Value)
+		{
+			Image field: @Model.RenderingItem.Image
+		}
+	</div>
+</div>
+```
 
 # Documentation
 

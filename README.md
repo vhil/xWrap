@@ -52,22 +52,6 @@ INumberFieldWrapper numberField = linkedItem.NumberField(new ID("{686E1737-890D-
 decimal numberFieldValue = numberField.Value;
 ```
 
-List of available field wrapper extensions:
-```cs
-ITextFieldWrapper TextField = item.TextField("text");
-ICheckboxFieldWrapper CheckboxField = item.CheckboxField("checkbox");
-IDateTimeFieldWrapper DateTimeField = item.DateTimeField("datetime");
-ILinkFieldWrapper LinkField = item.LinkField("link");
-IImageFieldWrapper ImageField = item.ImageField("image");
-IGeneralLinkFieldWrapper GeneralLinkField = item.GeneralLinkField("general link");
-IFileFieldWrapper FileField = item.FileField("file");
-IRichTextFieldWrapper RichTextField = item.RichTextField("rich text");
-INumberFieldWrapper NumberField = item.NumberField("number");
-IIntegerFieldWrapper IntegerField = item.IntegerField("integer");
-INameValueListFieldWrapper NameValueListField = item.NameValueListField("Name value list");
-INameLookupValueListFieldWrapper NameLookupValueField = item.NameLookupValueField("Name lookup value list");
-````
-
 ## 2. Wrapping items
 
 There is an option to wrap custom sitecore item templates into item wrappers:
@@ -120,10 +104,24 @@ If you building a simple view rendering, and you don't need a controller for it,
 
 ## 4. View rendering with strongly-typed datasource
 
-If you building a simple view rendering without a controller and you want to wrap the whole datasource item into strongly-typed representation:
+Building a simple view rendering without a controller and datasource item wrapping into a strongly-typed representation:
 1. Create a wrapper for your item template, fx ```TestItem```
+
+```cs
+[TemplateId("{655C4BD7-1D6A-4806-95EA-22B94603CC8F}")]
+public class TestItem : ItemWrapper
+{
+	public TestItem(Item item) : base(item)
+	{
+	}
+	
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+}
+```
+
 2. Define model of the view to be ```Xwrap.Mvc.IViewModel<TestItem>```
 3. Use rendering item to render fields
+
 ```html
 @using Xwrap.Extensions
 @model Xwrap.Mvc.IViewModel<TestItem>
@@ -137,6 +135,50 @@ If you building a simple view rendering without a controller and you want to wra
 
 ## 5. View rendering with strongly-typed datasource and rendering parameters
 
+
+Building a simple view rendering without a controller with datasource item and rendering parameters wrapping into a strongly-typed representation:
+1. Create a wrapper for your item template, fx ```TestItem```
+
+```cs
+[TemplateId("{655C4BD7-1D6A-4806-95EA-22B94603CC8F}")]
+public class TestItem : ItemWrapper
+{
+	public TestItem(Item item) : base(item)
+	{
+	}
+	
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+}
+```
+2. Create rendering parameters wrapper for your parameters:
+
+```cs
+public class TestRenderingParameters : RenderingParametersWrapper
+{
+	public TestRenderingParameters(RenderingParameters parameters) : base(parameters)
+	{
+	}
+
+	public ICheckboxFieldWrapper CheckboxParam => this.CheckboxField("checkbox parameter name");
+}
+```
+3. Define model of the view to be ```Xwrap.Mvc.IViewModel<TestItem, TestRenderingParameters>```
+4. Use rendering item to render fields and rendering parameters to access strongly-typed params
+
+```html
+@using Xwrap.Extensions
+@model Xwrap.Mvc.IViewModel<TestItem, TestRenderingParameters>
+
+<div class="row">
+	<div class="col-md-12">
+		@if (@Model.RenderingParameters.CheckboxParam.Value)
+		{
+			Image field: @Model.RenderingItem.Image
+		}
+	</div>
+</div>
+```
+
 ## 6. Controller rendering with strongly-typed fields
 
 ## 7. Controller rendering with strongly-typed datasource
@@ -144,3 +186,36 @@ If you building a simple view rendering without a controller and you want to wra
 ## 8. Controller rendering with strongly-typed datasource and rendering parameters
 
 # Documentation
+
+## List of available field wrapper extensions:
+```cs
+ITextFieldWrapper TextField = item.TextField("text");
+ICheckboxFieldWrapper CheckboxField = item.CheckboxField("checkbox");
+IDateTimeFieldWrapper DateTimeField = item.DateTimeField("datetime");
+ILinkFieldWrapper LinkField = item.LinkField("link");
+IImageFieldWrapper ImageField = item.ImageField("image");
+IGeneralLinkFieldWrapper GeneralLinkField = item.GeneralLinkField("general link");
+IFileFieldWrapper FileField = item.FileField("file");
+IRichTextFieldWrapper RichTextField = item.RichTextField("rich text");
+INumberFieldWrapper NumberField = item.NumberField("number");
+IIntegerFieldWrapper IntegerField = item.IntegerField("integer");
+INameValueListFieldWrapper NameValueListField = item.NameValueListField("Name value list");
+INameLookupValueListFieldWrapper NameLookupValueField = item.NameLookupValueField("Name lookup value list");
+````
+
+## List of available rendering parameter field wrapping options:
+```cs
+public class TestRenderingParameters : RenderingParametersWrapper
+{
+	public TestRenderingParameters(RenderingParameters parameters) : base(parameters)
+	{
+	}
+
+	public ITextFieldWrapper TextParam => this.TextField("text parameter");
+	public ILinkFieldWrapper LinkParam => this.LinkField("link parameter");
+	public IListFieldWrapper ListParam => this.ListField("list parameter");
+	public IIntegerFieldWrapper IntegerParam => this.IntegerField("integer parameter");
+	public INumberFieldWrapper NumberParam => this.NumberField("number parameter");
+	public ICheckboxFieldWrapper CheckboxParam => this.CheckboxField("number parameter");
+}
+```

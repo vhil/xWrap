@@ -50,6 +50,11 @@
     <Compile Include="Caching\SitecoreCacheStorage.cs" />
     <Compile Include="Caching\SitecoreMemoryCacheEntry.cs" />
     <Compile Include="Exceptions\FieldWrappingException.cs" />
+    <Compile Include="Exceptions\ItemWrappingException.cs" />
+    <Compile Include="Extensions\ItemWrapperExtensions.cs" />
+    <Compile Include="IItemWrapperFactory.cs" />
+    <Compile Include="ItemWrapperFactory.cs" />
+    <Compile Include="TemplateIdAttribute.cs" />
     <Compile Include="Extensions\CachingExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
@@ -86,6 +91,8 @@
     <Compile Include="FieldWrappers\NumberFieldWrapper.cs" />
     <Compile Include="FieldWrappers\RichTextFieldWrapper.cs" />
     <Compile Include="FieldWrappers\TextFieldWrapper.cs" />
+    <Compile Include="IItemWrapper.cs" />
+    <Compile Include="ItemWrapper.cs" />
     <Compile Include="Pipelines\WrapFieldArgs.cs" />
     <Compile Include="Pipelines\WrapFieldProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -29,7 +29,16 @@
             return null;
         }
 
-        public static implicit operator string(LinkFieldWrapper field)
+		public virtual TItemWrapper GetTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
+		{
+			var item = this.GetTarget();
+
+			if (item == null) return null;
+
+			return this.Factory.WrapItem<TItemWrapper>(item);
+		}
+
+		public static implicit operator string(LinkFieldWrapper field)
         {
             return field.Url;
         }

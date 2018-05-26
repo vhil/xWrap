@@ -22,10 +22,7 @@
 			this.cacheService = cacheService;
 		}
 
-		public static IFieldWrapperFactory Instance()
-	    {
-		    return Factory.CreateObject("xWrap/fieldWrapperFactory", true) as IFieldWrapperFactory;
-	    }
+		public static IFieldWrapperFactory Instance => Factory.CreateObject("xWrap/fieldWrapperFactory", true) as IFieldWrapperFactory;
 
 	    public virtual IFieldWrapper GetStronglyTypedField(Field field)
         {

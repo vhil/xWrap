@@ -5,7 +5,7 @@
 
 	public static class FieldExtensions
     {
-        private static IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance();
+        private static IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
 
         public static TField AsStronglyTypedField<TField>(this Field field) where TField : IFieldWrapper
         {

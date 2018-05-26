@@ -6,9 +6,17 @@
 	using RenderingParameters;
 	using Sitecore.Pipelines;
 	using Pipelines.GetRenderingItem;
+	using System;
 
 	public class ViewModelFactory : IViewModelFactory
 	{
+		protected readonly IItemWrapperFactory ItemWrapperFactory;
+
+		public ViewModelFactory(IItemWrapperFactory itemWrapperFactory)
+		{
+			this.ItemWrapperFactory = itemWrapperFactory;
+		}
+
 		public static IViewModelFactory Instance()
 		{
 			return Factory.CreateObject("xWrap/mvc/viewModelFactory", true) as IViewModelFactory;
@@ -22,16 +30,21 @@
 				this.GetRenderingParameters());
 		}
 
-		public virtual IFormViewModel<TForm> GetViewModel<TForm>() where TForm : IFormData, new()
+		public IViewModel<TRenderingItem> GetViewModel<TRenderingItem>() where TRenderingItem : ItemWrapper
 		{
-			var viewModel = this.GetViewModel();
-			return new FormViewModel<TForm>(new TForm(), viewModel);
+			return new ViewModel<TRenderingItem>(
+				this.GetPageItem(),
+				this.GetRenderingItem<TRenderingItem>());
 		}
 
-		public virtual IFormViewModel<TForm> GetViewModel<TForm>(TForm form) where TForm : IFormData
+		public IViewModel<TRenderingItem, TRenderingParameters> GetViewModel<TRenderingItem, TRenderingParameters>() 
+			where TRenderingItem : ItemWrapper 
+			where TRenderingParameters : RenderingParametersWrapper
 		{
-			var viewModel = this.GetViewModel();
-			return new FormViewModel<TForm>(form, viewModel);
+			return new ViewModel<TRenderingItem, TRenderingParameters>(
+				this.GetPageItem(),
+				this.GetRenderingItem<TRenderingItem>(),
+				this.GetRenderingParameters<TRenderingParameters>());
 		}
 
 		public virtual Item GetPageItem()
@@ -46,10 +59,22 @@
 			return args.RenderingItem;
 		}
 
+		public TRenderingItem GetRenderingItem<TRenderingItem>() where TRenderingItem : ItemWrapper
+		{
+			return this.ItemWrapperFactory.WrapItem<TRenderingItem>(this.GetRenderingItem());
+		}
+
 		public virtual IRenderingParametersWrapper GetRenderingParameters()
 		{
 			var parameters = RenderingContext.Current.Rendering.Parameters;
 			return new RenderingParametersWrapper(parameters);
+		}
+
+		public TRenderingParameters GetRenderingParameters<TRenderingParameters>() 
+			where TRenderingParameters : RenderingParametersWrapper
+		{
+			var parameters = RenderingContext.Current.Rendering.Parameters;
+			return Activator.CreateInstance(typeof(TRenderingParameters), parameters) as TRenderingParameters;
 		}
 	}
 }

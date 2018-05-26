@@ -3,10 +3,12 @@
 	using Sitecore.Data;
 	using Sitecore.Data.Items;
 	using FieldWrappers.Abstractions;
+	using System;
+	using Sitecore.Data.Managers;
 
 	public static class ItemExtensions
 	{
-        private static IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance();
+        private static IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
 
 		#region field name
 
@@ -155,5 +157,36 @@
 		}
 
 		#endregion
+
+		internal static bool IsDerived(this Item item, Guid templateId)
+		{
+			return item.IsDerived(new ID(templateId));
+		}
+
+		internal static bool IsDerived(this Item item, ID templateId)
+		{
+			if (item == null)
+			{
+				return false;
+			}
+
+			return !templateId.IsNull && item.IsDerived(item.Database.Templates[templateId]);
+		}
+
+		internal static bool IsDerived(this Item item, Item templateItem)
+		{
+			if (item == null)
+			{
+				return false;
+			}
+
+			if (templateItem == null)
+			{
+				return false;
+			}
+
+			var itemTemplate = TemplateManager.GetTemplate(item);
+			return itemTemplate != null && (itemTemplate.ID == templateItem.ID || itemTemplate.DescendsFrom(templateItem.ID));
+		}
 	}
 }

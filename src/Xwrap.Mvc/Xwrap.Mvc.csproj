@@ -51,9 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ServicesConfigurator.cs" />
-    <Compile Include="FormViewModel.cs" />
     <Compile Include="IFormData.cs" />
-    <Compile Include="IFormViewModel.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="IViewModelFactory.cs" />
     <Compile Include="Pipelines\GetRenderingItem\GetFromContextItem.cs" />

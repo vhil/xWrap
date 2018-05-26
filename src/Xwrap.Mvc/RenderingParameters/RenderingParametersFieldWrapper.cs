@@ -6,7 +6,9 @@
 
 	public class RenderingParametersFieldWrapper : IRenderingParametersFieldWrapper
     {
-        public object Original => this.RawValue;
+	    protected IItemWrapperFactory Factory => ItemWrapperFactory.Instance;
+
+		public object Original => this.RawValue;
 
         public string Name { get; protected set; }
 

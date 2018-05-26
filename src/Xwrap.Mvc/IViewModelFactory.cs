@@ -1,15 +1,19 @@
 ﻿namespace Xwrap.Mvc
 {
-	using Xwrap.Mvc.RenderingParameters;
+	using RenderingParameters;
 	using Sitecore.Data.Items;
 
 	public interface IViewModelFactory
 	{
 		IViewModel GetViewModel();
-		IFormViewModel<TForm> GetViewModel<TForm>() where TForm : IFormData, new();
-		IFormViewModel<TForm> GetViewModel<TForm>(TForm form) where TForm : IFormData;
+		IViewModel<TRenderingItem> GetViewModel<TRenderingItem>() where TRenderingItem : ItemWrapper;
+		IViewModel<TRenderingItem, TRenderingParameters> GetViewModel<TRenderingItem, TRenderingParameters>() 
+			where TRenderingItem : ItemWrapper
+			where TRenderingParameters : RenderingParametersWrapper;
 		Item GetPageItem();
 		Item GetRenderingItem();
+		TRenderingItem GetRenderingItem<TRenderingItem>() where TRenderingItem : ItemWrapper;
 		IRenderingParametersWrapper GetRenderingParameters();
+		TRenderingParameters GetRenderingParameters<TRenderingParameters>() where TRenderingParameters : RenderingParametersWrapper;
 	}
 }

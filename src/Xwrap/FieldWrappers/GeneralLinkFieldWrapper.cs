@@ -20,16 +20,16 @@
         }
 
         protected LinkField LinkField => this.OriginalField;
-        public string AlternateText => this.LinkField.Title;
-        public string Description => this.LinkField.Text;
-        public bool IsInternal => this.LinkField.IsInternal;
-        public bool IsMediaLink => this.LinkField.IsMediaLink;
-        public string Styles => this.LinkField.Class;
-        public string Target => this.LinkField.Target;
-        public string Value => this.Url;
-        public Guid ItemId => this.LinkField.TargetID.ToGuid();
+        public virtual string AlternateText => this.LinkField.Title;
+        public virtual string Description => this.LinkField.Text;
+        public virtual bool IsInternal => this.LinkField.IsInternal;
+        public virtual bool IsMediaLink => this.LinkField.IsMediaLink;
+        public virtual string Styles => this.LinkField.Class;
+        public virtual string Target => this.LinkField.Target;
+        public virtual string Value => this.Url;
+        public virtual Guid ItemId => this.LinkField.TargetID.ToGuid();
 
-        public string Url
+        public virtual string Url
         {
             get
             {
@@ -52,7 +52,7 @@
             }
         }
 
-        public Item GetTarget()
+        public virtual Item GetTarget()
         {
             if (this.IsInternal || this.IsMediaLink)
             {
@@ -62,7 +62,16 @@
             return null;
         }
 
-        public static implicit operator string(GeneralLinkFieldWrapper field)
+	    public virtual TItemWrapper GetTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
+	    {
+		    var target = this.GetTarget();
+
+		    if (target == null) return null;
+
+		    return this.Factory.WrapItem<TItemWrapper>(target);
+	    }
+
+	    public static implicit operator string(GeneralLinkFieldWrapper field)
         {
             return field.Url;
         }

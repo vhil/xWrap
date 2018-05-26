@@ -26,7 +26,16 @@
             }
         }
 
-        public IEnumerator<Item> GetEnumerator()
+		public IEnumerable<TItemWrapper> GetItems<TItemWrapper>() where TItemWrapper : ItemWrapper
+		{
+			var items = this.GetItems();
+
+			if (items == null) return null;
+
+			return this.Factory.WrapItems<TItemWrapper>(items);
+		}
+
+		public IEnumerator<Item> GetEnumerator()
         {
             return this.GetItems().GetEnumerator();
         }

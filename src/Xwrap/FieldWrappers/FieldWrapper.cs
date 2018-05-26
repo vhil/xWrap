@@ -12,6 +12,7 @@
 
     public class FieldWrapper : IFieldWrapper
     {
+	    protected IItemWrapperFactory Factory => ItemWrapperFactory.Instance;
         private Stack<string> endFieldStack;
         protected virtual Stack<string> EndFieldStack => this.endFieldStack ?? (this.endFieldStack = new Stack<string>());
 

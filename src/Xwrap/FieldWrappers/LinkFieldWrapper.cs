@@ -19,8 +19,8 @@
         {
         }
 
-        public Guid ItemId => this.GetItemId(this.RawValue);
-        public Guid Value => this.GetItemId(this.RawValue);
+        public virtual Guid ItemId => this.GetItemId(this.RawValue);
+        public virtual Guid Value => this.GetItemId(this.RawValue);
 
         public virtual string Url
         {
@@ -49,7 +49,16 @@
             return null;
         }
 
-        public static implicit operator string(LinkFieldWrapper field)
+		public virtual TItemWrapper GetTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
+		{
+			var target = this.GetTarget();
+
+			if (target == null) return null;
+
+			return this.Factory.WrapItem<TItemWrapper>(target);
+		}
+
+		public static implicit operator string(LinkFieldWrapper field)
         {
             return field.Url;
         }

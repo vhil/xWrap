@@ -393,3 +393,7 @@ public class TestRenderingParameters : RenderingParametersWrapper
 	public ICheckboxFieldWrapper CheckboxParam => this.CheckboxField("number parameter");
 }
 ```
+
+# Hints
+
+Item wrappers can be generated from serialized items either using Unicorn and Rainbow or hedgehoc's TDS.

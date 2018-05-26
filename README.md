@@ -42,7 +42,7 @@ This section covers the basic framework functionality.
 
 ## 1. Wrapping fields
 
-Item fields can be wrapped into strongly-typed intepretation by using convenient extension methods:
+Item fields can be wrapped into strongly-typed intepretation by using convenient extension methods usign both field names or field IDs:
 ```cs
 var item = Sitecore.Context.Item;
 ILinkFieldWrapper linkField = item.LinkField("link field name");
@@ -52,7 +52,7 @@ INumberFieldWrapper numberField = linkedItem.NumberField(new ID("{686E1737-890D-
 decimal numberFieldValue = numberField.Value;
 ```
 
-List of available field wrapper extensions usign both field names or field IDs:
+List of available field wrapper extensions:
 ```cs
 ITextFieldWrapper TextField = item.TextField("text");
 ICheckboxFieldWrapper CheckboxField = item.CheckboxField("checkbox");
@@ -103,8 +103,26 @@ var testItem = new TestItem(Sitecore.Context.Item);
 ```TemplateId``` attribute is optional but nice to have in order to validate the item which is being passed to be wrapped.
 
 ##3. View rendering with strongly-typed fields
+
+If you building a simple view rendering, and you don't need a controller for it, you can use this option:
+1. Define model of the view to be Xwrap.Mvc.IViewModel
+2. Use field extensions to render fields
+```html
+@using Xwrap.Extensions
+@model Xwrap.Mvc.IViewModel
+
+<div class="row">
+	<div class="col-md-12">
+		ImageField: @Model.RenderingItem.ImageField("image") <br />
+	</div>
+</div>
+```
+
+
 ##4. View rendering with strongly-typed datasource
 ##5. View rendering with strongly-typed datasource and rendering parameters
 ##6. Controller rendering with strongly-typed fields
 ##7. Controller rendering with strongly-typed datasource
 ##8. Controller rendering with strongly-typed datasource and rendering parameters
+
+#Documentation

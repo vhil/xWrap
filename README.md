@@ -1,4 +1,4 @@
-# xWrap
+# xWrap - Sitecore Experience Wrapper
 
 Strongly-typed wrapping framework for Sitecore CMS.
 
@@ -9,10 +9,10 @@ Functionality and features
  - provides functionality for strongly-typed wrapping items
  - provides functionality for strongly-typed wrapping rendering parameters  
  - provides functionality for MVC support based on strongly-typed view models 
- - built on a `wrapper` pattern
+ - built on a `wrapper` design pattern
  - super light-weight
  - uses only standard Sitecore API, no inventions
- - native support for Sitecore Experience Editor
+ - native support for Sitecore Experience Editor out of the box
  - compliant with [helix](http://helix.sitecore.net/ "helix") principles and modular architecture
  - provides convenient field and item extensions
  - fully configurable through sitecore include config files
@@ -64,18 +64,18 @@ public class TestItem : ItemWrapper
 	{
 	}
 
-	public ITextFieldWrapper Text => this.WrapField<ITextFieldWrapper>("text");
-	public ICheckboxFieldWrapper Checkbox => this.WrapField<ICheckboxFieldWrapper>("checkbox");
-	public IDateTimeFieldWrapper DateTime => this.WrapField<IDateTimeFieldWrapper>("datetime");
-	public ILinkFieldWrapper Link => this.WrapField<ILinkFieldWrapper>("link");
-	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
-	public IGeneralLinkFieldWrapper GeneralLink => this.WrapField<IGeneralLinkFieldWrapper>("general link");
-	public IFileFieldWrapper File => this.WrapField<IFileFieldWrapper>("file");
-	public IRichTextFieldWrapper RichText => this.WrapField<IRichTextFieldWrapper>("rich text");
-	public INumberFieldWrapper Number => this.WrapField<INumberFieldWrapper>("number");
+	public ITextFieldWrapper Text => this.WrapField<ITextFieldWrapper>("text field name");
+	public ICheckboxFieldWrapper Checkbox => this.WrapField<ICheckboxFieldWrapper>("checkbox field name");
+	public IDateTimeFieldWrapper DateTime => this.WrapField<IDateTimeFieldWrapper>("datetime field name");
+	public ILinkFieldWrapper Link => this.WrapField<ILinkFieldWrapper>("link field name");
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image field name");
+	public IGeneralLinkFieldWrapper GeneralLink => this.WrapField<IGeneralLinkFieldWrapper>("general link field name");
+	public IFileFieldWrapper File => this.WrapField<IFileFieldWrapper>("file field name");
+	public IRichTextFieldWrapper RichText => this.WrapField<IRichTextFieldWrapper>("rich text field name");
+	public INumberFieldWrapper Number => this.WrapField<INumberFieldWrapper>("number field name");
 	public IIntegerFieldWrapper Integer => this.WrapField<IIntegerFieldWrapper>("integer");
-	public INameValueListFieldWrapper NameValueList => this.WrapField<INameValueListFieldWrapper>("Name value list");
-	public INameLookupValueListFieldWrapper NameLookupValue => this.WrapField<INameLookupValueListFieldWrapper>("Name lookup value list");
+	public INameValueListFieldWrapper NameValueList => this.WrapField<INameValueListFieldWrapper>("Name value list field name");
+	public INameLookupValueListFieldWrapper NameLookupValue => this.WrapField<INameLookupValueListFieldWrapper>("Name lookup value list field name");
 }
 ```
 
@@ -115,7 +115,7 @@ public class TestItem : ItemWrapper
 	{
 	}
 	
-	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image field name");
 }
 ```
 
@@ -146,7 +146,7 @@ public class TestItem : ItemWrapper
 	{
 	}
 	
-	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image field name");
 }
 ```
 2. Create rendering parameters wrapper for your parameters:
@@ -188,7 +188,7 @@ public class TestViewModel : ViewModel
 	{
 	}
 
-	public IRichTextFieldWrapper RichTextField => this.RenderingItem.RichTextField("rich text");
+	public IRichTextFieldWrapper RichTextField => this.RenderingItem.RichTextField("rich text field name");
 }
 ```
 2. Create controller and inject ```IViewModelFactory```
@@ -220,7 +220,7 @@ public class TestController : Controller
 
 <div class="row">
 	<div class="col-md-12">
-		ImageField: @Model.RenderingItem.RichTextField
+		RichTextField: @Model.RenderingItem.RichTextField
 	</div>
 </div>
 ```
@@ -238,7 +238,7 @@ public class TestItem : ItemWrapper
 	{
 	}
 	
-	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image field name");
 }
 ```
 
@@ -296,7 +296,7 @@ public class TestItem : ItemWrapper
 	{
 	}
 	
-	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image");
+	public IImageFieldWrapper Image => this.WrapField<IImageFieldWrapper>("image field name");
 }
 ```
 
@@ -364,17 +364,17 @@ public class TestController : Controller
 ## List of available field wrapper extensions:
 ```cs
 ITextFieldWrapper TextField = item.TextField("text");
-ICheckboxFieldWrapper CheckboxField = item.CheckboxField("checkbox");
-IDateTimeFieldWrapper DateTimeField = item.DateTimeField("datetime");
-ILinkFieldWrapper LinkField = item.LinkField("link");
-IImageFieldWrapper ImageField = item.ImageField("image");
-IGeneralLinkFieldWrapper GeneralLinkField = item.GeneralLinkField("general link");
-IFileFieldWrapper FileField = item.FileField("file");
-IRichTextFieldWrapper RichTextField = item.RichTextField("rich text");
-INumberFieldWrapper NumberField = item.NumberField("number");
-IIntegerFieldWrapper IntegerField = item.IntegerField("integer");
-INameValueListFieldWrapper NameValueListField = item.NameValueListField("Name value list");
-INameLookupValueListFieldWrapper NameLookupValueField = item.NameLookupValueField("Name lookup value list");
+ICheckboxFieldWrapper CheckboxField = item.CheckboxField("checkbox field name");
+IDateTimeFieldWrapper DateTimeField = item.DateTimeField("datetime field name");
+ILinkFieldWrapper LinkField = item.LinkField("link field name");
+IImageFieldWrapper ImageField = item.ImageField("image field name");
+IGeneralLinkFieldWrapper GeneralLinkField = item.GeneralLinkField("general link field name");
+IFileFieldWrapper FileField = item.FileField("file field name");
+IRichTextFieldWrapper RichTextField = item.RichTextField("rich text field name");
+INumberFieldWrapper NumberField = item.NumberField("number field name");
+IIntegerFieldWrapper IntegerField = item.IntegerField("integer field name");
+INameValueListFieldWrapper NameValueListField = item.NameValueListField("Name value list field name");
+INameLookupValueListFieldWrapper NameLookupValueField = item.NameLookupValueField("Name lookup value list field name");
 ````
 
 ## List of available rendering parameter field wrapping options:
@@ -385,12 +385,12 @@ public class TestRenderingParameters : RenderingParametersWrapper
 	{
 	}
 
-	public ITextFieldWrapper TextParam => this.TextField("text parameter");
-	public ILinkFieldWrapper LinkParam => this.LinkField("link parameter");
-	public IListFieldWrapper ListParam => this.ListField("list parameter");
-	public IIntegerFieldWrapper IntegerParam => this.IntegerField("integer parameter");
-	public INumberFieldWrapper NumberParam => this.NumberField("number parameter");
-	public ICheckboxFieldWrapper CheckboxParam => this.CheckboxField("number parameter");
+	public ITextFieldWrapper TextParam => this.TextField("text parameter name");
+	public ILinkFieldWrapper LinkParam => this.LinkField("link parameter name");
+	public IListFieldWrapper ListParam => this.ListField("list parameter name");
+	public IIntegerFieldWrapper IntegerParam => this.IntegerField("integer parameter name");
+	public INumberFieldWrapper NumberParam => this.NumberField("number parameter name");
+	public ICheckboxFieldWrapper CheckboxParam => this.CheckboxField("checkbox parameter name");
 }
 ```
 

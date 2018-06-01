@@ -1,0 +1,11 @@
+<#@ template debug="true" hostspecific="true" language="C#" #><#@ output extension=".cs" encoding="utf-8" #><#@ include file="$(SolutionDir)codegen\RainbowAssemblies.tt" #>
+<#
+IgnoreNamespacePath = "";  
+BaseNamespace = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint").ToString();
+CustomNamespace = "";
+var solutionPath = this.Host.ResolveAssemblyReference("$(SolutionDir)");  
+var projectPath = this.Host.ResolveAssemblyReference("$(ProjectDir)");
+Configurations = new string[]  
+{
+projectPath + "serialization\\Templates"
+};#><#@ include file="$(SolutionDir)codegen\RainbowCodeGeneration.tt" #>

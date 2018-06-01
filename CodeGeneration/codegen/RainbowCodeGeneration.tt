@@ -1,0 +1,318 @@
+﻿<#@ assembly name="System.Core" #><#@ assembly name="System.Xml" #><#@ import namespace="System.Collections.Generic" #><#@ import namespace="System.IO" #><#@ import namespace="System.Linq" #><#@ import namespace="System.Text" #><#@ import namespace="System.Text.RegularExpressions" #><#@ import namespace="System.Xml" #><#@ import namespace="Rainbow.Model" #><#@ import namespace="Rainbow.Storage.Yaml" #><#@ import namespace="Sitecore" #>
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Mvc.Presentation;
+using Xwrap;
+using Xwrap.FieldWrappers.Abstractions;
+using Xwrap.Mvc.RenderingParameters;
+<# 
+try { foreach (var data in GetTemplateData().ToArray()) { var template = data.Template; var fields = data.Fields; if (template.Name == "$name") { continue; }
+#>
+
+#region <#= template.Path#>
+
+namespace <#=BaseNamespace#>.Templates
+{
+<#if (!IsRenderingParameters(template)) { #>
+	/// <summary>
+	/// Item wrapper for items of template '<#= template.Name#>'
+	/// Template ID: <#= template.Id.ToString("B").ToUpper()#>
+	/// Template path: <#= template.Path#>
+	/// </summary>
+	[TemplateId(Constants.TemplateIdString)]
+    // ReSharper disable once InconsistentNaming
+	public class <#= GetClassName(template)#>Item : ItemWrapper
+	{
+		public <#= GetClassName(template)#>Item(Item item) : base(item)
+		{
+		}
+<#foreach(var field in fields) { #>
+
+		/// <summary>
+		/// A wrapped field for item field name: '<#= field.Name#>'
+		/// <returns><see cref="<#=GetFieldWrapperType(field)#>"/></returns>
+		/// </summary>
+		public <#=GetFieldWrapperType(field)#> <#= GetFieldName(field)#> => this.WrapField<<#=GetFieldWrapperType(field)#>>(FieldNames.<#= GetFieldName(field)#>);
+<#}#>
+
+		public static class Constants
+		{
+			public static readonly TemplateID TemplateId = new TemplateID(new ID(TemplateIdString));
+			public const string TemplateIdString = "<#= template.Id.ToString("B").ToUpper()#>"; 
+		}
+
+<#  if (fields.Any()) { #>
+		public static class FieldNames
+		{
+<#foreach(var field in fields) { #>
+			public const string <#= GetFieldName(field)#> = "<#= field.Name#>"; 
+<#}#>
+		}
+<# } #>
+<#  if (fields.Any()) { #>
+
+		public static class FieldIds
+		{
+<#foreach(var field in fields) { #>
+			public static ID <#= GetFieldName(field)#> = new ID("<#= field.Id.ToString("B").ToUpper()#>"); 
+<#}#>
+		}
+<# } #>
+	}
+<#} else {#>
+	/// <summary>
+	/// Rendering parameters wrapper for template '<#= template.Name#>'
+	/// Template ID: <#= template.Id.ToString("B").ToUpper()#>
+	/// Template path: <#= template.Path#>
+	/// </summary>
+    // ReSharper disable once InconsistentNaming
+	public class <#= GetClassName(template)#> : RenderingParametersWrapper
+	{
+		public <#= GetClassName(template)#>(RenderingParameters parameters) : base(parameters)
+		{
+		}
+<#foreach(var field in fields) { #>
+
+		/// <summary>
+		/// A wrapped parameter for field: '<#= field.Name#>'
+		/// <returns><see cref="<#=GetParameterWrapperType(field)#>"/></returns>
+		/// </summary>
+		public <#=GetParameterWrapperType(field)#> <#=GetFieldName(field)#> => this.<#=GetParamterMethodName(field)#>(FieldNames.<#= GetFieldName(field)#>);
+<#}#>
+<#if (fields.Any()) { #>
+
+		public static class FieldNames
+		{
+<#foreach(var field in fields) { #>
+			public const string <#= GetFieldName(field)#> = "<#= field.Name#>"; 
+<#}#>
+		}
+<#}#>
+	}
+<#}#>
+}
+
+#endregion
+<# } 
+} catch{} #>
+<#+
+
+public string GetClassName(IItemData template)  
+{
+    return AsValidWord(template.Name);
+}
+
+public string GetFieldName(IItemData field)  
+{
+    return AsValidWord(field.Name);
+}
+
+public string GetIndexFieldValue(IItemData field)  
+{
+    return field.Name.Replace(" ", "_").ToLowerInvariant();
+}
+
+public bool IsRenderingParameters(IItemData template)
+{
+    return template.SharedFields.First(f => f.FieldId == new Guid("{12C33F3F-86C5-43A5-AEB4-5598CEC45116}")).Value
+		.Contains("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
+}
+
+public string GetFieldType(IItemData field)  
+{
+    return field.SharedFields.First(f => f.FieldId == new Guid("{AB162CC0-DC80-4ABF-8871-998EE5D7BA32}")).Value.ToLowerInvariant();
+}
+
+public string AsValidWord(string part)  
+{
+    part = TitleCase(part);
+    part = part.Replace(" ", "");
+    //part = Regex.Replace(part, "^_", "");
+    part = part.Replace("-", "");
+    while (Regex.IsMatch(part, "^\\d"))
+    {
+        part = Regex.Replace(part, "^1", "One");
+        part = Regex.Replace(part, "^2", "Two");
+        part = Regex.Replace(part, "^3", "Three");
+        part = Regex.Replace(part, "^4", "Four");
+        part = Regex.Replace(part, "^5", "Five");
+        part = Regex.Replace(part, "^6", "Six");
+        part = Regex.Replace(part, "^7", "Seven");
+        part = Regex.Replace(part, "^8", "Eight");
+        part = Regex.Replace(part, "^9", "Nine");
+    }
+    return part;
+}
+
+public string GetParamterMethodName(IItemData field)
+{
+	var fieldWrapperName = GetParameterWrapperType(field);
+	fieldWrapperName = fieldWrapperName.Substring(1, fieldWrapperName.Length - 1);
+	return fieldWrapperName.Replace("Wrapper", "");
+}
+
+public string GetParameterWrapperType(IItemData field)
+{
+	var typeName = GetFieldType(field);
+	var returnType = "string";
+	
+	switch (typeName)
+	{
+		case "checkbox":
+			returnType = "ICheckboxFieldWrapper";
+			break;
+		case "checklist":
+		case "treelist":
+		case "treelist with search":
+		case "treelistex":
+		case "multilist":
+		case "multilist with search":
+		case "accounts multilist":
+		case "tags":
+			returnType = "IListFieldWrapper";
+			break;
+		case "droplink":
+		case "droptree":
+			returnType = "ILinkFieldWrapper";
+			break;
+		case "text":
+		case "single-line text":
+		case "multi-line text":
+			returnType = "ITextFieldWrapper";
+			break;
+		case "number":
+			returnType = "INumberFieldWrapper";
+			break;
+		case "integer":
+			returnType = "IIntegerFieldWrapper";
+			break;
+		default:
+			returnType = "ITextFieldWrapper";
+			break;
+	}
+
+	return returnType;
+}
+
+public string GetFieldWrapperType(IItemData field)
+{
+	var typeName = GetFieldType(field);
+	var returnType = "string";
+	
+	switch (typeName)
+	{
+		case "checkbox":
+			returnType = "ICheckboxFieldWrapper";
+			break;
+		case "image":
+			returnType = "IImageFieldWrapper";
+			break;
+		case "file":
+			returnType = "IFileFieldWrapper";
+			break;
+		case "date":
+		case "datetime":
+			returnType = "IDateTimeFieldWrapper";
+			break;
+		case "checklist":
+		case "treelist":
+		case "treelist with search":
+		case "treelistex":
+		case "multilist":
+		case "multilist with search":
+		case "accounts multilist":
+		case "tags":
+			returnType = "IListFieldWrapper";
+			break;
+		case "droplink":
+		case "droptree":
+			returnType = "ILinkFieldWrapper";
+			break;
+		case "general link":
+		case "general link with search":
+			returnType = "IGeneralLinkFieldWrapper";
+			break;
+		case "text":
+		case "single-line text":
+		case "multi-line text":
+			returnType = "ITextFieldWrapper";
+			break;
+		case "rich text":
+			returnType = "IRichTextFieldWrapper";
+			break;
+		case "number":
+			returnType = "INumberFieldWrapper";
+			break;
+		case "integer":
+			returnType = "IIntegerFieldWrapper";
+			break;
+		case "name lookup value list":
+			returnType = "INameLookupValueListFieldWrapper";
+			break;
+		case "name value list":
+			returnType = "INameValueListFieldWrapper";
+			break;
+		default:
+			returnType = "ITextFieldWrapper";
+			break;
+	}
+
+	return returnType;
+}
+
+public static string TitleCase(string word)  
+{
+    word = Regex.Replace(word, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1+");
+    word = System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(word);
+    word = word.Replace("+", "");
+    return word;
+}
+
+public IEnumerable<TemplateData> GetTemplateData() {  
+    var serializer = new YamlSerializationFormatter(null, null);
+
+    var files = Configurations.SelectMany(x => Directory.EnumerateFiles(x, "*.yml", SearchOption.AllDirectories));
+
+    var items = new List<IItemData>();
+
+    foreach (var file in files)
+    {
+        using (var reader = File.OpenRead(file))
+        {
+            var item = serializer.ReadSerializedItem(reader, file);
+            items.Add(item);
+        }
+    }
+
+    var itemsLookup = items.ToLookup(x => x.ParentId, x => x);
+
+    var templates = items.Where(x => x.TemplateId == Sitecore.TemplateIDs.Template.Guid);
+
+    return templates.Select(template => new TemplateData
+    {
+        Template = template,
+        Fields = GetFields(template.Id, itemsLookup)
+    });
+}
+
+public IList<IItemData> GetSections(Guid templateId, ILookup<Guid, IItemData> lookup)  
+{
+    return lookup[templateId].Where(x => x.TemplateId == Sitecore.TemplateIDs.TemplateSection.Guid).ToList();
+}
+
+public IList<IItemData> GetFields(Guid templateId, ILookup<Guid, IItemData> lookup)  
+{
+    var sectionIds = GetSections(templateId, lookup).Select(x => x.Id);
+    return sectionIds.SelectMany(x => lookup[x].Where(item => item.TemplateId == Sitecore.TemplateIDs.TemplateField.Guid).ToList()).ToList();
+}
+
+public class TemplateData  
+{
+    public IItemData Template { get; set; }
+    public IEnumerable<IItemData> Fields { get; set; }
+}
+
+private string IgnoreNamespacePath { get; set; }  
+private string BaseNamespace { get; set; }  
+private string CustomNamespace { get; set; }  
+private IEnumerable<string> Configurations { get; set; }#>

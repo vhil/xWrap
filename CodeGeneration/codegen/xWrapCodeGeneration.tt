@@ -1,4 +1,17 @@
-﻿<#@ assembly name="System.Core" #><#@ assembly name="System.Xml" #><#@ import namespace="System.Collections.Generic" #><#@ import namespace="System.IO" #><#@ import namespace="System.Linq" #><#@ import namespace="System.Text" #><#@ import namespace="System.Text.RegularExpressions" #><#@ import namespace="System.Xml" #><#@ import namespace="Rainbow.Model" #><#@ import namespace="Rainbow.Storage.Yaml" #><#@ import namespace="Sitecore" #>
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="Rainbow.Model" #>
+<#@ import namespace="Rainbow.Storage.Yaml" #>
+<#@ import namespace="Sitecore" #>
+<#@ assembly name="$(SolutionDir)packages\Rainbow.Core.2.0.0\lib\net452\Rainbow.dll" #>
+<#@ assembly name="$(SolutionDir)packages\Rainbow.Storage.Yaml.2.0.0\lib\net452\Rainbow.Storage.Yaml.dll" #>
+<#@ assembly name="$(SolutionDir)packages\Sitecore.Kernel.NoReferences.9.0.171219\lib\NET462\Sitecore.Kernel.dll" #>
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Presentation;
@@ -11,17 +24,18 @@ try { foreach (var data in GetTemplateData().ToArray()) { var template = data.Te
 
 #region <#= template.Path#>
 
-namespace <#=BaseNamespace#>.Templates
+namespace <#=BaseNamespace#>.SitecoreTemplates
 {
 <#if (!IsRenderingParameters(template)) { #>
 	/// <summary>
-	/// Item wrapper for items of template '<#= template.Name#>'
-	/// Template ID: <#= template.Id.ToString("B").ToUpper()#>
-	/// Template path: <#= template.Path#>
+	/// Item wrapper for items of template '<#= template.Name#>'.
+	/// Template ID: <#= template.Id.ToString("B").ToUpper()#>.
+	/// Template path: <#= template.Path#>.
 	/// </summary>
 	[TemplateId(Constants.TemplateIdString)]
     // ReSharper disable once InconsistentNaming
-	public class <#= GetClassName(template)#>Item : ItemWrapper
+	// ReSharper disable once PartialTypeWithSinglePart
+	public partial class <#= GetClassName(template)#>Item : ItemWrapper
 	{
 		public <#= GetClassName(template)#>Item(Item item) : base(item)
 		{
@@ -29,7 +43,7 @@ namespace <#=BaseNamespace#>.Templates
 <#foreach(var field in fields) { #>
 
 		/// <summary>
-		/// A wrapped field for item field name: '<#= field.Name#>'
+		/// A wrapped field for item field name: '<#= field.Name#>'.
 		/// <returns><see cref="<#=GetFieldWrapperType(field)#>"/></returns>
 		/// </summary>
 		public <#=GetFieldWrapperType(field)#> <#= GetFieldName(field)#> => this.WrapField<<#=GetFieldWrapperType(field)#>>(FieldNames.<#= GetFieldName(field)#>);
@@ -61,12 +75,13 @@ namespace <#=BaseNamespace#>.Templates
 	}
 <#} else {#>
 	/// <summary>
-	/// Rendering parameters wrapper for template '<#= template.Name#>'
-	/// Template ID: <#= template.Id.ToString("B").ToUpper()#>
-	/// Template path: <#= template.Path#>
+	/// Rendering parameters wrapper for template '<#= template.Name#>'.
+	/// Template ID: <#= template.Id.ToString("B").ToUpper()#>.
+	/// Template path: <#= template.Path#>.
 	/// </summary>
     // ReSharper disable once InconsistentNaming
-	public class <#= GetClassName(template)#> : RenderingParametersWrapper
+	// ReSharper disable once PartialTypeWithSinglePart
+	public partial class <#= GetClassName(template)#> : RenderingParametersWrapper
 	{
 		public <#= GetClassName(template)#>(RenderingParameters parameters) : base(parameters)
 		{
@@ -74,7 +89,7 @@ namespace <#=BaseNamespace#>.Templates
 <#foreach(var field in fields) { #>
 
 		/// <summary>
-		/// A wrapped parameter for field: '<#= field.Name#>'
+		/// A wrapped parameter for field: '<#= field.Name#>'.
 		/// <returns><see cref="<#=GetParameterWrapperType(field)#>"/></returns>
 		/// </summary>
 		public <#=GetParameterWrapperType(field)#> <#=GetFieldName(field)#> => this.<#=GetParamterMethodName(field)#>(FieldNames.<#= GetFieldName(field)#>);

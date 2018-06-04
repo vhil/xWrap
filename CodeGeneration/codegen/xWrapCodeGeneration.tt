@@ -43,7 +43,7 @@ namespace <#=BaseNamespace#>.SitecoreTemplates
 <#foreach(var field in fields) { #>
 
 		/// <summary>
-		/// A wrapped field for item field name: '<#= field.Name#>'.
+		/// A wrapped '<#=GetFieldType(field)#>' field for item field with name: '<#= field.Name#>'.
 		/// <returns><see cref="<#=GetFieldWrapperType(field)#>"/></returns>
 		/// </summary>
 		public <#=GetFieldWrapperType(field)#> <#= GetFieldName(field)#> => this.WrapField<<#=GetFieldWrapperType(field)#>>(FieldNames.<#= GetFieldName(field)#>);
@@ -89,7 +89,7 @@ namespace <#=BaseNamespace#>.SitecoreTemplates
 <#foreach(var field in fields) { #>
 
 		/// <summary>
-		/// A wrapped parameter for field: '<#= field.Name#>'.
+		/// A wrapped '<#=GetFieldType(field)#>' parameter for field with name '<#= field.Name#>'.
 		/// <returns><see cref="<#=GetParameterWrapperType(field)#>"/></returns>
 		/// </summary>
 		public <#=GetParameterWrapperType(field)#> <#=GetFieldName(field)#> => this.<#=GetParamterMethodName(field)#>(FieldNames.<#= GetFieldName(field)#>);

@@ -82,6 +82,11 @@
             return FieldWrapperFactory.WrapField<ITextFieldWrapper>(item, fieldName);
         }
 
+		public static IInternalLinkFieldWrapper InternalLinkField(this Item item, string fieldName)
+        {
+            return FieldWrapperFactory.WrapField<IInternalLinkFieldWrapper>(item, fieldName);
+        }
+
 		#endregion
 
 		#region field ID
@@ -154,6 +159,11 @@
 		public static ITextFieldWrapper TextField(this Item item, ID fieldId)
 		{
 			return FieldWrapperFactory.WrapField<ITextFieldWrapper>(item, fieldId);
+		}
+
+		public static IInternalLinkFieldWrapper InternalLinkField(this Item item, ID fieldId)
+		{
+			return FieldWrapperFactory.WrapField<IInternalLinkFieldWrapper>(item, fieldId);
 		}
 
 		#endregion

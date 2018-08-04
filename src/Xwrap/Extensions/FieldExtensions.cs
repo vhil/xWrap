@@ -72,9 +72,14 @@
             return FieldWrapperFactory.WrapField<INameLookupValueListFieldWrapper>(field);
         }
 
-        public static ITextFieldWrapper TextField(this Field field)
+        public static ITextFieldWrapper AsTextField(this Field field)
         {
             return FieldWrapperFactory.WrapField<ITextFieldWrapper>(field);
+        }
+
+		public static IInternalLinkFieldWrapper AsInternalLinkField(this Field field)
+        {
+            return FieldWrapperFactory.WrapField<IInternalLinkFieldWrapper>(field);
         }
     }
 }

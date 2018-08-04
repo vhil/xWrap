@@ -4,8 +4,8 @@ IgnoreNamespacePath = "";
 BaseNamespace = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint").ToString();
 CustomNamespace = "";
 var solutionPath = this.Host.ResolveAssemblyReference("$(SolutionDir)");  
-var projectPath = this.Host.ResolveAssemblyReference("$(ProjectDir)");
+var projectPath = Host.ResolvePath(this.Host.ResolveAssemblyReference("$(ProjectDir)") + "..\\serialization\\Templates");
 Configurations = new string[]  
 {
-projectPath + "serialization\\Templates"
+projectPath
 };#><#@ include file="$(SolutionDir)codegen\xWrapCodeGeneration.tt" #>

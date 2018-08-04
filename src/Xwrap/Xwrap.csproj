@@ -56,6 +56,8 @@
     <Compile Include="Exceptions\FieldWrappingException.cs" />
     <Compile Include="Exceptions\ItemWrappingException.cs" />
     <Compile Include="Extensions\ItemWrapperExtensions.cs" />
+    <Compile Include="FieldWrappers\Abstractions\IInternalLinkFieldWrapper.cs" />
+    <Compile Include="FieldWrappers\InternalLinkFieldWrapper.cs" />
     <Compile Include="IItemWrapperFactory.cs" />
     <Compile Include="ItemWrapperFactory.cs" />
     <Compile Include="TemplateIdAttribute.cs" />

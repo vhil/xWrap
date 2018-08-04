@@ -11,7 +11,7 @@
 <#@ import namespace="Sitecore" #>
 <#@ assembly name="$(SolutionDir)packages\Rainbow.Core.2.0.0\lib\net452\Rainbow.dll" #>
 <#@ assembly name="$(SolutionDir)packages\Rainbow.Storage.Yaml.2.0.0\lib\net452\Rainbow.Storage.Yaml.dll" #>
-<#@ assembly name="$(SolutionDir)packages\Sitecore.Kernel.NoReferences.9.0.171219\lib\NET462\Sitecore.Kernel.dll" #>
+<#@ assembly name="$(SolutionDir)packages\Sitecore.Kernel.NoReferences.9.0.180604\lib\NET452\Sitecore.Kernel.dll" #>
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Presentation;
@@ -190,6 +190,9 @@ public string GetParameterWrapperType(IItemData field)
 		case "droptree":
 			returnType = "ILinkFieldWrapper";
 			break;
+		case "internal link":
+			returnType = "IInternalLinkFieldWrapper";
+			break;
 		case "text":
 		case "single-line text":
 		case "multi-line text":
@@ -242,6 +245,9 @@ public string GetFieldWrapperType(IItemData field)
 		case "droplink":
 		case "droptree":
 			returnType = "ILinkFieldWrapper";
+			break;
+		case "internal link":
+			returnType = "IInternalLinkFieldWrapper";
 			break;
 		case "general link":
 		case "general link with search":

@@ -64,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderingParameters\CheckboxFieldWrapper.cs" />
     <Compile Include="RenderingParameters\IntegerFieldWrapper.cs" />
+    <Compile Include="RenderingParameters\InternalLinkFieldWrapper.cs" />
     <Compile Include="RenderingParameters\IRenderingParametersWrapper.cs" />
     <Compile Include="RenderingParameters\LinkFieldWrapper.cs" />
     <Compile Include="RenderingParameters\ListFieldWrapper.cs" />

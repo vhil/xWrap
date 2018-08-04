@@ -13,6 +13,8 @@
 
 		public TItemWrapper WrapItem<TItemWrapper>(Item item) where TItemWrapper : ItemWrapper
 		{
+			if (item == null) return default(TItemWrapper);
+
 			var templateIdAttr = typeof(TItemWrapper).GetTemplateIdAttribute();
 
 			if (templateIdAttr == null || item.IsDerived(templateIdAttr.TemplateId))

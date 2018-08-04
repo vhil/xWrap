@@ -8,8 +8,9 @@
 	using System.Linq;
 	using Sitecore.Data;
 	using FieldWrappers.Abstractions;
+	using Sitecore;
 
-	public abstract class ItemWrapper
+	public class ItemWrapper
 	{
 		protected IItemWrapperFactory ItemWrapperFactory => Xwrap.ItemWrapperFactory.Instance;
 		protected IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
@@ -21,7 +22,10 @@
 		public string DisplayName => this.OriginalItem.DisplayName;
 		public string FullPath => this.OriginalItem.Paths.FullPath;
 
-		protected ItemWrapper(Item item)
+		public IDateTimeFieldWrapper CreatedDate => this.WrapField<IDateTimeFieldWrapper>(FieldIDs.Created);
+		public IDateTimeFieldWrapper UpdatedDate => this.WrapField<IDateTimeFieldWrapper>(FieldIDs.Updated);
+
+		public ItemWrapper(Item item)
 		{
 			this.OriginalItem = item ?? throw new ItemWrappingException(
 				$"Unable to wrap item. Constructor argument '{nameof(item)}' was null.");

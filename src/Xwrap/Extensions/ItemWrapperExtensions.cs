@@ -29,5 +29,29 @@
 		{
 			return Factory.WrapItems<TItemWrapper>(items);
 		}
+
+		public static IEnumerable<TItemWrapper> GetChildren<TItemWrapper>(this Item item)
+			where TItemWrapper : ItemWrapper
+		{
+			return Factory.GetChildren<TItemWrapper>(item);
+		}
+
+		public static IEnumerable<TItemWrapper> GetChildren<TItemWrapper>(this ItemWrapper item)
+			where TItemWrapper : ItemWrapper
+		{
+			return Factory.GetChildren<TItemWrapper>(item);
+		}
+
+		public static IEnumerable<TItemWrapper> GetChildrenReccursively<TItemWrapper>(this Item item)
+			where TItemWrapper : ItemWrapper
+		{
+			return Factory.GetChildrenReccursively<TItemWrapper>(item);
+		}
+
+		public static IEnumerable<TItemWrapper> GetChildrenReccursively<TItemWrapper>(this ItemWrapper item)
+			where TItemWrapper : ItemWrapper
+		{
+			return Factory.GetChildrenReccursively<TItemWrapper>(item);
+		}
 	}
 }

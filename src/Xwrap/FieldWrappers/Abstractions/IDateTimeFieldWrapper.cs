@@ -5,6 +5,6 @@
 
     public interface IDateTimeFieldWrapper : IFieldWrapper<DateTime>
     {
-        IHtmlString Render(bool includeTime);
+        IHtmlString Render(bool includeTime, bool editing = true);
     }
 }

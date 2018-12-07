@@ -62,7 +62,7 @@
 				var returnValue = string.Empty;
 				if (this.MediaItem != null)
 				{
-					long bytes = long.Parse(this.MediaItem.Fields["Size"].ToString());
+					var bytes = long.Parse(this.MediaItem.Fields["Size"].ToString());
 					returnValue = Math.Round((bytes / 1024f) / 1024f, 2).ToString();
 				}
 				return returnValue;

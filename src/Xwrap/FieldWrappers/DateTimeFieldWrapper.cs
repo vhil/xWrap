@@ -21,11 +21,12 @@
 
         public DateTime Value => ((DateField) this.OriginalField).DateTime.ToLocalTime();
 
-        public IHtmlString Render(bool includeTime)
+        public IHtmlString Render(bool includeTime, bool editing = true)
         {
             return this.Render(includeTime 
                 ? this.OriginalField.Language?.CultureInfo?.DateTimeFormat.FullDateTimePattern ?? CultureInfo.InvariantCulture.DateTimeFormat.FullDateTimePattern
-                : this.OriginalField.Language?.CultureInfo?.DateTimeFormat.ShortDatePattern ?? CultureInfo.InvariantCulture.DateTimeFormat.ShortDatePattern);
+                : this.OriginalField.Language?.CultureInfo?.DateTimeFormat.ShortDatePattern ?? CultureInfo.InvariantCulture.DateTimeFormat.ShortDatePattern,
+	            editing);
         }
 
         public override IHtmlString Render(string dateTimeFormat = null, bool editing = true)

@@ -1,4 +1,7 @@
-﻿namespace Xwrap.Extensions
+﻿using System.Collections.Generic;
+using Sitecore.Collections;
+
+namespace Xwrap.Extensions
 {
 	using Sitecore.Data;
 	using Sitecore.Data.Items;
@@ -197,6 +200,23 @@
 
 			var itemTemplate = TemplateManager.GetTemplate(item);
 			return itemTemplate != null && (itemTemplate.ID == templateItem.ID || itemTemplate.DescendsFrom(templateItem.ID));
+		}
+
+		internal static IEnumerable<Item> GetChildrenReccursively(this Item item, Guid? templateId = null)
+		{
+			var result = new List<Item>();
+
+			foreach (Item child in item.GetChildren(ChildListOptions.IgnoreSecurity))
+			{
+				if (!templateId.HasValue || child.IsDerived(templateId.Value))
+				{
+					result.Add(child);
+				}
+
+				result.AddRange(child.GetChildrenReccursively(templateId));
+			}
+
+			return result;
 		}
 	}
 }

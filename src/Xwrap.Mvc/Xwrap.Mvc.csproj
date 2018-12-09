@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Xwrap.Mvc.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ServicesConfigurator.cs" />
-    <Compile Include="IFormData.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="IViewModelFactory.cs" />
     <Compile Include="Pipelines\GetRenderingItem\GetFromContextItem.cs" />

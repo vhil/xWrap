@@ -52,7 +52,7 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item to get children from</param>
-		public virtual IEnumerable<TItemWrapper> GetChildren<TItemWrapper>(Item item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(Item item) 
 			where TItemWrapper : ItemWrapper
 		{
 			return this.WrapItems<TItemWrapper>(item.Children);
@@ -63,7 +63,7 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item wrapper to get children from</param>
-		public virtual IEnumerable<TItemWrapper> GetChildren<TItemWrapper>(ItemWrapper item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(ItemWrapper item) 
 			where TItemWrapper : ItemWrapper
 		{
 			return this.WrapItems<TItemWrapper>(item.OriginalItem.Children);
@@ -74,7 +74,7 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item to get children from</param>
-		public virtual IEnumerable<TItemWrapper> GetChildrenReccursively<TItemWrapper>(Item item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(Item item) 
 			where TItemWrapper : ItemWrapper
 		{
 			var templateIdAttr = typeof(TItemWrapper).GetTemplateIdAttribute();
@@ -89,10 +89,10 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item wrapper to get children from</param>
-		public virtual IEnumerable<TItemWrapper> GetChildrenReccursively<TItemWrapper>(ItemWrapper item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(ItemWrapper item) 
 			where TItemWrapper : ItemWrapper
 		{
-			return this.GetChildrenReccursively<TItemWrapper>(item.OriginalItem);
+			return this.WrapChildrenReccursively<TItemWrapper>(item.OriginalItem);
 		}
 	}
 }

@@ -67,7 +67,7 @@
 			return new RenderingParametersWrapper(parameters);
 		}
 
-		public TRenderingParameters GetRenderingParameters<TRenderingParameters>() 
+		public virtual TRenderingParameters GetRenderingParameters<TRenderingParameters>() 
 			where TRenderingParameters : RenderingParametersWrapper
 		{
 			var parameters = RenderingContext.Current.Rendering.Parameters;

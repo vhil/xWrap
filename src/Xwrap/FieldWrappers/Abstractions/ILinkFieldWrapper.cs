@@ -11,6 +11,6 @@
     {
         string Url { get; }
         Item GetTarget();
-	    TItemWrapper GetTarget<TItemWrapper>() where TItemWrapper : ItemWrapper;
+	    TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper;
     }
 }

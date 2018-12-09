@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using Sitecore.Collections;
-
-namespace Xwrap.Extensions
+﻿namespace Xwrap.Extensions
 {
 	using Sitecore.Data;
 	using Sitecore.Data.Items;
 	using FieldWrappers.Abstractions;
 	using System;
 	using Sitecore.Data.Managers;
+	using System.Collections.Generic;
+	using Sitecore.Collections;
 
 	public static class ItemExtensions
 	{

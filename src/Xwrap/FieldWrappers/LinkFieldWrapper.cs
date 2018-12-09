@@ -49,7 +49,7 @@
             return null;
         }
 
-		public virtual TItemWrapper GetTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
+		public virtual TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var target = this.GetTarget();
 

@@ -30,28 +30,28 @@
 			return Factory.WrapItems<TItemWrapper>(items);
 		}
 
-		public static IEnumerable<TItemWrapper> GetChildren<TItemWrapper>(this Item item)
+		public static IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(this Item item)
 			where TItemWrapper : ItemWrapper
 		{
-			return Factory.GetChildren<TItemWrapper>(item);
+			return Factory.WrapChildren<TItemWrapper>(item);
 		}
 
-		public static IEnumerable<TItemWrapper> GetChildren<TItemWrapper>(this ItemWrapper item)
+		public static IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(this ItemWrapper item)
 			where TItemWrapper : ItemWrapper
 		{
-			return Factory.GetChildren<TItemWrapper>(item);
+			return Factory.WrapChildren<TItemWrapper>(item);
 		}
 
-		public static IEnumerable<TItemWrapper> GetChildrenReccursively<TItemWrapper>(this Item item)
+		public static IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(this Item item)
 			where TItemWrapper : ItemWrapper
 		{
-			return Factory.GetChildrenReccursively<TItemWrapper>(item);
+			return Factory.WrapChildrenReccursively<TItemWrapper>(item);
 		}
 
-		public static IEnumerable<TItemWrapper> GetChildrenReccursively<TItemWrapper>(this ItemWrapper item)
+		public static IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(this ItemWrapper item)
 			where TItemWrapper : ItemWrapper
 		{
-			return Factory.GetChildrenReccursively<TItemWrapper>(item);
+			return Factory.WrapChildrenReccursively<TItemWrapper>(item);
 		}
 	}
 }

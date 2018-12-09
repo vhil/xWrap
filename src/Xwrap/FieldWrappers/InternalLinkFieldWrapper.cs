@@ -51,7 +51,7 @@
 				: this.OriginalField.Database.GetItem(this.Path);
 		}
 
-		public TItemWrapper GetTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
+		public TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var target = this.GetTarget();
 

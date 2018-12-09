@@ -71,17 +71,17 @@
 		/// Gets children of an item and returns <see cref="IEnumerable{TItemWrapper}"/> of xWrap strongly typed item wrappers.
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
-		public IEnumerable<TItemWrapper> GetChildren<TItemWrapper>() where TItemWrapper : ItemWrapper
+		public IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
-			return this.ItemWrapperFactory.GetChildren<TItemWrapper>(this);
+			return this.ItemWrapperFactory.WrapChildren<TItemWrapper>(this);
 		}
 
 		/// <summary>
 		/// Gets first child inherited from target template and returns an instance of xWrap strongly typed item wrapper.
 		/// </summary>
-		public TItemWrapper GetFirstChild<TItemWrapper>() where TItemWrapper : ItemWrapper
+		public TItemWrapper WrapFirstChild<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
-			return this.GetChildren<TItemWrapper>().FirstOrDefault();
+			return this.WrapChildren<TItemWrapper>().FirstOrDefault();
 		}
 
 		protected TFieldWrapper WrapField<TFieldWrapper>(string fieldName) where TFieldWrapper : IFieldWrapper

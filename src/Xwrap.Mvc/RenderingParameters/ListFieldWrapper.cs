@@ -26,7 +26,7 @@
             }
         }
 
-		public IEnumerable<TItemWrapper> GetItems<TItemWrapper>() where TItemWrapper : ItemWrapper
+		public IEnumerable<TItemWrapper> WrapItems<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var items = this.GetItems();
 

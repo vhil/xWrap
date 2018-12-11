@@ -3,8 +3,8 @@
 namespace Xwrap.Caching
 {
 	internal interface ICacheStorage
-    {
-        ConcurrentDictionary<string, SitecoreMemoryCacheEntry> Entries { get; }
-        void Clear();
-    }
+	{
+		ConcurrentDictionary<string, SitecoreMemoryCacheEntry> Entries { get; }
+		void Clear();
+	}
 }

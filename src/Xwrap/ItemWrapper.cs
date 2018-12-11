@@ -111,8 +111,8 @@
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <typeparam name="TFieldWrapper">Target field wrapper type, inherited from <see cref="IFieldWrapper"/></typeparam>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		protected TFieldWrapper WrapField<TFieldWrapper>(string fieldName) where TFieldWrapper : IFieldWrapper
 		{
 			return this.FieldWrapperFactory.WrapField<TFieldWrapper>(this.OriginalItem, fieldName);
@@ -122,8 +122,8 @@
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <typeparam name="TFieldWrapper">Target field wrapper type, inherited from <see cref="IFieldWrapper"/></typeparam>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		protected TFieldWrapper WrapField<TFieldWrapper>(ID fieldId) where TFieldWrapper : IFieldWrapper
 		{
 			return this.FieldWrapperFactory.WrapField<TFieldWrapper>(this.OriginalItem, fieldId);

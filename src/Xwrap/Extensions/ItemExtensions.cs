@@ -1,6 +1,4 @@
-﻿using Xwrap.Exceptions;
-
-namespace Xwrap.Extensions
+﻿namespace Xwrap.Extensions
 {
 	using Sitecore.Data;
 	using Sitecore.Data.Items;
@@ -10,184 +8,194 @@ namespace Xwrap.Extensions
 	using System.Collections.Generic;
 	using Sitecore.Collections;
 
+	/// <summary>
+	/// xWrap item extensions methods
+	/// </summary>
 	public static class ItemExtensions
 	{
-        private static IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
+		private static IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
 
 		#region field name
 
+		/// <summary>Wraps Sitecore field and returns an xWrap strongly typed field wrapper.
+		/// Throws exception in case source field does not match the target field type.</summary>
+		/// <typeparam name="TField">Target field wrapper type, inherited from <see cref="IFieldWrapper"/></typeparam>
+		/// <param name="item">Item to get field from</param>
+		/// <param name="fieldName">Field name to wrap</param>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		public static TField StronglyTypedField<TField>(this Item item, string fieldName) where TField : IFieldWrapper
-        {
-            return FieldWrapperFactory.WrapField<TField>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<TField>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IRichTextFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IRichTextFieldWrapper"/></returns>
 		public static IRichTextFieldWrapper RichTextField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IRichTextFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IRichTextFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IIntegerFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IIntegerFieldWrapper"/></returns>
 		public static IIntegerFieldWrapper IntegerField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IIntegerFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IIntegerFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="INumberFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="INumberFieldWrapper"/></returns>
 		public static INumberFieldWrapper NumberField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<INumberFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<INumberFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="ICheckboxFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="ICheckboxFieldWrapper"/></returns>
 		public static ICheckboxFieldWrapper CheckboxField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<ICheckboxFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<ICheckboxFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IFileFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IFileFieldWrapper"/></returns>
 		public static IFileFieldWrapper FileField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IFileFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IFileFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IDateTimeFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IDateTimeFieldWrapper"/></returns>
 		public static IDateTimeFieldWrapper DateTimeField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IDateTimeFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IDateTimeFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IGeneralLinkFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IGeneralLinkFieldWrapper"/></returns>
 		public static IGeneralLinkFieldWrapper GeneralLinkField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IGeneralLinkFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IGeneralLinkFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IImageFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IImageFieldWrapper"/></returns>
 		public static IImageFieldWrapper ImageField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IImageFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IImageFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="ILinkFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="ILinkFieldWrapper"/></returns>
 		public static ILinkFieldWrapper LinkField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<ILinkFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<ILinkFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IListFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IListFieldWrapper"/></returns>
 		public static IListFieldWrapper ListField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IListFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IListFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="INameValueListFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="INameValueListFieldWrapper"/></returns>
 		public static INameValueListFieldWrapper NameValueListField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<INameValueListFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<INameValueListFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="INameLookupValueListFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="INameLookupValueListFieldWrapper"/></returns>
 		public static INameLookupValueListFieldWrapper NameLookupValueField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<INameLookupValueListFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<INameLookupValueListFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="ITextFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="ITextFieldWrapper"/></returns>
 		public static ITextFieldWrapper TextField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<ITextFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<ITextFieldWrapper>(item, fieldName);
+		}
 
 		/// <summary>Wraps Sitecore field into <see cref="IInternalLinkFieldWrapper"/> strongly typed field wrapper.
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldName">Field name to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IInternalLinkFieldWrapper"/></returns>
 		public static IInternalLinkFieldWrapper InternalLinkField(this Item item, string fieldName)
-        {
-            return FieldWrapperFactory.WrapField<IInternalLinkFieldWrapper>(item, fieldName);
-        }
+		{
+			return FieldWrapperFactory.WrapField<IInternalLinkFieldWrapper>(item, fieldName);
+		}
 
 		#endregion
 
@@ -198,8 +206,8 @@ namespace Xwrap.Extensions
 		/// <typeparam name="TField">Target field wrapper type, inherited from <see cref="IFieldWrapper"/></typeparam>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		public static TField StronglyTypedField<TField>(this Item item, ID fieldId) where TField : IFieldWrapper
 		{
 			return FieldWrapperFactory.WrapField<TField>(item, fieldId);
@@ -209,8 +217,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IRichTextFieldWrapper"/></returns>
 		public static IRichTextFieldWrapper RichTextField(this Item item, ID fieldId)
 		{
@@ -221,8 +229,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IIntegerFieldWrapper"/></returns>
 		public static IIntegerFieldWrapper IntegerField(this Item item, ID fieldId)
 		{
@@ -233,8 +241,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="INumberFieldWrapper"/></returns>
 		public static INumberFieldWrapper NumberField(this Item item, ID fieldId)
 		{
@@ -245,8 +253,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="ICheckboxFieldWrapper"/></returns>
 		public static ICheckboxFieldWrapper CheckboxField(this Item item, ID fieldId)
 		{
@@ -257,8 +265,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IFileFieldWrapper"/></returns>
 		public static IFileFieldWrapper FileField(this Item item, ID fieldId)
 		{
@@ -269,8 +277,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IDateTimeFieldWrapper"/></returns>
 		public static IDateTimeFieldWrapper DateTimeField(this Item item, ID fieldId)
 		{
@@ -281,8 +289,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IGeneralLinkFieldWrapper"/></returns>
 		public static IGeneralLinkFieldWrapper GeneralLinkField(this Item item, ID fieldId)
 		{
@@ -293,8 +301,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IImageFieldWrapper"/></returns>
 		public static IImageFieldWrapper ImageField(this Item item, ID fieldId)
 		{
@@ -305,8 +313,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="ILinkFieldWrapper"/></returns>
 		public static ILinkFieldWrapper LinkField(this Item item, ID fieldId)
 		{
@@ -317,8 +325,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IListFieldWrapper"/></returns>
 		public static IListFieldWrapper ListField(this Item item, ID fieldId)
 		{
@@ -329,8 +337,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="INameValueListFieldWrapper"/></returns>
 		public static INameValueListFieldWrapper NameValueListField(this Item item, ID fieldId)
 		{
@@ -341,8 +349,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="INameLookupValueListFieldWrapper"/></returns>
 		public static INameLookupValueListFieldWrapper NameLookupValueField(this Item item, ID fieldId)
 		{
@@ -353,8 +361,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="ITextFieldWrapper"/></returns>
 		public static ITextFieldWrapper TextField(this Item item, ID fieldId)
 		{
@@ -365,8 +373,8 @@ namespace Xwrap.Extensions
 		/// Throws exception in case source field does not match the target field type.</summary>
 		/// <param name="item">Item to get field from</param>
 		/// <param name="fieldId">Field ID to wrap</param>
-		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <exception cref="Xwrap.Exceptions.FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
 		/// <returns>Instance of <see cref="IInternalLinkFieldWrapper"/></returns>
 		public static IInternalLinkFieldWrapper InternalLinkField(this Item item, ID fieldId)
 		{

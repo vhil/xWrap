@@ -86,7 +86,7 @@
 		public Item GetTarget()
 		{
 			return this.Path.IsNullOrEmpty()
-				? null 
+				? null
 				: this.OriginalField.Database.GetItem(this.Path);
 		}
 

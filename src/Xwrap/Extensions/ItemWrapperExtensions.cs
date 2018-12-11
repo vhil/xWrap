@@ -12,12 +12,22 @@
 	{
 		private static IItemWrapperFactory Factory => ItemWrapperFactory.Instance;
 
-		internal static TemplateIdAttribute GetTemplateIdAttribute(this Type itemWrapperType)
+		/// <summary>
+		/// Gets the template ID attribute of the item wrapper type.
+		/// </summary>
+		/// <param name="itemWrapperType">Type of the item wrapper.</param>
+		/// <returns></returns>
+		public static TemplateIdAttribute GetTemplateIdAttribute(this Type itemWrapperType)
 		{
 			return Attribute.GetCustomAttribute(itemWrapperType, typeof(TemplateIdAttribute)) as TemplateIdAttribute;
 		}
 
-		internal static TemplateIdAttribute GetTemplateIdAttribute(this ItemWrapper itemWrapper)
+		/// <summary>
+		/// Gets the template ID attribute of the item wrapper.
+		/// </summary>
+		/// <param name="itemWrapper">The item wrapper.</param>
+		/// <returns></returns>
+		public static TemplateIdAttribute GetTemplateIdAttribute(this ItemWrapper itemWrapper)
 		{
 			return GetTemplateIdAttribute(itemWrapper.GetType());
 		}
@@ -27,9 +37,7 @@
 		/// Returns null in case the source item template does not match the target template ID.
 		/// </summary>
 		/// <param name="item">Item to wrap</param>
-		/// <exception cref="ItemWrappingException">if the source item template does not match the target template ID</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
-		public static TItemWrapper WrapItem<TItemWrapper>(this Item item) 
+		public static TItemWrapper WrapItem<TItemWrapper>(this Item item)
 			where TItemWrapper : ItemWrapper
 		{
 			return Factory.WrapItem<TItemWrapper>(item);
@@ -40,7 +48,7 @@
 		/// Items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="items">Items to wrap</param>
-		public static IEnumerable<TItemWrapper> WrapItems<TItemWrapper>(this IEnumerable<Item> items) 
+		public static IEnumerable<TItemWrapper> WrapItems<TItemWrapper>(this IEnumerable<Item> items)
 			where TItemWrapper : ItemWrapper
 		{
 			return Factory.WrapItems<TItemWrapper>(items);

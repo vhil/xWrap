@@ -1,4 +1,5 @@
 ﻿using Sitecore.Mvc.Presentation;
+using Xwrap.Extensions;
 
 namespace Xwrap.Mvc
 {
@@ -15,7 +16,7 @@ namespace Xwrap.Mvc
 		/// Initializes a new instance of the <see cref="ViewModel"/> class.
 		/// </summary>
 		/// <param name="viewModel">The view model.</param>
-		public ViewModel(IViewModel viewModel) 
+		public ViewModel(IViewModel viewModel)
 			: this(viewModel.PageItem, viewModel.RenderingItem, viewModel.RenderingParameters)
 		{
 		}
@@ -91,6 +92,18 @@ namespace Xwrap.Mvc
 		/// The value is being resolved through 'xWrap.GetRenderingItem' pipeline.
 		/// </summary>
 		public TRenderingItem RenderingItem { get; }
+
+		/// <summary>
+		/// Attempts to wrap PageItem into target <see cref="T:Xwrap.ItemWrapper" />type.
+		/// Returns null if page item can't be wrapped into desired type.
+		/// </summary>
+		/// <typeparam name="TPageItem">The type of the page item.</typeparam>
+		/// <returns></returns>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public TPageItem WrapPageItem<TPageItem>() where TPageItem : ItemWrapper
+		{
+			return this.PageItem.WrapItem<TPageItem>();
+		}
 	}
 
 	/// <summary>
@@ -119,7 +132,7 @@ namespace Xwrap.Mvc
 		/// <param name="renderingItem">The rendering item.</param>
 		/// <param name="renderingParameters">The rendering parameters.</param>
 		public ViewModel(Item pageItem, TRenderingItem renderingItem, TRenderingParameters renderingParameters)
-			:base(pageItem, renderingItem)
+			: base(pageItem, renderingItem)
 		{
 			this.RenderingParameters = renderingParameters;
 		}

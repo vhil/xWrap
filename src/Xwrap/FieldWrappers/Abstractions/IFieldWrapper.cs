@@ -1,12 +1,12 @@
 ﻿namespace Xwrap.FieldWrappers.Abstractions
 {
-    using System.Web;
+	using System.Web;
 
 	/// <summary>
 	/// Field wrapper abstraction
 	/// </summary>
 	public interface IFieldWrapper : IHtmlString
-    {
+	{
 		/// <summary>
 		/// Gets the original wrapped object.
 		/// </summary>
@@ -34,11 +34,11 @@
 		/// <param name="editing">Specify if the field should be editable when rendered.</param>
 		IHtmlString Render(string parameters = null, bool editing = true);
 
-	    /// <summary>
-	    /// Renders the field using default Sitecore field renderer.
-	    /// </summary>
-	    /// <param name="parameters">The parameters</param>
-	    /// <param name="editing">Specify if the field should be editable when rendered.</param>
+		/// <summary>
+		/// Renders the field using default Sitecore field renderer.
+		/// </summary>
+		/// <param name="parameters">The parameters</param>
+		/// <param name="editing">Specify if the field should be editable when rendered.</param>
 		IHtmlString Render(object parameters, bool editing = true);
 
 		/// <summary>
@@ -49,12 +49,12 @@
 		/// <returns></returns>
 		IHtmlString RenderBeginField(object parameters, bool editing = true);
 
-	    /// <summary>
-	    /// Renders the field using default Sitecore field renderer. Leaves the option to insert html inside the field until RenderEndField method is being called.
-	    /// </summary>
-	    /// <param name="parameters">The parameters.</param>
-	    /// <param name="editing">if set to <c>true</c> [editing].</param>
-	    /// <returns></returns>
+		/// <summary>
+		/// Renders the field using default Sitecore field renderer. Leaves the option to insert html inside the field until RenderEndField method is being called.
+		/// </summary>
+		/// <param name="parameters">The parameters.</param>
+		/// <param name="editing">if set to <c>true</c> [editing].</param>
+		/// <returns></returns>
 		IHtmlString RenderBeginField(string parameters = null, bool editing = true);
 
 		/// <summary>
@@ -62,16 +62,16 @@
 		/// </summary>
 		/// <returns></returns>
 		IHtmlString RenderEndField();
-    }
+	}
 
 	/// <summary>
 	/// Strongly typed field wrapper abstraction
 	/// </summary>
 	public interface IFieldWrapper<out TReturnType> : IFieldWrapper
-    {
+	{
 		/// <summary>
 		/// Gets the strongly typed field value.
 		/// </summary>
 		TReturnType Value { get; }
-    }
+	}
 }

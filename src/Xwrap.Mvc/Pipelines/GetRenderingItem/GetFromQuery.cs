@@ -3,8 +3,17 @@
 	using System;
 	using Sitecore.Data.Items;
 
+	/// <summary>
+	/// xWrap getRenderingItem pipeline processor. Tries to resolve rendering item from data source query
+	/// </summary>
+	/// <seealso cref="Xwrap.Mvc.Pipelines.GetRenderingItem.GetRenderingItemProcessor" />
 	public class GetFromQuery : GetRenderingItemProcessor
 	{
+		/// <summary>
+		/// Gets the rendering item.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
+		/// <returns></returns>
 		protected override Item GetRenderingItem(GetRenderingItemArgs args)
 		{
 			// Check for a sitecore query datasource

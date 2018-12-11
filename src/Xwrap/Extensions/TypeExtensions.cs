@@ -3,29 +3,32 @@
 	using System;
 	using System.Reflection;
 
+	/// <summary>
+	/// xWrap type extensions methods
+	/// </summary>
 	public static class TypeExtensions
-    {
-        internal static object GetValue(this MemberInfo member, object instance)
-        {
-            switch (member.MemberType)
-            {
-                case MemberTypes.Field:
-                    return ((FieldInfo)member).GetValue(instance);
-                case MemberTypes.Property:
-                    return ((PropertyInfo)member).GetValue(instance, null);
-                default:
-                    throw new NotSupportedException(
-                        Sitecore.StringExtensions.StringExtensions.FormatWith("Unsupported member type: {0}",
-                            new object[]
-                            {
-                                member.MemberType
-                            }));
-            }
-        }
+	{
+		internal static object GetValue(this MemberInfo member, object instance)
+		{
+			switch (member.MemberType)
+			{
+				case MemberTypes.Field:
+					return ((FieldInfo)member).GetValue(instance);
+				case MemberTypes.Property:
+					return ((PropertyInfo)member).GetValue(instance, null);
+				default:
+					throw new NotSupportedException(
+						Sitecore.StringExtensions.StringExtensions.FormatWith("Unsupported member type: {0}",
+							new object[]
+							{
+								member.MemberType
+							}));
+			}
+		}
 
-	    public static bool IsAssignableTo(this Type type, Type other)
-        {
-            return other.IsAssignableFrom(type);
-        }
-    }
+		public static bool IsAssignableTo(this Type type, Type other)
+		{
+			return other.IsAssignableFrom(type);
+		}
+	}
 }

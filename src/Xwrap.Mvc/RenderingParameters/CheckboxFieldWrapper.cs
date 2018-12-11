@@ -1,7 +1,7 @@
 ﻿namespace Xwrap.Mvc.RenderingParameters
 {
-    using System;
-    using FieldWrappers.Abstractions;
+	using System;
+	using FieldWrappers.Abstractions;
 
 	/// <summary>
 	/// Rendering parameters field wrapper for 'checkbox' Sitecore field type. Implements <see cref="IFieldWrapper{bool}"/>
@@ -9,7 +9,7 @@
 	/// <seealso cref="Xwrap.Mvc.RenderingParameters.RenderingParametersFieldWrapper{System.Boolean}" />
 	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.ICheckboxFieldWrapper" />
 	public class CheckboxFieldWrapper : RenderingParametersFieldWrapper<bool>, ICheckboxFieldWrapper
-    {
+	{
 		/// <summary>
 		/// Gets a value indicating whether checkbox is checked
 		/// </summary>
@@ -21,9 +21,9 @@
 		/// <param name="fieldName">Name of the field.</param>
 		/// <param name="value">The value.</param>
 		public CheckboxFieldWrapper(string fieldName, string value)
-            : base(fieldName, value)
-        {
-        }
+			: base(fieldName, value)
+		{
+		}
 
 		/// <summary>
 		/// Performs an implicit conversion from <see cref="CheckboxFieldWrapper"/> to <see cref="System.Boolean"/>.
@@ -33,9 +33,9 @@
 		/// The result of the conversion.
 		/// </returns>
 		public static implicit operator bool(CheckboxFieldWrapper field)
-        {
-            return field.Value;
-        }
+		{
+			return field.Value;
+		}
 
 		/// <summary>
 		/// Performs an implicit conversion from <see cref="CheckboxFieldWrapper"/> to <see cref="System.String"/>.
@@ -45,9 +45,9 @@
 		/// The result of the conversion.
 		/// </returns>
 		public static implicit operator string(CheckboxFieldWrapper field)
-        {
-            return field.Value.ToString();
-        }
+		{
+			return field.Value.ToString();
+		}
 
 		/// <summary>
 		/// Performs an implicit conversion from <see cref="CheckboxFieldWrapper"/> to <see cref="System.Int32"/>.
@@ -57,8 +57,8 @@
 		/// The result of the conversion.
 		/// </returns>
 		public static implicit operator int(CheckboxFieldWrapper field)
-        {
-            return Convert.ToInt32(field.Value);
-        }
-    }
+		{
+			return Convert.ToInt32(field.Value);
+		}
+	}
 }

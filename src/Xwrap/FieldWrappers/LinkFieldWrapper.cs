@@ -1,11 +1,11 @@
 ﻿namespace Xwrap.FieldWrappers
 {
-    using System;
-    using Abstractions;
-    using Sitecore.Data;
-    using Sitecore.Data.Fields;
-    using Sitecore.Data.Items;
-    using Sitecore.Links;
+	using System;
+	using Abstractions;
+	using Sitecore.Data;
+	using Sitecore.Data.Fields;
+	using Sitecore.Data.Items;
+	using Sitecore.Links;
 
 	/// <summary>
 	/// Default field wrapper type for item reference link Sitecore field types .e.g. 'droplink' Implements <see cref="ILinkFieldWrapper{Guid}"/>
@@ -13,25 +13,25 @@
 	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
 	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.ILinkFieldWrapper" />
 	public class LinkFieldWrapper : FieldWrapper, ILinkFieldWrapper
-    {
+	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LinkFieldWrapper"/> class.
 		/// </summary>
 		/// <param name="originalField">The original field.</param>
-		public LinkFieldWrapper(Field originalField) 
-            : base(originalField)
-        {
-        }
+		public LinkFieldWrapper(Field originalField)
+			: base(originalField)
+		{
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LinkFieldWrapper"/> class.
 		/// </summary>
 		/// <param name="item">The item.</param>
 		/// <param name="fieldName">Name of the field.</param>
-		public LinkFieldWrapper(BaseItem item, string fieldName) 
-            : base(item, fieldName)
-        {
-        }
+		public LinkFieldWrapper(BaseItem item, string fieldName)
+			: base(item, fieldName)
+		{
+		}
 
 		/// <summary>
 		/// Gets the selected item ID.
@@ -47,41 +47,40 @@
 		/// Gets the selected item URL.
 		/// </summary>
 		public virtual string Url
-        {
-            get
-            {
-                var target = this.GetTarget();
-                return target == null ? string.Empty : LinkManager.GetItemUrl(target);
-            }
-        }
+		{
+			get
+			{
+				var target = this.GetTarget();
+				return target == null ? string.Empty : LinkManager.GetItemUrl(target);
+			}
+		}
 
 		/// <summary>
 		/// Gets the target item.
 		/// </summary>
 		/// <returns></returns>
 		public virtual Item GetTarget()
-        {
-            if (string.IsNullOrWhiteSpace(this.RawValue))
-            {
-                return null;
-            }
-            if (ShortID.IsShortID(this.RawValue))
-            {
-                return this.GetTarget(ShortID.Parse(this.RawValue).ToID());
-            }
-            if (ID.IsID(this.RawValue))
-            {
-                return this.GetTarget(ID.Parse(this.RawValue));
-            }
+		{
+			if (string.IsNullOrWhiteSpace(this.RawValue))
+			{
+				return null;
+			}
+			if (ShortID.IsShortID(this.RawValue))
+			{
+				return this.GetTarget(ShortID.Parse(this.RawValue).ToID());
+			}
+			if (ID.IsID(this.RawValue))
+			{
+				return this.GetTarget(ID.Parse(this.RawValue));
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-	    /// <summary>
-	    /// Wraps the target Sitecore item and returns an xWrap strongly typed item wrapper.
-	    /// Returns null in case source item template does not match the target template ID.
-	    /// </summary>
-	    /// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
+		/// <summary>
+		/// Wraps the target Sitecore item and returns an xWrap strongly typed item wrapper.
+		/// Returns null in case source item template does not match the target template ID.
+		/// </summary>
 		public virtual TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var target = this.GetTarget();
@@ -99,9 +98,9 @@
 		/// The result of the conversion.
 		/// </returns>
 		public static implicit operator string(LinkFieldWrapper field)
-        {
-            return field.Url;
-        }
+		{
+			return field.Url;
+		}
 
 		/// <summary>
 		/// Gets the target item.
@@ -109,9 +108,9 @@
 		/// <param name="id">The identifier.</param>
 		/// <returns></returns>
 		protected Item GetTarget(ID id)
-        {
-            return ID.IsNullOrEmpty(id) ? null : this.OriginalField.Database.GetItem(id);
-        }
+		{
+			return ID.IsNullOrEmpty(id) ? null : this.OriginalField.Database.GetItem(id);
+		}
 
 		/// <summary>
 		/// Gets the target item ID.
@@ -119,23 +118,23 @@
 		/// <param name="value">The value.</param>
 		/// <returns></returns>
 		protected Guid GetItemId(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return Guid.Empty;
-            }
+		{
+			if (string.IsNullOrWhiteSpace(value))
+			{
+				return Guid.Empty;
+			}
 
-            if (ShortID.IsShortID(value))
-            {
-                return ShortID.Parse(value).ToID().Guid;
-            }
+			if (ShortID.IsShortID(value))
+			{
+				return ShortID.Parse(value).ToID().Guid;
+			}
 
-            if (ID.IsID(value))
-            {
-                return ID.Parse(value).Guid;
-            }
+			if (ID.IsID(value))
+			{
+				return ID.Parse(value).Guid;
+			}
 
-            return Guid.Parse(value);
-        }
-    }
+			return Guid.Parse(value);
+		}
+	}
 }

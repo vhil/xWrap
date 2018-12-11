@@ -1,9 +1,9 @@
 ﻿namespace Xwrap.FieldWrappers
 {
-    using Abstractions;
-    using Sitecore.Data.Fields;
-    using Sitecore.Data.Items;
-    using Sitecore.Resources.Media;
+	using Abstractions;
+	using Sitecore.Data.Fields;
+	using Sitecore.Data.Items;
+	using Sitecore.Resources.Media;
 
 	/// <summary>
 	/// Default field wrapper type for 'image' Sitecore fields. Implements <see cref="IImageFieldWrapper"/>
@@ -11,25 +11,25 @@
 	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
 	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IImageFieldWrapper" />
 	public class ImageFieldWrapper : FieldWrapper, IImageFieldWrapper
-    {
+	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ImageFieldWrapper"/> class.
 		/// </summary>
 		/// <param name="originalField">The original field.</param>
-		public ImageFieldWrapper(Field originalField) 
-            : base(originalField)
-        {
-        }
+		public ImageFieldWrapper(Field originalField)
+			: base(originalField)
+		{
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ImageFieldWrapper"/> class.
 		/// </summary>
 		/// <param name="item">The item.</param>
 		/// <param name="fieldName">Name of the field.</param>
-		public ImageFieldWrapper(BaseItem item, string fieldName) 
-            : base(item, fieldName)
-        {
-        }
+		public ImageFieldWrapper(BaseItem item, string fieldName)
+			: base(item, fieldName)
+		{
+		}
 
 		/// <summary>
 		/// Gets the image field.
@@ -51,9 +51,9 @@
 		/// </summary>
 		/// <returns></returns>
 		public string GetSourceUri()
-        {
-            return this.GetSourceUri(false);
-        }
+		{
+			return this.GetSourceUri(false);
+		}
 
 		/// <summary>
 		/// Gets the image source URI.
@@ -61,39 +61,39 @@
 		/// <param name="absolute">if set to <c>true</c> includes hostname.</param>
 		/// <returns></returns>
 		public string GetSourceUri(bool absolute)
-        {
-            if (!this.HasValue)
-            {
-                return string.Empty;
-            }
+		{
+			if (!this.HasValue)
+			{
+				return string.Empty;
+			}
 
-            var mediaItem = this.ImageField.MediaItem;
+			var mediaItem = this.ImageField.MediaItem;
 
-            var url = mediaItem == null 
-                ? string.Empty 
-                : MediaManager.GetMediaUrl(mediaItem, new MediaUrlOptions { AbsolutePath = absolute });
+			var url = mediaItem == null
+				? string.Empty
+				: MediaManager.GetMediaUrl(mediaItem, new MediaUrlOptions { AbsolutePath = absolute });
 
-	        if (!absolute && !string.IsNullOrWhiteSpace(url))
-	        {
-		        url = "/" + url.TrimStart('/');
-	        }
+			if (!absolute && !string.IsNullOrWhiteSpace(url))
+			{
+				url = "/" + url.TrimStart('/');
+			}
 
-	        return url;
-        }
+			return url;
+		}
 
 		/// <summary>
 		/// Gets the target media item as <see cref="Item" />.
 		/// </summary>
 		/// <returns></returns>
 		public Item GetTarget()
-        {
-            if (!this.HasValue)
-            {
-                return null;
-            }
+		{
+			if (!this.HasValue)
+			{
+				return null;
+			}
 
-            return this.ImageField.MediaItem;
-        }
+			return this.ImageField.MediaItem;
+		}
 
 		/// <summary>
 		/// Performs an implicit conversion from <see cref="ImageFieldWrapper"/> to <see cref="System.String"/>.
@@ -103,8 +103,8 @@
 		/// The result of the conversion.
 		/// </returns>
 		public static implicit operator string(ImageFieldWrapper field)
-        {
-            return field.GetSourceUri();
-        }
-    }
+		{
+			return field.GetSourceUri();
+		}
+	}
 }

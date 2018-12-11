@@ -1,5 +1,4 @@
-﻿
-namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
+﻿namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
 {
 	using System.Web.Compilation;
 	using Sitecore.Mvc.Pipelines.Response.GetModel;
@@ -9,8 +8,16 @@ namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
 	using System.Linq;
 	using RenderingParameters;
 
+	/// <summary>
+	/// Tries to set the instance of <see cref="IViewModel"/> type for Sitecore view rendering.
+	/// </summary>
+	/// <seealso cref="Sitecore.Mvc.Pipelines.Response.GetModel.GetModelProcessor" />
 	public class GetFromView : GetModelProcessor
 	{
+		/// <summary>
+		/// Processes the pipeline step.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
 		public override void Process(GetModelArgs args)
 		{
 			if (args.Result == null)
@@ -19,6 +26,12 @@ namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
 			}
 		}
 
+		/// <summary>
+		/// Gets model from view path.
+		/// </summary>
+		/// <param name="rendering">The rendering.</param>
+		/// <param name="args">The arguments.</param>
+		/// <returns></returns>
 		protected virtual object GetFromViewPath(Rendering rendering, GetModelArgs args)
 		{
 			try
@@ -58,7 +71,7 @@ namespace Xwrap.Mvc.Pipelines.Mvc.GetModel
 					var modelGenericArgs = modelType.GetGenericArguments();
 
 					var method = typeof(ViewModelFactory).GetMethods().FirstOrDefault(m =>
-						string.Equals(m.Name, "GetViewModel") && 
+						string.Equals(m.Name, "GetViewModel") &&
 						m.GetGenericArguments().Length.Equals(modelGenericArgs.Length));
 
 					var genericMethod = method?.MakeGenericMethod(modelGenericArgs);

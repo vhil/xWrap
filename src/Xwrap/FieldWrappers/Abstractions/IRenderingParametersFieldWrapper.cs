@@ -11,6 +11,6 @@
 	/// Generic rendering parameters template wrapper abstraction.
 	/// </summary>
 	public interface IRenderingParametersFieldWrapper<out TReturnType> : IFieldWrapper<TReturnType>
-    {
+	{
 	}
 }

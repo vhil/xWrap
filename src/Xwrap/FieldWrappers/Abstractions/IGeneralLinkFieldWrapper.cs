@@ -6,7 +6,7 @@
 	/// Field wrapper abstraction for 'general link' Sitecore field types. Implements <see cref="ILinkFieldWrapper{string}"/>
 	/// </summary>
 	public interface IGeneralLinkFieldWrapper : ILinkFieldWrapper<string>
-    {
+	{
 		/// <summary>
 		/// Gets the linked item ID.
 		/// </summary>
@@ -41,5 +41,5 @@
 		/// Gets the _target link property.
 		/// </summary>
 		string Target { get; }
-    }
+	}
 }

@@ -1,12 +1,12 @@
 ﻿namespace Xwrap.FieldWrappers.Abstractions
 {
-    using Sitecore.Data.Items;
+	using Sitecore.Data.Items;
 
 	/// <summary>
 	/// Field wrapper abstraction for 'image' Sitecore field types. Implements <see cref="IFieldWrapper{string}"/>
 	/// </summary>
 	public interface IImageFieldWrapper : IFieldWrapper<string>
-    {
+	{
 		/// <summary>
 		/// Gets the image alt text.
 		/// </summary>
@@ -30,5 +30,5 @@
 		/// </summary>
 		/// <returns></returns>
 		Item GetTarget();
-    }
+	}
 }

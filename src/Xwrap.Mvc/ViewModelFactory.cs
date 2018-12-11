@@ -63,8 +63,8 @@
 		/// <typeparam name="TRenderingItem">The type of the rendering item.</typeparam>
 		/// <typeparam name="TRenderingParameters">The type of the rendering parameters.</typeparam>
 		/// <returns></returns>
-		public IViewModel<TRenderingItem, TRenderingParameters> GetViewModel<TRenderingItem, TRenderingParameters>() 
-			where TRenderingItem : ItemWrapper 
+		public IViewModel<TRenderingItem, TRenderingParameters> GetViewModel<TRenderingItem, TRenderingParameters>()
+			where TRenderingItem : ItemWrapper
 			where TRenderingParameters : RenderingParametersWrapper
 		{
 			return new ViewModel<TRenderingItem, TRenderingParameters>(
@@ -118,7 +118,7 @@
 		/// </summary>
 		/// <typeparam name="TRenderingParameters">The type of the rendering parameters.</typeparam>
 		/// <returns></returns>
-		public virtual TRenderingParameters GetRenderingParameters<TRenderingParameters>() 
+		public virtual TRenderingParameters GetRenderingParameters<TRenderingParameters>()
 			where TRenderingParameters : RenderingParametersWrapper
 		{
 			var parameters = RenderingContext.Current.Rendering.Parameters;

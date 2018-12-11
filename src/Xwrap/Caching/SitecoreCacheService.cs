@@ -6,37 +6,37 @@
 	using Extensions;
 
 	internal class SitecoreCacheService : ICacheService
-    {
-        protected ICacheStorage CacheStorage;
-	    protected bool IsDisposed;
+	{
+		protected ICacheStorage CacheStorage;
+		protected bool IsDisposed;
 
 		public SitecoreCacheService(ICacheStorage cacheStorage)
-        {
-            this.CacheStorage = cacheStorage;
-        }
+		{
+			this.CacheStorage = cacheStorage;
+		}
 
-        public virtual bool Add<T>(string key, T value, TimeSpan expiresIn = new TimeSpan(), bool clearOnPublish = false)
-        {
-	        if (this.CacheStorage.Entries.TryGetValue(key, out _))
-            {
-                return false;
-            }
+		public virtual bool Add<T>(string key, T value, TimeSpan expiresIn = new TimeSpan(), bool clearOnPublish = false)
+		{
+			if (this.CacheStorage.Entries.TryGetValue(key, out _))
+			{
+				return false;
+			}
 
 			return this.CacheStorage.Entries.TryAdd(key, new SitecoreMemoryCacheEntry(value, expiresIn, clearOnPublish));
-        }
+		}
 
-        public virtual bool Set<T>(string key, T value, TimeSpan expiresIn = default(TimeSpan), bool clearOnPublish = false)
-        {
-	        var cacheEntry = new SitecoreMemoryCacheEntry(value, expiresIn, clearOnPublish);
+		public virtual bool Set<T>(string key, T value, TimeSpan expiresIn = default(TimeSpan), bool clearOnPublish = false)
+		{
+			var cacheEntry = new SitecoreMemoryCacheEntry(value, expiresIn, clearOnPublish);
 
-            if (this.CacheStorage.Entries.TryGetValue(key, out _))
-            {
-                this.CacheStorage.Entries[key] = cacheEntry;
-                return true;
-            }
+			if (this.CacheStorage.Entries.TryGetValue(key, out _))
+			{
+				this.CacheStorage.Entries[key] = cacheEntry;
+				return true;
+			}
 
-            return this.CacheStorage.Entries.TryAdd(key, cacheEntry);
-        }
+			return this.CacheStorage.Entries.TryAdd(key, cacheEntry);
+		}
 
 		public virtual T Get<T>(string key)
 		{

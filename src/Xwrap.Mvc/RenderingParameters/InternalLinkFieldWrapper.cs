@@ -18,7 +18,7 @@
 		/// </summary>
 		/// <param name="fieldName">Name of the field.</param>
 		/// <param name="value">The value.</param>
-		public InternalLinkFieldWrapper(string fieldName, string value) 
+		public InternalLinkFieldWrapper(string fieldName, string value)
 			: base(fieldName, value)
 		{
 		}
@@ -65,8 +65,8 @@
 		/// <returns></returns>
 		public virtual Item GetTarget()
 		{
-			return this.HasValue 
-				? Sitecore.Context.Database.GetItem(this.RawValue) 
+			return this.HasValue
+				? Sitecore.Context.Database.GetItem(this.RawValue)
 				: null;
 		}
 

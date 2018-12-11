@@ -4,7 +4,7 @@
 	/// Field wrapper abstraction for 'file' Sitecore field types. Implements <see cref="IFieldWrapper{string}"/>
 	/// </summary>
 	public interface IFileFieldWrapper : IFieldWrapper<string>
-    {
+	{
 		/// <summary>
 		/// Gets the file download URL.
 		/// </summary>

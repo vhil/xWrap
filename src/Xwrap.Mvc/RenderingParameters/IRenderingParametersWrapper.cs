@@ -1,12 +1,12 @@
 ﻿namespace Xwrap.Mvc.RenderingParameters
 {
-    using FieldWrappers.Abstractions;
+	using FieldWrappers.Abstractions;
 
 	/// <summary>
 	/// An abstraction for wrapping rendering parameters templates
 	/// </summary>
 	public interface IRenderingParametersWrapper
-    {
+	{
 		/// <summary>
 		/// Wraps the rendering parameters field into xWrap strongly typed rendering parameter field wrapper of <see cref="IRenderingParametersFieldWrapper"/>.
 		/// </summary>
@@ -56,5 +56,5 @@
 		/// <param name="fieldName">Name of the field.</param>
 		/// <returns></returns>
 		ITextFieldWrapper TextField(string fieldName);
-    }
+	}
 }

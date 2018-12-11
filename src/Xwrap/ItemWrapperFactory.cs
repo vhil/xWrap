@@ -23,9 +23,7 @@
 		/// Returns null in case the source item template does not match the target template ID.
 		/// </summary>
 		/// <param name="item">Item to wrap</param>
-		/// <exception cref="ItemWrappingException">if the source item template does not match the target template ID</exception>
-		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
-		public virtual TItemWrapper WrapItem<TItemWrapper>(Item item) 
+		public virtual TItemWrapper WrapItem<TItemWrapper>(Item item)
 			where TItemWrapper : ItemWrapper
 		{
 			if (item == null) return default(TItemWrapper);
@@ -45,7 +43,7 @@
 		/// Items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="items">Items to wrap</param>
-		public virtual IEnumerable<TItemWrapper> WrapItems<TItemWrapper>(IEnumerable<Item> items) 
+		public virtual IEnumerable<TItemWrapper> WrapItems<TItemWrapper>(IEnumerable<Item> items)
 			where TItemWrapper : ItemWrapper
 		{
 			if (items == null) return Enumerable.Empty<TItemWrapper>();
@@ -58,7 +56,7 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item to get children from</param>
-		public virtual IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(Item item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(Item item)
 			where TItemWrapper : ItemWrapper
 		{
 			return this.WrapItems<TItemWrapper>(item.Children);
@@ -69,7 +67,7 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item wrapper to get children from</param>
-		public virtual IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(ItemWrapper item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildren<TItemWrapper>(ItemWrapper item)
 			where TItemWrapper : ItemWrapper
 		{
 			return this.WrapItems<TItemWrapper>(item.OriginalItem.Children);
@@ -80,13 +78,13 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item to get children from</param>
-		public virtual IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(Item item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(Item item)
 			where TItemWrapper : ItemWrapper
 		{
 			var templateIdAttr = typeof(TItemWrapper).GetTemplateIdAttribute();
 
-			return this.WrapItems<TItemWrapper>(templateIdAttr != null 
-				? item.GetChildrenReccursively(templateIdAttr.TemplateId) 
+			return this.WrapItems<TItemWrapper>(templateIdAttr != null
+				? item.GetChildrenReccursively(templateIdAttr.TemplateId)
 				: item.GetChildrenReccursively());
 		}
 
@@ -95,7 +93,7 @@
 		/// Child items which are not inherited from target template are being skipped and not included into result.
 		/// </summary>
 		/// <param name="item">Item wrapper to get children from</param>
-		public virtual IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(ItemWrapper item) 
+		public virtual IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(ItemWrapper item)
 			where TItemWrapper : ItemWrapper
 		{
 			return this.WrapChildrenReccursively<TItemWrapper>(item.OriginalItem);

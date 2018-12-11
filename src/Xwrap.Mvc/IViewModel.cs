@@ -43,6 +43,14 @@
 		/// The value is being resolved through 'xWrap.GetRenderingItem' pipeline.
 		/// </summary>
 		TRenderingItem RenderingItem { get; }
+
+		/// <summary>
+		/// Attempts to wrap PageItem into target <see cref="ItemWrapper"/>type.
+		/// Returns null if page item can't be wrapped into desired type.
+		/// </summary>
+		/// <typeparam name="TPageItem">The type of the page item.</typeparam>
+		/// <returns></returns>
+		TPageItem WrapPageItem<TPageItem>() where TPageItem : ItemWrapper;
 	}
 
 	/// <summary>

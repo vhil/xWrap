@@ -1,7 +1,7 @@
 ﻿namespace Xwrap.Mvc.RenderingParameters
 {
-    using System;
-    using System.Web;
+	using System;
+	using System.Web;
 	using FieldWrappers.Abstractions;
 
 	/// <summary>
@@ -36,10 +36,10 @@
 		/// <param name="fieldName">Name of the field.</param>
 		/// <param name="value">The value.</param>
 		public RenderingParametersFieldWrapper(string fieldName, string value)
-        {
-            this.Name = fieldName;
-            this.RawValue = value;
-        }
+		{
+			this.Name = fieldName;
+			this.RawValue = value;
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether this field has a valid value.
@@ -53,9 +53,9 @@
 		/// <param name="editing">if set to <c>true</c> [editing].</param>
 		/// <returns></returns>
 		public virtual IHtmlString Render(string parameters = null, bool editing = false)
-        {
-	        return new HtmlString(this.RawValue);
-        }
+		{
+			return new HtmlString(this.RawValue);
+		}
 
 		/// <summary>
 		/// Rendering parameter field wrappers do not support field rendering.
@@ -64,9 +64,9 @@
 		/// <param name="editing">if set to <c>true</c> [editing].</param>
 		/// <returns></returns>
 		public virtual IHtmlString Render(object parameters, bool editing = true)
-        {
-            return new HtmlString(this.RawValue);
-        }
+		{
+			return new HtmlString(this.RawValue);
+		}
 
 		/// <summary>
 		/// Rendering parameter field wrappers do not support field rendering.
@@ -75,7 +75,7 @@
 		/// <param name="editing">if set to <c>true</c> [editing].</param>
 		/// <returns></returns>
 		public virtual IHtmlString RenderBeginField(object parameters, bool editing = true)
-        {
+		{
 			return new HtmlString(this.RawValue);
 		}
 
@@ -86,7 +86,7 @@
 		/// <param name="editing">if set to <c>true</c> [editing].</param>
 		/// <returns></returns>
 		public virtual IHtmlString RenderBeginField(string parameters, bool editing = true)
-        {
+		{
 			return new HtmlString(this.RawValue);
 		}
 
@@ -95,7 +95,7 @@
 		/// </summary>
 		/// <returns></returns>
 		public virtual IHtmlString RenderEndField()
-        {
+		{
 			return new HtmlString(this.RawValue);
 		}
 
@@ -106,9 +106,9 @@
 		/// A <see cref="System.String" /> that represents this instance.
 		/// </returns>
 		public override string ToString()
-        {
-            return this.RawValue;
-        }
+		{
+			return this.RawValue;
+		}
 
 		/// <summary>
 		/// Performs an implicit conversion from <see cref="RenderingParametersFieldWrapper"/> to <see cref="System.String"/>.
@@ -118,19 +118,19 @@
 		/// The result of the conversion.
 		/// </returns>
 		public static implicit operator string(RenderingParametersFieldWrapper field)
-        {
-            return field.RawValue;
-        }
+		{
+			return field.RawValue;
+		}
 
 		/// <summary>
 		/// To the HTML string.
 		/// </summary>
 		/// <returns></returns>
 		public string ToHtmlString()
-        {
-            return this.Render().ToString();
-        }
-    }
+		{
+			return this.Render().ToString();
+		}
+	}
 
 	/// <summary>
 	/// Base strongly typed rendering parameters field wrapper
@@ -144,7 +144,7 @@
 		/// </summary>
 		/// <param name="fieldName">Name of the field.</param>
 		/// <param name="value">The value.</param>
-		protected RenderingParametersFieldWrapper(string fieldName, string value) 
+		protected RenderingParametersFieldWrapper(string fieldName, string value)
 			: base(fieldName, value)
 		{
 		}

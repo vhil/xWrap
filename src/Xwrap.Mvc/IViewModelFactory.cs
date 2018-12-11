@@ -24,7 +24,7 @@
 		/// </summary>
 		/// <typeparam name="TRenderingItem">The type of the rendering item.</typeparam>
 		/// <typeparam name="TRenderingParameters">The type of the rendering parameters.</typeparam>
-		IViewModel<TRenderingItem, TRenderingParameters> GetViewModel<TRenderingItem, TRenderingParameters>() 
+		IViewModel<TRenderingItem, TRenderingParameters> GetViewModel<TRenderingItem, TRenderingParameters>()
 			where TRenderingItem : ItemWrapper
 			where TRenderingParameters : RenderingParametersWrapper;
 

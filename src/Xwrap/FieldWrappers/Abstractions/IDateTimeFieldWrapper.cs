@@ -3,8 +3,16 @@
     using System;
     using System.Web;
 
-    public interface IDateTimeFieldWrapper : IFieldWrapper<DateTime>
+	/// <summary>
+	/// Field wrapper abstraction for 'date time' based Sitecore field types. Implements <see cref="IFieldWrapper{DateTime}"/>
+	/// </summary>
+	public interface IDateTimeFieldWrapper : IFieldWrapper<DateTime>
     {
-        IHtmlString Render(bool includeTime, bool editing = true);
+		/// <summary>
+		/// Renders date time field
+		/// </summary>
+		/// <param name="includeTime">Specify if time part should be included</param>
+		/// <param name="editing">Specify if the field should be editable</param>
+		IHtmlString Render(bool includeTime, bool editing = true);
     }
 }

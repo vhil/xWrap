@@ -7,29 +7,84 @@
     using Sitecore.Links;
     using Sitecore.Resources.Media;
 
-    public class GeneralLinkFieldWrapper : FieldWrapper, IGeneralLinkFieldWrapper
+	/// <summary>
+	/// Default field wrapper type for 'general link' Sitecore fields. Implements <see cref="IGeneralLinkFieldWrapper"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IGeneralLinkFieldWrapper" />
+	public class GeneralLinkFieldWrapper : FieldWrapper, IGeneralLinkFieldWrapper
     {
-        public GeneralLinkFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GeneralLinkFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public GeneralLinkFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public GeneralLinkFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GeneralLinkFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public GeneralLinkFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
         }
 
-        protected LinkField LinkField => this.OriginalField;
-        public virtual string AlternateText => this.LinkField.Title;
-        public virtual string Description => this.LinkField.Text;
-        public virtual bool IsInternal => this.LinkField.IsInternal;
-        public virtual bool IsMediaLink => this.LinkField.IsMediaLink;
-        public virtual string Styles => this.LinkField.Class;
-        public virtual string Target => this.LinkField.Target;
-        public virtual string Value => this.Url;
-        public virtual Guid ItemId => this.LinkField.TargetID.ToGuid();
+		/// <summary>
+		/// Gets the link field.
+		/// </summary>
+		protected LinkField LinkField => this.OriginalField;
 
-        public virtual string Url
+		/// <summary>
+		/// Gets the link alternate text.
+		/// </summary>
+		public virtual string AlternateText => this.LinkField.Title;
+
+		/// <summary>
+		/// Gets the link description.
+		/// </summary>
+		public virtual string Description => this.LinkField.Text;
+
+		/// <summary>
+		/// Gets a value indicating whether this link is internal.
+		/// </summary>
+		public virtual bool IsInternal => this.LinkField.IsInternal;
+
+		/// <summary>
+		/// Gets a value indicating whether this link is a media link.
+		/// </summary>
+		public virtual bool IsMediaLink => this.LinkField.IsMediaLink;
+
+		/// <summary>
+		/// Gets the link styles.
+		/// </summary>
+		public virtual string Styles => this.LinkField.Class;
+
+		/// <summary>
+		/// Gets the _target link property.
+		/// </summary>
+		public virtual string Target => this.LinkField.Target;
+
+		/// <summary>
+		/// Gets the value.
+		/// </summary>
+		public virtual string Value => this.Url;
+
+		/// <summary>
+		/// Gets the linked item ID.
+		/// </summary>
+		public virtual Guid ItemId => this.LinkField.TargetID.ToGuid();
+
+		/// <summary>
+		/// Gets the link field URL.
+		/// </summary>
+		/// <value>
+		/// The URL.
+		/// </value>
+		public virtual string Url
         {
             get
             {
@@ -52,7 +107,13 @@
             }
         }
 
-        public virtual Item GetTarget()
+		/// <summary>
+		/// Gets the target linked item.
+		/// </summary>
+		/// <returns>
+		/// Instance of <see cref="T:Sitecore.Data.Items.Item" />
+		/// </returns>
+		public virtual Item GetTarget()
         {
             if (this.IsInternal || this.IsMediaLink)
             {
@@ -62,7 +123,13 @@
             return null;
         }
 
-	    public virtual TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
+		/// <summary>
+		/// Wraps the target linked Sitecore item and returns an xWrap strongly typed item wrapper.
+		/// Returns null in case source item template does not match the target template ID.
+		/// </summary>
+		/// <typeparam name="TItemWrapper">Target field wrapper type, inherited from <see cref="T:Xwrap.FieldWrappers.Abstractions.IFieldWrapper" /></typeparam>
+		/// <returns></returns>
+		public virtual TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
 	    {
 		    var target = this.GetTarget();
 
@@ -71,7 +138,14 @@
 		    return this.Factory.WrapItem<TItemWrapper>(target);
 	    }
 
-	    public static implicit operator string(GeneralLinkFieldWrapper field)
+		/// <summary>
+		/// Performs an implicit conversion from <see cref="GeneralLinkFieldWrapper"/> to <see cref="System.String"/>.
+		/// </summary>
+		/// <param name="field">The field.</param>
+		/// <returns>
+		/// The result of the conversion.
+		/// </returns>
+		public static implicit operator string(GeneralLinkFieldWrapper field)
         {
             return field.Url;
         }

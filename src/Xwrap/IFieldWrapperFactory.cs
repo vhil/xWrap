@@ -7,6 +7,9 @@
 	using Exceptions;
 	using System;
 
+	/// <summary>
+	/// Field wrapper factory abstraction for creating instances of <see cref="IFieldWrapper"/> types.
+	/// </summary>
 	public interface IFieldWrapperFactory
 	{
 		/// <summary>

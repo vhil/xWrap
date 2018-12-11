@@ -7,22 +7,46 @@
     using Sitecore.Data.Items;
     using Sitecore.Links;
 
-    public class LinkFieldWrapper : FieldWrapper, ILinkFieldWrapper
+	/// <summary>
+	/// Default field wrapper type for item reference link Sitecore field types .e.g. 'droplink' Implements <see cref="ILinkFieldWrapper{Guid}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.ILinkFieldWrapper" />
+	public class LinkFieldWrapper : FieldWrapper, ILinkFieldWrapper
     {
-        public LinkFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="LinkFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public LinkFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public LinkFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="LinkFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public LinkFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
         }
 
-        public virtual Guid ItemId => this.GetItemId(this.RawValue);
-        public virtual Guid Value => this.GetItemId(this.RawValue);
+		/// <summary>
+		/// Gets the selected item ID.
+		/// </summary>
+		public virtual Guid ItemId => this.GetItemId(this.RawValue);
 
-        public virtual string Url
+		/// <summary>
+		/// Gets the selected item ID.
+		/// </summary>
+		public virtual Guid Value => this.GetItemId(this.RawValue);
+
+		/// <summary>
+		/// Gets the selected item URL.
+		/// </summary>
+		public virtual string Url
         {
             get
             {
@@ -31,7 +55,11 @@
             }
         }
 
-        public virtual Item GetTarget()
+		/// <summary>
+		/// Gets the target item.
+		/// </summary>
+		/// <returns></returns>
+		public virtual Item GetTarget()
         {
             if (string.IsNullOrWhiteSpace(this.RawValue))
             {
@@ -49,6 +77,11 @@
             return null;
         }
 
+	    /// <summary>
+	    /// Wraps the target Sitecore item and returns an xWrap strongly typed item wrapper.
+	    /// Returns null in case source item template does not match the target template ID.
+	    /// </summary>
+	    /// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
 		public virtual TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var target = this.GetTarget();
@@ -58,17 +91,34 @@
 			return this.Factory.WrapItem<TItemWrapper>(target);
 		}
 
+		/// <summary>
+		/// Performs an implicit conversion from <see cref="LinkFieldWrapper"/> to <see cref="System.String"/>.
+		/// </summary>
+		/// <param name="field">The field.</param>
+		/// <returns>
+		/// The result of the conversion.
+		/// </returns>
 		public static implicit operator string(LinkFieldWrapper field)
         {
             return field.Url;
         }
 
-        protected Item GetTarget(ID id)
+		/// <summary>
+		/// Gets the target item.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
+		protected Item GetTarget(ID id)
         {
             return ID.IsNullOrEmpty(id) ? null : this.OriginalField.Database.GetItem(id);
         }
 
-        protected Guid GetItemId(string value)
+		/// <summary>
+		/// Gets the target item ID.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns></returns>
+		protected Guid GetItemId(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {

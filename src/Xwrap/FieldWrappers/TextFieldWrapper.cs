@@ -4,18 +4,35 @@
     using Sitecore.Data.Fields;
     using Sitecore.Data.Items;
 
-    public class TextFieldWrapper : FieldWrapper, ITextFieldWrapper
+	/// <summary>
+	/// Default field wrapper type for textual Sitecore field types such as 'single line text'. Implements <see cref="IFieldWrapper{string}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.ITextFieldWrapper" />
+	public class TextFieldWrapper : FieldWrapper, ITextFieldWrapper
     {
-        public TextFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TextFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public TextFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public TextFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TextFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public TextFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
         }
 
-        public string Value => this.RawValue;
+		/// <summary>
+		/// Gets the strongly typed value.
+		/// </summary>
+		public string Value => this.RawValue;
     }
 }

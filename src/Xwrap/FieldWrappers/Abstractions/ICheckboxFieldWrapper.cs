@@ -1,6 +1,9 @@
 ﻿namespace Xwrap.FieldWrappers.Abstractions
 {
-    public interface ICheckboxFieldWrapper : IFieldWrapper<bool>
+	/// <summary>
+	/// Field wrapper abstraction for 'checkbox' Sitecore field type. Implements <see cref="IFieldWrapper{bool}"/>
+	/// </summary>
+	public interface ICheckboxFieldWrapper : IFieldWrapper<bool>
     {
     }
 }

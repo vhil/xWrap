@@ -7,14 +7,28 @@
 	using Sitecore.Data;
     using Sitecore.Data.Items;
 
-    public class ListFieldWrapper : RenderingParametersFieldWrapper<IEnumerable<Guid>>, IListFieldWrapper
+	/// <summary>
+	/// Rendering parameters field wrapper for list Sitecore field types such as 'treelist' or 'multilist'. Implements <see cref="IFieldWrapper{IEnumerable{Guid}}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.Mvc.RenderingParameters.RenderingParametersFieldWrapper{System.Collections.Generic.IEnumerable{System.Guid}}" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IListFieldWrapper" />
+	public class ListFieldWrapper : RenderingParametersFieldWrapper<IEnumerable<Guid>>, IListFieldWrapper
     {
-        public ListFieldWrapper(string fieldName, string value)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="fieldName">Name of the field.</param>
+		/// <param name="value">The value.</param>
+		public ListFieldWrapper(string fieldName, string value)
             : base(fieldName, value)
         {
         }
 
-        public IEnumerable<Item> GetItems()
+		/// <summary>
+		/// Gets the list of selected items.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Item> GetItems()
         {
             foreach (var id in this.Value)
             {
@@ -26,6 +40,12 @@
             }
         }
 
+		/// <summary>
+		/// Wraps Sitecore items and returns <see cref="T:System.Collections.Generic.IEnumerable`1" /> of xWrap strongly typed item wrappers.
+		/// Items which are not inherited from target template are being skipped and not included into result.
+		/// </summary>
+		/// <typeparam name="TItemWrapper"></typeparam>
+		/// <returns></returns>
 		public IEnumerable<TItemWrapper> WrapItems<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var items = this.GetItems();
@@ -35,17 +55,32 @@
 			return this.Factory.WrapItems<TItemWrapper>(items);
 		}
 
+		/// <summary>
+		/// Returns an enumerator that iterates through the collection.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+		/// </returns>
 		public IEnumerator<Item> GetEnumerator()
         {
             return this.GetItems().GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+		/// <summary>
+		/// Returns an enumerator that iterates through a collection.
+		/// </summary>
+		/// <returns>
+		/// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+		/// </returns>
+		IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
-        public override IEnumerable<Guid> Value
+		/// <summary>
+		/// Gets the enumerable of selected item IDs.
+		/// </summary>
+		public override IEnumerable<Guid> Value
         {
             get
             {

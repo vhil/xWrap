@@ -10,9 +10,19 @@
 	using FieldWrappers.Abstractions;
 	using Sitecore;
 
+	/// <summary>
+	/// The base class for all xWrap item wrappers.
+	/// </summary>
 	public class ItemWrapper
 	{
+		/// <summary>
+		/// Gets the item wrapper factory.
+		/// </summary>
 		protected IItemWrapperFactory ItemWrapperFactory => Xwrap.ItemWrapperFactory.Instance;
+
+		/// <summary>
+		/// Gets the field wrapper factory.
+		/// </summary>
 		protected IFieldWrapperFactory FieldWrapperFactory => Xwrap.FieldWrapperFactory.Instance;
 
 		/// <summary>
@@ -55,6 +65,11 @@
 		/// </summary>
 		public IDateTimeFieldWrapper UpdatedDate => this.WrapField<IDateTimeFieldWrapper>(FieldIDs.Updated);
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ItemWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <exception cref="Xwrap.Exceptions.ItemWrappingException">Unable to wrap item. Constructor argument '{nameof(item)}</exception>
 		public ItemWrapper(Item item)
 		{
 			this.OriginalItem = item ?? throw new ItemWrappingException(
@@ -63,8 +78,16 @@
 			this.ValidateTemplate();
 		}
 
+		/// <summary>
+		/// Gets the <see cref="IFieldWrapper"/> by the specified field name.
+		/// </summary>
+		/// <param name="fieldName">Name of the field.</param>
 		public IFieldWrapper this[string fieldName] => this.FieldWrapperFactory.WrapField(this.OriginalItem, fieldName);
 
+		/// <summary>
+		/// Gets the <see cref="IFieldWrapper"/> by the specified field ID.
+		/// </summary>
+		/// <param name="fieldId">The field ID.</param>
 		public IFieldWrapper this[ID fieldId] => this.FieldWrapperFactory.WrapField(this.OriginalItem, fieldId);
 
 		/// <summary>
@@ -84,16 +107,33 @@
 			return this.WrapChildren<TItemWrapper>().FirstOrDefault();
 		}
 
+		/// <summary>Wraps Sitecore field and returns an xWrap strongly typed field wrapper.
+		/// Throws exception in case source field does not match the target field type.</summary>
+		/// <typeparam name="TFieldWrapper">Target field wrapper type, inherited from <see cref="IFieldWrapper"/></typeparam>
+		/// <param name="fieldName">Field name to wrap</param>
+		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
 		protected TFieldWrapper WrapField<TFieldWrapper>(string fieldName) where TFieldWrapper : IFieldWrapper
 		{
 			return this.FieldWrapperFactory.WrapField<TFieldWrapper>(this.OriginalItem, fieldName);
 		}
 
+		/// <summary>Wraps Sitecore field and returns an xWrap strongly typed field wrapper.
+		/// Throws exception in case source field does not match the target field type.</summary>
+		/// <typeparam name="TFieldWrapper">Target field wrapper type, inherited from <see cref="IFieldWrapper"/></typeparam>
+		/// <param name="fieldId">Field ID to wrap</param>
+		/// <exception cref="FieldWrappingException">if the source field does not match the target field type</exception>
+		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
 		protected TFieldWrapper WrapField<TFieldWrapper>(ID fieldId) where TFieldWrapper : IFieldWrapper
 		{
 			return this.FieldWrapperFactory.WrapField<TFieldWrapper>(this.OriginalItem, fieldId);
 		}
 
+		/// <summary>
+		/// Validates the template.
+		/// </summary>
+		/// <exception cref="Xwrap.Exceptions.ItemWrappingException">Unable to wrap item '{this.FullPath}' of template {this.TemplateId}. " +
+		/// 					$"'{this.GetType().Name}' item wrapper expects item of {expectedTemplateAttr.TemplateId}</exception>
 		protected virtual void ValidateTemplate()
 		{
 			var expectedTemplateAttr = this.GetTemplateIdAttribute();

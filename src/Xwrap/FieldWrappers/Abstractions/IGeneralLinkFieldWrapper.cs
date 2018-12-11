@@ -1,19 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xwrap.FieldWrappers.Abstractions
+﻿namespace Xwrap.FieldWrappers.Abstractions
 {
-    public interface IGeneralLinkFieldWrapper : ILinkFieldWrapper<string>
+	using System;
+
+	/// <summary>
+	/// Field wrapper abstraction for 'general link' Sitecore field types. Implements <see cref="ILinkFieldWrapper{string}"/>
+	/// </summary>
+	public interface IGeneralLinkFieldWrapper : ILinkFieldWrapper<string>
     {
-        Guid ItemId { get; }
-        string AlternateText { get; }
-        string Description { get; }
-        bool IsInternal { get; }
-        bool IsMediaLink { get; }
-        string Styles { get; }
-        string Target { get; }
+		/// <summary>
+		/// Gets the linked item ID.
+		/// </summary>
+		Guid ItemId { get; }
+
+		/// <summary>
+		/// Gets the link alternate text.
+		/// </summary>
+		string AlternateText { get; }
+
+		/// <summary>
+		/// Gets the link description.
+		/// </summary>
+		string Description { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether this link is internal.
+		/// </summary>
+		bool IsInternal { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether this link is a media link.
+		/// </summary>
+		bool IsMediaLink { get; }
+
+		/// <summary>
+		/// Gets the link styles.
+		/// </summary>
+		string Styles { get; }
+
+		/// <summary>
+		/// Gets the _target link property.
+		/// </summary>
+		string Target { get; }
     }
 }

@@ -8,23 +8,44 @@
     using Sitecore.Data.Fields;
     using Sitecore.Data.Items;
 
-    public class ListFieldWrapper : FieldWrapper, IListFieldWrapper
+	/// <summary>
+	/// Default field wrapper type for list Sitecore field types such as 'treelist' or 'multilist' Implements <see cref="IFieldWrapper{IEnumerable{Guid}}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IListFieldWrapper" />
+	public class ListFieldWrapper : FieldWrapper, IListFieldWrapper
     {
         private IEnumerable<Guid> ids;
 
-        public ListFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public ListFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public ListFieldWrapper(BaseItem item, string fieldName)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public ListFieldWrapper(BaseItem item, string fieldName)
             : base(item, fieldName)
         {
         }
 
-        public override bool HasValue => this.ids != null && this.Value.Any();
+		/// <summary>
+		/// Gets a value indicating whether this field has a valid value.
+		/// </summary>
+		public override bool HasValue => this.ids != null && this.Value.Any();
 
-        public IEnumerable<Item> GetItems()
+		/// <summary>
+		/// Gets the list of selected items.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Item> GetItems()
         {
             foreach (var id in this.Value)
             {
@@ -37,7 +58,13 @@
             }
         }
 
-	    public IEnumerable<TItemWrapper> WrapItems<TItemWrapper>() where TItemWrapper : ItemWrapper
+		/// <summary>
+		/// Wraps Sitecore items and returns <see cref="IEnumerable{TItemWrapper}" /> of xWrap strongly typed item wrappers.
+		/// Items which are not inherited from target template are being skipped and not included into result.
+		/// </summary>
+		/// <typeparam name="TItemWrapper"></typeparam>
+		/// <returns></returns>
+		public IEnumerable<TItemWrapper> WrapItems<TItemWrapper>() where TItemWrapper : ItemWrapper
 	    {
 			var items = this.GetItems();
 
@@ -46,17 +73,32 @@
 			return this.Factory.WrapItems<TItemWrapper>(items);
 		}
 
-	    public IEnumerator<Item> GetEnumerator()
+		/// <summary>
+		/// Returns an enumerator that iterates through the collection.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+		/// </returns>
+		public IEnumerator<Item> GetEnumerator()
         {
             return this.GetItems().GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+		/// <summary>
+		/// Returns an enumerator that iterates through a collection.
+		/// </summary>
+		/// <returns>
+		/// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+		/// </returns>
+		IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
-        public IEnumerable<Guid> Value
+		/// <summary>
+		/// Gets the enumerable of selected item IDs.
+		/// </summary>
+		public IEnumerable<Guid> Value
         {
             get
             {

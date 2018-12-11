@@ -3,6 +3,9 @@
 	using System;
 	using System.Runtime.Serialization;
 
+	/// <summary>
+	/// Occurs normally if the field type can't be wrapped into target field wrapper type
+	/// </summary>
 	[Serializable]
 	public class FieldWrappingException : Exception
 	{

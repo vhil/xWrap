@@ -8,13 +8,19 @@
 	using System.Linq;
 	using Exceptions;
 
+	/// <summary>
+	/// A factory type for creating ItemWrapper instances.
+	/// </summary>
 	public class ItemWrapperFactory : IItemWrapperFactory
 	{
+		/// <summary>
+		/// Configured instance of the IItemWrapperFactory in configuration by path "xWrap/itemWrapperFactory"
+		/// </summary>
 		public static IItemWrapperFactory Instance => Factory.CreateObject("xWrap/itemWrapperFactory", true) as IItemWrapperFactory;
 
 		/// <summary>
 		/// Wraps Sitecore item and returns an xWrap strongly typed item wrapper.
-		/// Throws exception in case source item template does not match the target template ID.
+		/// Returns null in case the source item template does not match the target template ID.
 		/// </summary>
 		/// <param name="item">Item to wrap</param>
 		/// <exception cref="ItemWrappingException">if the source item template does not match the target template ID</exception>

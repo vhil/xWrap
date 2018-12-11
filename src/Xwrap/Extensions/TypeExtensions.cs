@@ -5,7 +5,7 @@
 
 	public static class TypeExtensions
     {
-        public static object GetValue(this MemberInfo member, object instance)
+        internal static object GetValue(this MemberInfo member, object instance)
         {
             switch (member.MemberType)
             {
@@ -23,7 +23,7 @@
             }
         }
 
-        public static bool IsAssignableTo(this Type type, Type other)
+	    public static bool IsAssignableTo(this Type type, Type other)
         {
             return other.IsAssignableFrom(type);
         }

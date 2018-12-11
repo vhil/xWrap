@@ -5,21 +5,38 @@
     using Sitecore.Data.Items;
     using System.Globalization;
 
+	/// <summary>
+	/// Default field wrapper type for 'number' Sitecore field types. Implements <see cref="IFieldWrapper{decimal}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.INumberFieldWrapper" />
 	public class NumberFieldWrapper : FieldWrapper, INumberFieldWrapper
     {
         private decimal? value;
 
-        public NumberFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NumberFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public NumberFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public NumberFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NumberFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public NumberFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
         }
 
-        public override bool HasValue
+		/// <summary>
+		/// Gets a value indicating whether this field has a valid value.
+		/// </summary>
+		public override bool HasValue
         {
             get
             {
@@ -28,7 +45,10 @@
             }
         }
 
-        public decimal Value
+		/// <summary>
+		/// Gets the strongly typed value.
+		/// </summary>
+		public decimal Value
         {
             get
             {
@@ -37,7 +57,10 @@
             }
         }
 
-        protected void InitializeValue()
+		/// <summary>
+		/// Initializes the value.
+		/// </summary>
+		protected void InitializeValue()
         {
             if (!this.value.HasValue)
             {

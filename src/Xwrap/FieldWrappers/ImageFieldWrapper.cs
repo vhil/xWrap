@@ -5,28 +5,62 @@
     using Sitecore.Data.Items;
     using Sitecore.Resources.Media;
 
-    public class ImageFieldWrapper : FieldWrapper, IImageFieldWrapper
+	/// <summary>
+	/// Default field wrapper type for 'image' Sitecore fields. Implements <see cref="IImageFieldWrapper"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IImageFieldWrapper" />
+	public class ImageFieldWrapper : FieldWrapper, IImageFieldWrapper
     {
-        public ImageFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ImageFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public ImageFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public ImageFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ImageFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public ImageFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
         }
 
-        protected ImageField ImageField => this.OriginalField;
-        public string AltText => this.ImageField.Alt;
-        public string Value => this.GetSourceUri();
+		/// <summary>
+		/// Gets the image field.
+		/// </summary>
+		protected ImageField ImageField => this.OriginalField;
 
-        public string GetSourceUri()
+		/// <summary>
+		/// Gets the image alt text.
+		/// </summary>
+		public string AltText => this.ImageField.Alt;
+
+		/// <summary>
+		/// Gets the strongly typed field value.
+		/// </summary>
+		public string Value => this.GetSourceUri();
+
+		/// <summary>
+		/// Gets the image source URI.
+		/// </summary>
+		/// <returns></returns>
+		public string GetSourceUri()
         {
             return this.GetSourceUri(false);
         }
 
-        public string GetSourceUri(bool absolute)
+		/// <summary>
+		/// Gets the image source URI.
+		/// </summary>
+		/// <param name="absolute">if set to <c>true</c> includes hostname.</param>
+		/// <returns></returns>
+		public string GetSourceUri(bool absolute)
         {
             if (!this.HasValue)
             {
@@ -46,8 +80,12 @@
 
 	        return url;
         }
-        
-        public Item GetTarget()
+
+		/// <summary>
+		/// Gets the target media item as <see cref="Item" />.
+		/// </summary>
+		/// <returns></returns>
+		public Item GetTarget()
         {
             if (!this.HasValue)
             {
@@ -57,7 +95,14 @@
             return this.ImageField.MediaItem;
         }
 
-        public static implicit operator string(ImageFieldWrapper field)
+		/// <summary>
+		/// Performs an implicit conversion from <see cref="ImageFieldWrapper"/> to <see cref="System.String"/>.
+		/// </summary>
+		/// <param name="field">The field.</param>
+		/// <returns>
+		/// The result of the conversion.
+		/// </returns>
+		public static implicit operator string(ImageFieldWrapper field)
         {
             return field.GetSourceUri();
         }

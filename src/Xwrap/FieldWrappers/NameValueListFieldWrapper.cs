@@ -7,21 +7,38 @@
 	using Sitecore;
 	using Sitecore.Data.Items;
 
+	/// <summary>
+	/// Default field wrapper type for 'name value list' Sitecore field types. Implements <see cref="IFieldWrapper{NameValueCollection}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.INameValueListFieldWrapper" />
 	public class NameValueListFieldWrapper : FieldWrapper, INameValueListFieldWrapper
     {
         private NameValueCollection value;
 
-        public NameValueListFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NameValueListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public NameValueListFieldWrapper(Field originalField) 
             : base(originalField)
         {
         }
 
-        public NameValueListFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NameValueListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public NameValueListFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
         }
 
-        public NameValueCollection Value
+		/// <summary>
+		/// Gets the strongly typed value.
+		/// </summary>
+		public NameValueCollection Value
         {
             get
             {
@@ -36,7 +53,10 @@
             }
         }
 
-        public override bool HasValue
+		/// <summary>
+		/// Gets a value indicating whether this field has a valid value.
+		/// </summary>
+		public override bool HasValue
         {
             get
             {
@@ -45,7 +65,10 @@
             }
         }
 
-        protected void InitializeValue()
+		/// <summary>
+		/// Initializes the value.
+		/// </summary>
+		protected void InitializeValue()
         {
             if (this.value == null)
             {

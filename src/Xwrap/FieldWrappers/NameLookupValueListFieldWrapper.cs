@@ -8,21 +8,38 @@
 	using System.Web;
     using Sitecore.Data.Items;
 
+	/// <summary>
+	/// Default field wrapper type for 'name look value list' Sitecore field types. Implements <see cref="IFieldWrapper{IDictionary{string, Guid}}"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.INameLookupValueListFieldWrapper" />
 	public class NameLookupValueListFieldWrapper : FieldWrapper, INameLookupValueListFieldWrapper
     {
-        public NameLookupValueListFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NameLookupValueListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public NameLookupValueListFieldWrapper(Field originalField) 
             : base(originalField)
         {
             this.InitializeValue();
         }
 
-        public NameLookupValueListFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NameLookupValueListFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public NameLookupValueListFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
             this.InitializeValue();
         }
 
-        public IDictionary<string, Guid> Value { get; private set; }
+		/// <summary>
+		/// Gets the strongly typed value.
+		/// </summary>
+		public IDictionary<string, Guid> Value { get; private set; }
 
         private void InitializeValue()
         {

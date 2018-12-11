@@ -1,6 +1,9 @@
 ﻿namespace Xwrap.FieldWrappers.Abstractions
 {
-    public interface IIntegerFieldWrapper : IFieldWrapper<int>
+	/// <summary>
+	/// Field wrapper abstraction for 'integer' Sitecore field types. Implements <see cref="IFieldWrapper{int}"/>
+	/// </summary>
+	public interface IIntegerFieldWrapper : IFieldWrapper<int>
     {
     }
 }

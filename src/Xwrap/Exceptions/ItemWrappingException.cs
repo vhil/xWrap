@@ -3,6 +3,9 @@
 	using System;
 	using System.Runtime.Serialization;
 
+	/// <summary>
+	/// Occurs if the item can not be wrapped into target item wrapper type.
+	/// </summary>
 	[Serializable]
 	public class ItemWrappingException : Exception
 	{

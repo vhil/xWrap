@@ -4,23 +4,40 @@
     using Sitecore.Data.Fields;
     using Sitecore.Data.Items;
 
-    public class IntegerFieldWrapper : FieldWrapper, IIntegerFieldWrapper
+	/// <summary>
+	/// Default field wrapper type for 'integer' Sitecore fields. Implements <see cref="IIntegerFieldWrapper"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IIntegerFieldWrapper" />
+	public class IntegerFieldWrapper : FieldWrapper, IIntegerFieldWrapper
     {
         private int? value;
 
-        public IntegerFieldWrapper(Field originalField) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IntegerFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
+		public IntegerFieldWrapper(Field originalField) 
             : base(originalField)
         {
             this.value = null;
         }
 
-        public IntegerFieldWrapper(BaseItem item, string fieldName) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IntegerFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		public IntegerFieldWrapper(BaseItem item, string fieldName) 
             : base(item, fieldName)
         {
             this.value = null;
         }
 
-        public int Value
+		/// <summary>
+		/// Gets the strongly typed value.
+		/// </summary>
+		public int Value
         {
             get
             {
@@ -29,7 +46,10 @@
             }
         }
 
-        public override bool HasValue
+		/// <summary>
+		/// Gets a value indicating whether this field has a valid value.
+		/// </summary>
+		public override bool HasValue
         {
             get
             {
@@ -38,7 +58,10 @@
             }
         }
 
-        protected void InitializeValue()
+		/// <summary>
+		/// Initializes the value.
+		/// </summary>
+		protected void InitializeValue()
         {
             if (!this.value.HasValue)
             {

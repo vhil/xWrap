@@ -8,20 +8,43 @@
 	using Sitecore.StringExtensions;
 	using Abstractions;
 
+	/// <summary>
+	/// Default field wrapper type for 'internal link' Sitecore fields. Implements <see cref="IInternalLinkFieldWrapper"/>
+	/// </summary>
+	/// <seealso cref="Xwrap.FieldWrappers.FieldWrapper" />
+	/// <seealso cref="Xwrap.FieldWrappers.Abstractions.IInternalLinkFieldWrapper" />
 	public class InternalLinkFieldWrapper : FieldWrapper, IInternalLinkFieldWrapper
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="InternalLinkFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="originalField">The original field.</param>
 		public InternalLinkFieldWrapper(Field originalField)
 			: base(originalField)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="InternalLinkFieldWrapper"/> class.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="fieldName">Name of the field.</param>
 		public InternalLinkFieldWrapper(BaseItem item, string fieldName)
 			: base(item, fieldName)
 		{
 		}
 
+		/// <summary>
+		/// Gets the strongly typed field value.
+		/// </summary>
 		public string Value => this.Path;
 
+		/// <summary>
+		/// Gets the target item ID.
+		/// </summary>
+		/// <value>
+		/// The target item ID.
+		/// </value>
 		public Guid TargetId
 		{
 			get
@@ -32,8 +55,20 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets the target item path.
+		/// </summary>
+		/// <value>
+		/// The target item path.
+		/// </value>
 		public string Path => this.RawValue;
 
+		/// <summary>
+		/// Gets the target item URL.
+		/// </summary>
+		/// <value>
+		/// The target item URL.
+		/// </value>
 		public string Url
 		{
 			get
@@ -44,6 +79,10 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets the target linked item.
+		/// </summary>
+		/// <returns></returns>
 		public Item GetTarget()
 		{
 			return this.Path.IsNullOrEmpty()
@@ -51,6 +90,12 @@
 				: this.OriginalField.Database.GetItem(this.Path);
 		}
 
+		/// <summary>
+		/// Wraps the target linked Sitecore item and returns an xWrap strongly typed item wrapper.
+		/// Returns null in case source item template does not match the target template ID.
+		/// </summary>
+		/// <typeparam name="TItemWrapper">Target field wrapper type, inherited from <see cref="IFieldWrapper" /></typeparam>
+		/// <returns></returns>
 		public TItemWrapper WrapTarget<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			var target = this.GetTarget();

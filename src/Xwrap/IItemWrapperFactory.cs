@@ -1,18 +1,19 @@
 ﻿namespace Xwrap
 {
 	using System;
-	using Exceptions;
 	using System.Collections.Generic;
 	using Sitecore.Data.Items;
 
+	/// <summary>
+	/// Item wrapper factory abstraction for creating xWrap <see cref="ItemWrapper"/> types.
+	/// </summary>
 	public interface IItemWrapperFactory
 	{
 		/// <summary>
 		/// Wraps Sitecore item and returns an xWrap strongly typed item wrapper.
-		/// Throws exception in case source item template does not match the target template ID.
+		/// Returns null in case source item template does not match the target template ID.
 		/// </summary>
 		/// <param name="item">Item to wrap</param>
-		/// <exception cref="ItemWrappingException">if the source item template does not match the target template ID</exception>
 		/// <exception cref="ArgumentNullException">if one of input parameters is null</exception>
 		TItemWrapper WrapItem<TItemWrapper>(Item item) 
 			where TItemWrapper : ItemWrapper;

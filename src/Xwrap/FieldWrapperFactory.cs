@@ -13,17 +13,31 @@
 	using Extensions;
 	using FieldWrappers;
 
+	/// <summary>
+	/// Field wrapper factory object for creating instances of <see cref="IFieldWrapper"/> types.
+	/// </summary>
+	/// <seealso cref="Xwrap.IFieldWrapperFactory" />
 	public class FieldWrapperFactory : IFieldWrapperFactory
 	{
 		private readonly ICacheService cacheService;
 
+		/// <summary>
+		/// Gets a value indicating whether this instance can cache.
+		/// </summary>
 		protected virtual bool CanCache => Sitecore.Context.PageMode.IsNormal;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FieldWrapperFactory"/> class.
+		/// </summary>
+		/// <param name="cacheService">The cache service.</param>
 		public FieldWrapperFactory(ICacheService cacheService)
 		{
 			this.cacheService = cacheService;
 		}
 
+		/// <summary>
+		/// Gets the configured instance of <see cref="IFieldWrapperFactory"/> in sitecore configuration by path 'xWrap/fieldWrapperFactory'.
+		/// </summary>
 		public static IFieldWrapperFactory Instance => Factory.CreateObject("xWrap/fieldWrapperFactory", true) as IFieldWrapperFactory;
 
 		/// <summary>

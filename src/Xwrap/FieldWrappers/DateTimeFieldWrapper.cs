@@ -77,5 +77,10 @@
 		{
 			return field.Value;
 		}
+
+		/// <summary>
+		/// Gets a value indicating whether this field has a valid value.
+		/// </summary>
+		public override bool HasValue => ((DateField)this.OriginalField).DateTime != default(DateTime);
 	}
 }

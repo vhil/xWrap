@@ -63,6 +63,11 @@ namespace Xwrap.Mvc
 		where TRenderingItem : ItemWrapper
 	{
 		/// <summary>
+		/// The wrapped page item
+		/// </summary>
+		protected object wrappedPageItem;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="ViewModel{TRenderingItem}"/> class.
 		/// </summary>
 		/// <param name="viewModel">The view model.</param>
@@ -102,7 +107,12 @@ namespace Xwrap.Mvc
 		/// <exception cref="System.NotImplementedException"></exception>
 		public TPageItem WrapPageItem<TPageItem>() where TPageItem : ItemWrapper
 		{
-			return this.PageItem.WrapItem<TPageItem>();
+			if (!(this.wrappedPageItem is TPageItem))
+			{
+				this.wrappedPageItem = this.PageItem.WrapItem<TPageItem>();
+			}
+
+			return (TPageItem)this.wrappedPageItem;
 		}
 	}
 

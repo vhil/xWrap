@@ -22,11 +22,6 @@
 		private readonly ICacheService cacheService;
 
 		/// <summary>
-		/// Gets a value indicating whether this instance can cache.
-		/// </summary>
-		protected virtual bool CanCache => Sitecore.Context.PageMode.IsNormal;
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="FieldWrapperFactory"/> class.
 		/// </summary>
 		/// <param name="cacheService">The cache service.</param>
@@ -61,7 +56,7 @@
 
 				IFieldWrapper fieldWrapper;
 
-				if (this.CanCache && field.Database.Name != "master")
+				if (field.Database.Name != "master")
 				{
 					fieldWrapper = this.cacheService.Get<IFieldWrapper>(cacheKey);
 					if (fieldWrapper != null) return fieldWrapper;
@@ -72,7 +67,7 @@
 
 				fieldWrapper = wrapFieldAgrs.FieldWrapper ?? new TextFieldWrapper(field);
 
-				if (this.CanCache && field.Database.Name != "master")
+				if (field.Database.Name != "master")
 				{
 					this.cacheService.Set(cacheKey, fieldWrapper, TimeSpan.FromMinutes(5), true);
 				}

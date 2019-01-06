@@ -1,0 +1,13 @@
+{
+	"name": "xwrap",
+	"version": "1.0.0",
+	"description": "Build and pack/push nuget",
+	"main": "gulpfile.js",
+	"dependencies": {
+		"gulp": "^4.0.0",
+		"gulp-color": "0.0.2",
+		"gulp-msbuild": "^0.5.5",
+		"gulp-rimraf": "^0.2.2",
+		"run-sequence": "^2.2.1"
+	}
+}

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xwrap.Mvc", "Xwrap.Mvc\Xwra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution files", "solution files", "{F8E2D0FA-B339-4901-B0FD-70908A2A2765}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\gulp.config.json = ..\gulp.config.json
 		..\gulpfile.js = ..\gulpfile.js
 		..\package.json = ..\package.json
 	EndProjectSection

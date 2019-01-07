@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>xWrap</id>
+    <version>1.0.12</version>
+    <title/>
+    <authors>Volodymyr Hil</authors>
+    <owners>Volodymyr Hil</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/vhil/xWrap</projectUrl>
+    <description>Sitecore strongly-typed wrapper framework</description>
+    <dependencies>
+      <dependency id="xWrap.Framework" version="1.0.12"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\xWrap\App_Config\Include\xWrap\xWrap.Dependencies.config" target="content\App_Config\Include\xWrap\xWrap.Dependencies.config"/>
+    <file src="..\src\xWrap\App_Config\Include\xWrap\xWrap.Pipelines.config" target="content\App_Config\Include\xWrap\xWrap.Pipelines.config"/>
+    <file src="..\src\xWrap\App_Config\Include\xWrap\xWrap.ServicesConfiguration.config" target="content\App_Config\Include\xWrap\xWrap.ServicesConfiguration.config"/>
+  </files>
+</package>

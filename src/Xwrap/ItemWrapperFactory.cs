@@ -98,5 +98,27 @@
 		{
 			return this.WrapChildrenReccursively<TItemWrapper>(item.OriginalItem);
 		}
+
+		/// <summary>
+		/// Finds first parent item of requested template and wraps it into xWrap strongly typed item wrapper.
+		/// Returns null in case if there are no parent items inherited from requested template.
+		/// </summary>
+		/// <typeparam name="TItemWrapper"></typeparam>
+		/// <param name="item">item</param>
+		/// <returns></returns>
+		public TItemWrapper WrapFirstParent<TItemWrapper>(Item item) where TItemWrapper : ItemWrapper
+		{
+			var templateIdAttr = typeof(TItemWrapper).GetTemplateIdAttribute();
+
+			foreach (var ancestor in item.Axes.GetAncestors().Reverse())
+			{
+				if (templateIdAttr == null || ancestor.IsDerived(templateIdAttr.TemplateId))
+				{
+					return this.WrapItem<TItemWrapper>(ancestor);
+				}
+			}
+
+			return default(TItemWrapper);
+		}
 	}
 }

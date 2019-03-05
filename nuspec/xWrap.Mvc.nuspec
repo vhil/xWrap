@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>xWrap.Mvc</id>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <title/>
     <authors>Volodymyr Hil</authors>
     <owners>Volodymyr Hil</owners>
@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/vhil/xWrap</projectUrl>
     <description>Sitecore strongly-typed wrapper framework - MVC support</description>
     <dependencies>
-      <dependency id="xWrap.Mvc.Framework" version="1.0.12"/>
-      <dependency id="xWrap" version="1.0.12"/>
+      <dependency id="xWrap.Mvc.Framework" version="1.0.13"/>
+      <dependency id="xWrap" version="1.0.13"/>
     </dependencies>
   </metadata>
   <files>

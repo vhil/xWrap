@@ -57,5 +57,14 @@
 		/// <param name="item">Item wrapper to get children from</param>
 		IEnumerable<TItemWrapper> WrapChildrenReccursively<TItemWrapper>(ItemWrapper item)
 			where TItemWrapper : ItemWrapper;
+
+		/// <summary>
+		/// Finds first parent item of requested template and wraps it into xWrap strongly typed item wrapper.
+		/// Returns null in case if there are no parent items inherited from requested template.
+		/// </summary>
+		/// <param name="item">item</param>
+		/// <exception cref="System.ArgumentNullException">if one of input parameters is null</exception>
+		TItemWrapper WrapFirstParent<TItemWrapper>(Item item)
+			where TItemWrapper : ItemWrapper;
 	}
 }

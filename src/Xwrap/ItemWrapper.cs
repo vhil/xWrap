@@ -105,6 +105,15 @@
 		public TItemWrapper WrapFirstChild<TItemWrapper>() where TItemWrapper : ItemWrapper
 		{
 			return this.WrapChildren<TItemWrapper>().FirstOrDefault();
+
+		}
+
+		/// <summary>
+		/// Gets first parent item inherited from target template and returns an instance of xWrap strongly typed item wrapper.
+		/// </summary>
+		public TItemWrapper WrapFirstParent<TItemWrapper>() where TItemWrapper : ItemWrapper
+		{
+			return this.ItemWrapperFactory.WrapFirstParent<TItemWrapper>(this.OriginalItem);
 		}
 
 		/// <summary>Wraps Sitecore field and returns an xWrap strongly typed field wrapper.

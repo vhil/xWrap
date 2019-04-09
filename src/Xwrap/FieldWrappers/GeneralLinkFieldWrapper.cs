@@ -90,20 +90,11 @@
 			{
 				if (this.IsMediaLink)
 				{
-					return MediaManager.GetMediaUrl(this.LinkField.TargetItem);
+					var mediaUrl = MediaManager.GetMediaUrl(this.LinkField.TargetItem);
+					return HashingUtils.ProtectAssetUrl(mediaUrl);
 				}
 
-				if (this.IsInternal)
-				{
-					var target = this.GetTarget();
-
-					if (target != null)
-					{
-						return LinkManager.GetItemUrl(target);
-					}
-				}
-
-				return this.LinkField.Url;
+				return this.LinkField.GetFriendlyUrl();
 			}
 		}
 

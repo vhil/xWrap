@@ -41,7 +41,7 @@
 		{
 			var url = "/" + MediaManager.GetMediaUrl(this.MediaItem).TrimStart('/');
 
-			return new HtmlString(url);
+			return new HtmlString(HashingUtils.ProtectAssetUrl(url));
 		}
 
 		/// <summary>

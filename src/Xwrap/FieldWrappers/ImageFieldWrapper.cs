@@ -71,7 +71,7 @@
 
 			var url = mediaItem == null
 				? string.Empty
-				: MediaManager.GetMediaUrl(mediaItem, new MediaUrlOptions { AbsolutePath = absolute });
+				: HashingUtils.ProtectAssetUrl(MediaManager.GetMediaUrl(mediaItem, new MediaUrlOptions { AbsolutePath = absolute }));
 
 			if (!absolute && !string.IsNullOrWhiteSpace(url))
 			{

@@ -49,7 +49,7 @@
 		{
 			foreach (var id in this.Value)
 			{
-				var item = this.OriginalField.Database.GetItem(id.ToString());
+				var item = this.OriginalField.Database.GetItem(id.ToString(), this.OriginalField.Language);
 
 				if (item != null)
 				{

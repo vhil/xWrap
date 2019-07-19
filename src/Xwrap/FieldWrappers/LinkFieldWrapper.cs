@@ -109,7 +109,7 @@
 		/// <returns></returns>
 		protected Item GetTarget(ID id)
 		{
-			return ID.IsNullOrEmpty(id) ? null : this.OriginalField.Database.GetItem(id);
+			return ID.IsNullOrEmpty(id) ? null : this.OriginalField.Database.GetItem(id, this.OriginalField.Language);
 		}
 
 		/// <summary>

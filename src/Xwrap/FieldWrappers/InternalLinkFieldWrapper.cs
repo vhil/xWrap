@@ -87,7 +87,7 @@
 		{
 			return this.Path.IsNullOrEmpty()
 				? null
-				: this.OriginalField.Database.GetItem(this.Path);
+				: this.OriginalField.Database.GetItem(this.Path, this.OriginalField.Language);
 		}
 
 		/// <summary>

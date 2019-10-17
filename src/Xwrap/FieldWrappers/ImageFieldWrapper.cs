@@ -4,6 +4,8 @@
 	using Sitecore.Data.Fields;
 	using Sitecore.Data.Items;
 	using Sitecore.Resources.Media;
+	using System.Web;
+	using Sitecore.SecurityModel;
 
 	/// <summary>
 	/// Default field wrapper type for 'image' Sitecore fields. Implements <see cref="IImageFieldWrapper"/>
@@ -62,8 +64,11 @@
 		/// <returns></returns>
 		public string GetSourceUri(bool absolute)
 		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+
 			if (!this.HasValue)
 			{
+				disabler?.Dispose();
 				return string.Empty;
 			}
 
@@ -78,6 +83,7 @@
 				url = "/" + url.TrimStart('/');
 			}
 
+			disabler?.Dispose();
 			return url;
 		}
 
@@ -105,6 +111,22 @@
 		public static implicit operator string(ImageFieldWrapper field)
 		{
 			return field.GetSourceUri();
+		}
+
+		public override IHtmlString RenderBeginField(object parameters, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
+		}
+
+		public override IHtmlString RenderBeginField(string parameters = null, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
 		}
 	}
 }

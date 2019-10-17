@@ -62,6 +62,7 @@
     <Compile Include="FieldWrappers\LazyLoadField.cs" />
     <Compile Include="IItemWrapperFactory.cs" />
     <Compile Include="ItemWrapperFactory.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="TemplateIdAttribute.cs" />
     <Compile Include="Extensions\CachingExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />

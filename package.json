@@ -16,19 +16,19 @@
     "url": "https://github.com/vhil/xWrap/issues"
   },
   "homepage": "https://github.com/vhil/xWrap#readme",
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "fs": "0.0.1-security",
-    "gulp": "3.9.1",
-    "gulp-color": "0.0.2",
-    "gulp-copy": "^4.0.1",
-    "gulp-debug": "^4.0.0",
-    "gulp-foreach": "^0.1.0",
-    "gulp-msbuild": "^0.5.5",
-    "gulp-nuget": "^1.2.0",
-    "gulp-rimraf": "^0.2.2",
-    "request": "^2.88.0",
-    "run-sequence": "^2.2.1",
-    "semver": "^5.6.0"
-  }
+	"dependencies": {
+		"cheerio": "^1.0.0-rc.2",
+		"fs": "0.0.1-security",
+		"gulp": "3.9.1",
+		"gulp-color": "0.0.2",
+		"gulp-copy": "^4.0.1",
+		"gulp-debug": "^4.0.0",
+		"gulp-foreach": "^0.1.0",
+		"gulp-msbuild": "0.6.2",
+		"gulp-nuget": "^1.2.0",
+		"gulp-rimraf": "^0.2.2",
+		"request": "^2.88.0",
+		"run-sequence": "^2.2.1",
+		"semver": "^5.6.0"
+	}
 }

@@ -5,6 +5,7 @@
 	using Sitecore.Data;
 	using Sitecore.Data.Items;
 	using Sitecore.Links;
+	using Sitecore.SecurityModel;
 
 	/// <summary>
 	/// Rendering parameters field wrapper for item reference link Sitecore field types .e.g. 'droplink' Implements <see cref="ILinkFieldWrapper{Guid}"/>
@@ -34,7 +35,16 @@
 		/// <summary>
 		/// Gets the selected item URL.
 		/// </summary>
-		public virtual string Url => this.Target == null ? string.Empty : LinkManager.GetItemUrl(this.Target);
+		public virtual string Url
+		{
+			get
+			{
+				var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+				var url = this.Target == null ? string.Empty : LinkManager.GetItemUrl(this.Target);
+				disabler?.Dispose();
+				return url;
+			}
+		}
 
 		/// <summary>
 		/// Gets the selected item.

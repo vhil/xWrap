@@ -7,6 +7,8 @@
 	using Sitecore.Links;
 	using Sitecore.StringExtensions;
 	using Abstractions;
+	using System.Web;
+	using Sitecore.SecurityModel;
 
 	/// <summary>
 	/// Default field wrapper type for 'internal link' Sitecore fields. Implements <see cref="IInternalLinkFieldWrapper"/>
@@ -73,9 +75,11 @@
 		{
 			get
 			{
+				var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
 				var target = this.GetTarget();
-
-				return target != null ? LinkManager.GetItemUrl(target) : string.Empty;
+				var url = target != null ? LinkManager.GetItemUrl(target) : string.Empty;
+				disabler?.Dispose();
+				return url;
 			}
 		}
 
@@ -103,6 +107,22 @@
 			if (target == null) return null;
 
 			return this.Factory.WrapItem<TItemWrapper>(target);
+		}
+
+		public override IHtmlString RenderBeginField(object parameters, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
+		}
+
+		public override IHtmlString RenderBeginField(string parameters = null, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
 		}
 	}
 }

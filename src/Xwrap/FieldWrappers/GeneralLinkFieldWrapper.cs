@@ -4,8 +4,9 @@
 	using Abstractions;
 	using Sitecore.Data.Fields;
 	using Sitecore.Data.Items;
-	using Sitecore.Links;
 	using Sitecore.Resources.Media;
+	using System.Web;
+	using Sitecore.SecurityModel;
 
 	/// <summary>
 	/// Default field wrapper type for 'general link' Sitecore fields. Implements <see cref="IGeneralLinkFieldWrapper"/>
@@ -88,13 +89,19 @@
 		{
 			get
 			{
+				var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+
 				if (this.IsMediaLink)
 				{
 					var mediaUrl = MediaManager.GetMediaUrl(this.LinkField.TargetItem);
-					return HashingUtils.ProtectAssetUrl(mediaUrl);
+					var url = HashingUtils.ProtectAssetUrl(mediaUrl);
+					disabler?.Dispose();
+					return url;
 				}
 
-				return this.LinkField.GetFriendlyUrl();
+				var friendlyUrl = this.LinkField.GetFriendlyUrl();
+				disabler?.Dispose();
+				return friendlyUrl;
 			}
 		}
 
@@ -139,6 +146,22 @@
 		public static implicit operator string(GeneralLinkFieldWrapper field)
 		{
 			return field.Url;
+		}
+
+		public override IHtmlString RenderBeginField(object parameters, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
+		}
+
+		public override IHtmlString RenderBeginField(string parameters = null, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
 		}
 	}
 }

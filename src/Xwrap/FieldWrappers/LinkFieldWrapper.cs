@@ -6,6 +6,8 @@
 	using Sitecore.Data.Fields;
 	using Sitecore.Data.Items;
 	using Sitecore.Links;
+	using System.Web;
+	using Sitecore.SecurityModel;
 
 	/// <summary>
 	/// Default field wrapper type for item reference link Sitecore field types .e.g. 'droplink' Implements <see cref="ILinkFieldWrapper{Guid}"/>
@@ -50,8 +52,11 @@
 		{
 			get
 			{
+				var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
 				var target = this.GetTarget();
-				return target == null ? string.Empty : LinkManager.GetItemUrl(target);
+				var url = target == null ? string.Empty : LinkManager.GetItemUrl(target);
+				disabler?.Dispose();
+				return url;
 			}
 		}
 
@@ -135,6 +140,22 @@
 			}
 
 			return Guid.Parse(value);
+		}
+
+		public override IHtmlString RenderBeginField(object parameters, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
+		}
+
+		public override IHtmlString RenderBeginField(string parameters = null, bool editing = true)
+		{
+			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
+			var url = base.RenderBeginField(parameters, editing);
+			disabler?.Dispose();
+			return url;
 		}
 	}
 }

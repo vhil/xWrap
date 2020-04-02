@@ -1,6 +1,7 @@
 ﻿namespace Xwrap.FieldWrappers.Abstractions
 {
 	using Sitecore.Data.Items;
+	using Sitecore.Resources.Media;
 
 	/// <summary>
 	/// Field wrapper abstraction for 'image' Sitecore field types. Implements <see cref="IFieldWrapper{string}"/>
@@ -13,17 +14,19 @@
 		string AltText { get; }
 
 		/// <summary>
-		/// Gets the image source URI.
+		/// Gets media url for the image
 		/// </summary>
+		/// <param name="mw"></param>
+		/// <param name="mh"></param>
 		/// <returns></returns>
-		string GetSourceUri();
+		string GetSourceUri(int mw = 0, int mh = 0);
 
 		/// <summary>
-		/// Gets the image source URI.
+		/// Gets media url for the image
 		/// </summary>
-		/// <param name="absolute">if set to <c>true</c> includes hostname.</param>
+		/// <param name="options"></param>
 		/// <returns></returns>
-		string GetSourceUri(bool absolute);
+		string GetSourceUri(MediaUrlOptions options);
 
 		/// <summary>
 		/// Gets the target media item as <see cref="Item"/>.

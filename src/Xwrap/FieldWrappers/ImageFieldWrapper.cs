@@ -5,6 +5,8 @@
 	using Sitecore.Data.Items;
 	using Sitecore.Resources.Media;
 	using System.Web;
+	using Sitecore;
+	using Sitecore.Pipelines.WebDAV.Processors;
 	using Sitecore.SecurityModel;
 
 	/// <summary>
@@ -49,20 +51,34 @@
 		public string Value => this.GetSourceUri();
 
 		/// <summary>
-		/// Gets the image source URI.
+		/// Gets media url for the image
 		/// </summary>
+		/// <param name="mw"></param>
+		/// <param name="mh"></param>
 		/// <returns></returns>
-		public string GetSourceUri()
+		public string GetSourceUri(int mw = 0, int mh = 0)
 		{
-			return this.GetSourceUri(false);
+			var options = new MediaUrlOptions();
+
+			if (mw > 0)
+			{
+				options.MaxWidth = mw;
+			}
+
+			if (mh > 0)
+			{
+				options.MaxHeight = mh;
+			}
+
+			return this.GetSourceUri(options);
 		}
 
 		/// <summary>
-		/// Gets the image source URI.
+		/// Gets media url for the image
 		/// </summary>
-		/// <param name="absolute">if set to <c>true</c> includes hostname.</param>
+		/// <param name="options"></param>
 		/// <returns></returns>
-		public string GetSourceUri(bool absolute)
+		public string GetSourceUri(MediaUrlOptions options)
 		{
 			var disabler = Settings.DisableSecurityOnLinkGeneration ? new SecurityDisabler() : null;
 
@@ -74,17 +90,19 @@
 
 			var mediaItem = this.ImageField.MediaItem;
 
-			var url = mediaItem == null
-				? string.Empty
-				: HashingUtils.ProtectAssetUrl(MediaManager.GetMediaUrl(mediaItem, new MediaUrlOptions { AbsolutePath = absolute }));
+			if (mediaItem == null) return string.Empty;
 
-			if (!absolute && !string.IsNullOrWhiteSpace(url))
+			if (options == null)
 			{
-				url = "/" + url.TrimStart('/');
+				options = MediaUrlOptions.Empty;
 			}
 
+			var mediaUrl = MediaManager.GetMediaUrl(mediaItem, options);
+			var url = StringUtil.EnsurePrefix('/', mediaUrl);
+			var hashedUrl = HashingUtils.ProtectAssetUrl(url);
+
 			disabler?.Dispose();
-			return url;
+			return hashedUrl;
 		}
 
 		/// <summary>

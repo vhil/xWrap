@@ -53,12 +53,13 @@
 		/// <summary>
 		/// Gets media url for the image
 		/// </summary>
+		/// <param name="absolute"></param>
 		/// <param name="mw"></param>
 		/// <param name="mh"></param>
 		/// <returns></returns>
-		public string GetSourceUri(int mw = 0, int mh = 0)
+		public string GetSourceUri(bool absolute = false, int mw = 0, int mh = 0)
 		{
-			var options = new MediaUrlOptions();
+			var options = new MediaUrlOptions {AbsolutePath = absolute};
 
 			if (mw > 0)
 			{

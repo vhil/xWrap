@@ -16,10 +16,11 @@
 		/// <summary>
 		/// Gets media url for the image
 		/// </summary>
+		/// <param name="absolute"></param>
 		/// <param name="mw"></param>
 		/// <param name="mh"></param>
 		/// <returns></returns>
-		string GetSourceUri(int mw = 0, int mh = 0);
+		string GetSourceUri(bool absolute = false, int mw = 0, int mh = 0);
 
 		/// <summary>
 		/// Gets media url for the image

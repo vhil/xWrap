@@ -3,65 +3,61 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using Extensions;
+	using Sitecore.Caching;
 
-	internal class SitecoreCacheService : ICacheService
+	internal class SitecoreCacheService : CustomCache, ICacheService
 	{
-		protected ICacheStorage CacheStorage;
-		protected bool IsDisposed;
-
-		public SitecoreCacheService(ICacheStorage cacheStorage)
+		public SitecoreCacheService(string name)
+			: base(name, global::Sitecore.Configuration.Settings.Caching.DefaultDataCacheSize)
 		{
-			this.CacheStorage = cacheStorage;
+			global::Sitecore.Events.Event.Subscribe("publish:end", this.OnPublishEnd);
+			global::Sitecore.Events.Event.Subscribe("publish:end:remote", this.OnPublishEnd);
 		}
 
-		public virtual bool Add<T>(string key, T value, TimeSpan expiresIn = new TimeSpan(), bool clearOnPublish = false)
+		public SitecoreCacheService(ICache innerCache) : base(innerCache)
 		{
-			if (this.CacheStorage.Entries.TryGetValue(key, out _))
-			{
-				return false;
-			}
-
-			return this.CacheStorage.Entries.TryAdd(key, new SitecoreMemoryCacheEntry(value, expiresIn, clearOnPublish));
+			global::Sitecore.Events.Event.Subscribe("publish:end", this.OnPublishEnd);
+			global::Sitecore.Events.Event.Subscribe("publish:end:remote", this.OnPublishEnd);
 		}
 
-		public virtual bool Set<T>(string key, T value, TimeSpan expiresIn = default(TimeSpan), bool clearOnPublish = false)
+		public bool Set<T>(string key, T value, TimeSpan expiresIn = new TimeSpan(), bool clearOnPublish = false)
 		{
-			var cacheEntry = new SitecoreMemoryCacheEntry(value, expiresIn, clearOnPublish);
+			this.RemoveEntry(key);
+			this.SetObject(key, new SitecoreCacheEntry(value, expiresIn, clearOnPublish));
 
-			if (this.CacheStorage.Entries.TryGetValue(key, out _))
-			{
-				this.CacheStorage.Entries[key] = cacheEntry;
-				return true;
-			}
-
-			return this.CacheStorage.Entries.TryAdd(key, cacheEntry);
+			return true;
 		}
 
-		public virtual T Get<T>(string key)
+		public T Get<T>(string key)
 		{
-			var obj = this.Get(key);
+			var entry = this.GetObject(key) as SitecoreCacheEntry;
 
-			if (obj != null && obj is T)
+			if (entry?.Value is T entryValue)
 			{
-				return (T)obj;
+				if (entry.IsExpired)
+				{
+					this.RemoveEntry(key);
+					return default(T);
+				}
+
+				return entryValue;
 			}
 
 			return default(T);
 		}
 
-		public virtual IDictionary<string, T> GetAll<T>(IEnumerable<string> keys)
+		public IDictionary<string, T> GetAll<T>(IEnumerable<string> keys)
 		{
-			return keys.Select(key => new { Key = key, Value = this.Get<T>(key) }).ToDictionary(k => k.Key, v => v.Value);
+			return keys.ToDictionary(k => k, this.Get<T>);
 		}
 
-		public virtual bool Remove(string key)
+		public new bool Remove(string key)
 		{
-			this.CacheStorage.Entries.RemoveCacheEntries(key);
-			return true;
+			this.RemoveEntry(key);
+			return false;
 		}
 
-		public virtual void RemoveAll(IEnumerable<string> keys)
+		public void RemoveAll(IEnumerable<string> keys)
 		{
 			foreach (var key in keys)
 			{
@@ -69,36 +65,48 @@
 			}
 		}
 
-		public virtual void FlushAll()
+		public void FlushAll()
 		{
-			this.CacheStorage.Entries.RemoveCacheEntries(this.CacheStorage.Entries.Keys.ToArray());
-			this.CacheStorage.Clear();
+			this.Clear();
 		}
 
-		public virtual void Dispose()
+		public bool Add<T>(string key, T value, TimeSpan expiresIn = new TimeSpan(), bool clearOnPublish = false)
 		{
-			if (!this.IsDisposed)
-			{
-				this.FlushAll();
+			return this.Set<T>(key, value, expiresIn, false);
+		}
 
-				this.IsDisposed = true;
+		public void Dispose()
+		{
+		}
+
+		private void OnPublishEnd(object sender, EventArgs e)
+		{
+			var keys = this.InnerCache?.GetCacheKeys();
+
+			foreach (var key in keys ?? Enumerable.Empty<string>())
+			{
+				var entry = this.GetObject(key) as SitecoreCacheEntry;
+
+				if (entry != null && (entry.ClearOnPublish || entry.IsExpired))
+				{
+					this.RemoveEntry(key);
+				}
 			}
 		}
 
-		protected virtual object Get(string key)
+		internal void RemoveEntry(string key)
 		{
-			if (!this.CacheStorage.Entries.TryGetValue(key, out var memoryCacheEntry))
-			{
-				return null;
-			}
+			var entry = this.GetObject(key) as SitecoreCacheEntry;
 
-			if (memoryCacheEntry.ExpiresAt < DateTime.UtcNow)
+			if (entry != null)
 			{
-				this.CacheStorage.Entries.TryRemove(key, out memoryCacheEntry);
-				return null;
-			}
+				base.Remove(key);
 
-			return memoryCacheEntry.Value;
+				if (entry?.Value != null && entry.Value is IDisposable disposable)
+				{
+					disposable?.Dispose();
+				}
+			}
 		}
 	}
 }

@@ -49,10 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\ICacheService.cs" />
-    <Compile Include="Caching\ICacheStorage.cs" />
     <Compile Include="Caching\SitecoreCacheService.cs" />
-    <Compile Include="Caching\SitecoreCacheStorage.cs" />
-    <Compile Include="Caching\SitecoreMemoryCacheEntry.cs" />
+    <Compile Include="Caching\SitecoreCacheEntry.cs" />
     <Compile Include="Configuration\ServicesConfigurator.cs" />
     <Compile Include="Exceptions\FieldWrappingException.cs" />
     <Compile Include="Exceptions\ItemWrappingException.cs" />
@@ -64,7 +62,6 @@
     <Compile Include="ItemWrapperFactory.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TemplateIdAttribute.cs" />
-    <Compile Include="Extensions\CachingExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />

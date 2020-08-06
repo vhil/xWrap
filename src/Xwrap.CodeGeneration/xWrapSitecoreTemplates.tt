@@ -1,0 +1,9 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #><#@ output extension=".cs" encoding="utf-8" #>
+<#
+BaseNamespace = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint").ToString();
+var solutionPath = this.Host.ResolveAssemblyReference("$(SolutionDir)");  
+var projectPath = Host.ResolvePath(this.Host.ResolveAssemblyReference("$(ProjectDir)") + "..\\serialization\\Templates");
+Configurations = new string[]  
+{
+projectPath
+};#><#@ include file="%UserProfile%\.nuget\packages\xwrap.codegeneration\1.0.1\lib\xWrapCodeGeneration.tt" #>

@@ -1,0 +1,128 @@
+﻿<#@ assembly name="%UserProfile%\.nuget\packages\sitecore.kernel\10.0.0\lib\net48\Sitecore.Kernel.dll" #>
+<#@ assembly name="%UserProfile%\.nuget\packages\xwrap.codegeneration\1.0.1\lib\Xwrap.CodeGeneration.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="Xwrap.CodeGeneration" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="Sitecore.Data.Serialization.Yaml.Formatting" #>
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Mvc.Presentation;
+using Xwrap;
+using Xwrap.FieldWrappers.Abstractions;
+using Xwrap.Mvc.RenderingParameters;
+<# 
+// default formatters set from Sitecore 10 initial release, check <fieldFormatters> configuration node in your Sitecore instance.
+var formatters = new BaseFieldFormatter[]
+{
+	new XmlFieldFormatter(),
+	new MultilistFormatter(),
+	new CheckboxFieldFormatter()
+};
+var gen = new SitecoreCodeGenerator(Configurations, formatters);
+try 
+{ 
+	foreach (var data in gen.GetTemplateData()) 
+	{ 
+		var template = data.Template; 
+		var fields = data.Fields;
+#>
+
+#region <#=template.Path#>
+
+namespace <#=BaseNamespace#>.SitecoreTemplates
+{
+<#if (!gen.IsRenderingParameters(template)) { #>
+	/// <summary>
+	/// Item wrapper for items of template '<#=template.Name#>'.
+	/// Template ID: <#=template.Id.ToString("B").ToUpper()#>.
+	/// Template path: <#=template.Path#>.
+	/// </summary>
+	[TemplateId(Constants.TemplateIdString)]
+    // ReSharper disable once InconsistentNaming
+	// ReSharper disable once PartialTypeWithSinglePart
+	public partial class <#=gen.GetClassName(template)#>Item : ItemWrapper
+	{
+		public <#=gen.GetClassName(template)#>Item(Item item) : base(item)
+		{
+		}
+<#foreach(var field in fields) { #>
+
+		/// <summary>
+		/// A wrapped '<#=gen.GetFieldType(field)#>' field for item field with name: '<#=field.Name#>'.
+		/// <returns><see cref="<#=gen.GetFieldWrapperType(field)#>"/></returns>
+		/// </summary>
+		public <#=gen.GetFieldWrapperType(field)#> <#=gen.GetFieldName(field)#> => this.WrapField<<#=gen.GetFieldWrapperType(field)#>>(FieldNames.<#=gen.GetFieldName(field)#>);
+<#}#>
+
+		public static class Constants
+		{
+			public static readonly TemplateID TemplateId = new TemplateID(new ID(TemplateIdString));
+			public const string TemplateIdString = "<#=template.Id.ToString("B").ToUpper()#>"; 
+		}
+
+<#  if (fields.Any()) { #>
+		public static class FieldNames
+		{
+<#foreach(var field in fields) { #>
+			public const string <#=gen.GetFieldName(field)#> = "<#=field.Name#>"; 
+<#}#>
+		}
+<# } #>
+<#  if (fields.Any()) { #>
+
+		public static class FieldIds
+		{
+<#foreach(var field in fields) { #>
+			public static ID <#=gen.GetFieldName(field)#> = new ID("<#=field.Id.ToString("B").ToUpper()#>"); 
+<#}#>
+		}
+<# } #>
+	}
+<#} else {#>
+	/// <summary>
+	/// Rendering parameters wrapper for template '<#=template.Name#>'.
+	/// Template ID: <#=template.Id.ToString("B").ToUpper()#>.
+	/// Template path: <#=template.Path#>.
+	/// </summary>
+    // ReSharper disable once InconsistentNaming
+	// ReSharper disable once PartialTypeWithSinglePart
+	public partial class <#=gen.GetClassName(template)#> : RenderingParametersWrapper
+	{
+		public <#=gen.GetClassName(template)#>(RenderingParameters parameters) : base(parameters)
+		{
+		}
+<#foreach(var field in fields) { #>
+
+		/// <summary>
+		/// A wrapped '<#=gen.GetFieldType(field)#>' parameter for field with name '<#=field.Name#>'.
+		/// <returns><see cref="<#=gen.GetParameterWrapperType(field)#>"/></returns>
+		/// </summary>
+		public <#=gen.GetParameterWrapperType(field)#> <#=gen.GetFieldName(field)#> => this.<#=gen.GetParameterMethodName(field)#>(FieldNames.<#=gen.GetFieldName(field)#>);
+<#}#>
+<#if (fields.Any()) { #>
+
+		public static class FieldNames
+		{
+<#foreach(var field in fields) { #>
+			public const string <#=gen.GetFieldName(field)#> = "<#=field.Name#>"; 
+<#}#>
+		}
+<#}#>
+		
+		public static class Constants
+		{
+			public static readonly TemplateID TemplateId = new TemplateID(new ID(TemplateIdString));
+			public const string TemplateIdString = "<#=template.Id.ToString("B").ToUpper()#>"; 
+		}
+	}
+<#}#>
+}
+
+#endregion
+<# } 
+} catch{} #>
+<#+
+private string BaseNamespace { get; set; }  
+private IEnumerable<string> Configurations { get; set; }#>

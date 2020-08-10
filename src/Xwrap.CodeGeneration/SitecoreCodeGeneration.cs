@@ -31,36 +31,39 @@
 			this.fieldFormatters = fieldFormatters;
 		}
 
-
-		public string GetClassName(IItemData template)
+		public virtual string GetClassName(IItemData template)
 		{
-			return AsValidWord(template.Name);
+			return this.AsValidWord(template.Name);
 		}
 
-		public string GetFieldName(IItemData field)
+		public virtual string GetFieldName(IItemData field)
 		{
-			return AsValidWord(field.Name);
+			return this.AsValidWord(field.Name);
 		}
 
-		public string GetIndexFieldValue(IItemData field)
+		public virtual string TitleCase(string word)
 		{
-			return field.Name.Replace(" ", "_").ToLowerInvariant();
+			word = Regex.Replace(word, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1+");
+			word = System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(word);
+			word = word.Replace("+", "");
+			return word;
 		}
 
-		public bool IsRenderingParameters(IItemData template)
+		public virtual bool IsRenderingParameters(IItemData template)
 		{
-			return template.SharedFields.First(f => f.FieldId == new Guid("{12C33F3F-86C5-43A5-AEB4-5598CEC45116}")).Value
+			return template.SharedFields.First(
+					f => f.FieldId == new Guid("{12C33F3F-86C5-43A5-AEB4-5598CEC45116}")).Value
 				.Contains("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
 		}
 
-		public string GetFieldType(IItemData field)
+		public virtual string GetFieldType(IItemData field)
 		{
 			return field.SharedFields.First(f => f.FieldId == new Guid("{AB162CC0-DC80-4ABF-8871-998EE5D7BA32}")).Value.ToLowerInvariant();
 		}
 
-		public string AsValidWord(string part)
+		public virtual string AsValidWord(string part)
 		{
-			part = TitleCase(part);
+			part = this.TitleCase(part);
 			part = part.Replace(" ", "");
 			part = part.Replace("-", "");
 			while (Regex.IsMatch(part, "^\\d"))
@@ -78,17 +81,17 @@
 			return part;
 		}
 
-		public string GetParameterMethodName(IItemData field)
+		public virtual string GetParameterMethodName(IItemData field)
 		{
-			var fieldWrapperName = GetParameterWrapperType(field);
+			var fieldWrapperName = this.GetParameterWrapperType(field);
 			fieldWrapperName = fieldWrapperName.Substring(1, fieldWrapperName.Length - 1);
 			return fieldWrapperName.Replace("Wrapper", "");
 		}
 
-		public string GetParameterWrapperType(IItemData field)
+		public virtual string GetParameterWrapperType(IItemData field)
 		{
-			var typeName = GetFieldType(field);
-			var returnType = "string";
+			string returnType;
+			var typeName = this.GetFieldType(field);
 
 			switch (typeName)
 			{
@@ -133,10 +136,10 @@
 			return returnType;
 		}
 
-		public string GetFieldWrapperType(IItemData field)
+		public virtual string GetFieldWrapperType(IItemData field)
 		{
-			var typeName = GetFieldType(field);
-			var returnType = "string";
+			var typeName = this.GetFieldType(field);
+			string returnType;
 
 			switch (typeName)
 			{
@@ -204,15 +207,7 @@
 			return returnType;
 		}
 
-		public static string TitleCase(string word)
-		{
-			word = Regex.Replace(word, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1+");
-			word = System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(word);
-			word = word.Replace("+", "");
-			return word;
-		}
-
-		public IReadOnlyCollection<TemplateData> GetTemplateData()
+		public virtual IReadOnlyCollection<TemplateData> GetTemplateData()
 		{
 			var files = this.pathsToTemplates.SelectMany(x => Directory.EnumerateFiles(x, "*.yml", SearchOption.AllDirectories));
 
@@ -242,21 +237,21 @@
 			}).ToArray();
 		}
 
-		public IList<IItemData> GetSections(Guid templateId, ILookup<Guid, IItemData> lookup)
+		public virtual IList<IItemData> GetSections(Guid templateId, ILookup<Guid, IItemData> lookup)
 		{
 			return lookup[templateId].Where(x => x.TemplateId == Sitecore.TemplateIDs.TemplateSection.Guid).ToList();
 		}
 
-		public IList<IItemData> GetFields(Guid templateId, ILookup<Guid, IItemData> lookup)
+		public virtual IList<IItemData> GetFields(Guid templateId, ILookup<Guid, IItemData> lookup)
 		{
 			var sectionIds = this.GetSections(templateId, lookup).Select(x => x.Id);
 			return sectionIds.SelectMany(x => lookup[x].Where(item => item.TemplateId == Sitecore.TemplateIDs.TemplateField.Guid).ToList()).ToList();
 		}
+	}
 
-		public class TemplateData
-		{
-			public IItemData Template { get; set; }
-			public IEnumerable<IItemData> Fields { get; set; }
-		}
+	public class TemplateData
+	{
+		public IItemData Template { get; set; }
+		public IEnumerable<IItemData> Fields { get; set; }
 	}
 }

@@ -209,12 +209,14 @@
 
 		public virtual IReadOnlyCollection<TemplateData> GetTemplateData()
 		{
-			var files = this.pathsToTemplates.SelectMany(x => Directory.EnumerateFiles(x, "*.yml", SearchOption.AllDirectories));
+			var files = this.pathsToTemplates.SelectMany(x => 
+				Directory.EnumerateFiles(x, "*.yml", SearchOption.AllDirectories));
 
 			var items = new List<IItemData>();
 
 			var factory = new StaticFieldFormattersFactory(this.fieldFormatters);
 			var serializer = new YamlItemSerializer(factory);
+			
 			foreach (var file in files)
 			{
 				using (TextReader reader = new StreamReader(file))
@@ -224,6 +226,11 @@
 				}
 			}
 
+			return this.ToTemplateDataCollection(items);
+		}
+
+		private IReadOnlyCollection<TemplateData> ToTemplateDataCollection(IReadOnlyCollection<IItemData> items)
+		{
 			var itemsLookup = items.ToLookup(x => x.ParentId, x => x);
 
 			var templates = items

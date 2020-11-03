@@ -39,7 +39,7 @@
 		/// <summary>
 		/// Gets a value indicating whether this field has a valid value.
 		/// </summary>
-		public override bool HasValue => this.ids != null && this.Value.Any();
+		public override bool HasValue => this.Value.Any();
 
 		/// <summary>
 		/// Gets the list of selected items.

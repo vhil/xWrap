@@ -20,7 +20,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "fs": "0.0.1-security",
-    "gulp": "3.9.1",
+    "gulp": "4.0.2",
     "gulp-color": "0.0.2",
     "gulp-copy": "^4.0.1",
     "gulp-debug": "^4.0.0",
